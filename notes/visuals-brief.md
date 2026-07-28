@@ -37,6 +37,10 @@ Software artefacts 2010–2026 plotted against *how far the thing could travel*
 (hard drive → zip on request → public repo → CRAN → named in regulation), with the three
 eras shaded behind.
 
+- **Check the years before presenting.** They were reconstructed from the CV and the earlier
+  decks, not from CRAN or GitHub metadata. `bayesnec` in particular is placed at 2021 on the
+  strength of the 2021 SETAC presentation and the 2022 AIMS talk describing it as already on
+  CRAN. There's a matching `TODO` in `R/figures.R`.
 - The y-axis is the argument. Resist any temptation to relabel it "capability".
 - Labels are staggered left/right via the `hj`/`nx` columns so points a year apart don't
   collide. If you add an event, set `hj` accordingly.

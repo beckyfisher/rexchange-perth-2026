@@ -73,6 +73,11 @@ reach_levels <- c(
 )
 
 # `hj` staggers labels left/right so points one year apart never overplot.
+#
+# TODO (author to confirm): the years below are reconstructed from the CV and the
+# earlier decks, not from CRAN/GitHub metadata. `bayesnec` is placed at 2021 on
+# the strength of the 2021 SETAC presentation and the 2022 AIMS talk describing
+# it as already on CRAN — check the actual first release before presenting.
 journey <- tribble(
   ~year, ~artefact,        ~reach,                ~era,   ~hj,  ~note,
   2010,  "CReefs scripts", "On my hard drive",    "era1", 0.5,  "25 stats scripts + 32 tcl/tk scripts",
