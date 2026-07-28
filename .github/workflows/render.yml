@@ -54,11 +54,14 @@ jobs:
       - name: Build figures
         run: Rscript R/figures.R
 
-      - name: Fail if figures are stale
+      - name: Rebuild speaker notes from the deck
+        run: Rscript R/build-speaker-notes.R
+
+      - name: Fail if generated files are stale
         run: |
-          if [ -n "$(git status --porcelain talk/figures)" ]; then
-            echo "::error::talk/figures/ is out of date with R/figures.R — run Rscript R/figures.R and commit the result."
-            git --no-pager diff --stat talk/figures
+          if [ -n "$(git status --porcelain talk/figures notes/speaker-notes.md)" ]; then
+            echo "::error::Generated files are out of date. Run 'Rscript R/figures.R' and 'Rscript R/build-speaker-notes.R', then commit the result."
+            git --no-pager diff --stat talk/figures notes/speaker-notes.md
             exit 1
           fi
 

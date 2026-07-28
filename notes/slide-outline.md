@@ -5,17 +5,28 @@ Built for **20 minutes**. A **15-minute cut** is specified at the bottom.
 
 Press `s` in the rendered deck for the speaker view (notes + timer + next slide).
 
+> **Two versions exist.** `main` is the **chronological** cut: it opens on the dredge, then
+> walks the timeline left to right — ElicitN → black data → dredging thresholds → packages →
+> SSDs → `ssdtools`. The `discharge-first` branch opens instead on a licensed discharge and
+> puts the SSD material up front, which gets to the guideline-value stakes faster but is not
+> chronological. `git switch discharge-first` to compare.
+
 ---
 
 ## Structure
 
-The talk is a three-act arc with the science as setting, not subject:
+A cold open, then a strictly chronological walk, then the AI turn:
 
-1. **Stakes** (slides 1–3) — a discharge is licensed against a number; the number comes from
-   an R package; the package's internal choices move the number.
-2. **Journey** (slides 4–13) — three eras, each with one transferable lesson.
+1. **Hook** (slide 1) — a dredge stops against a number; *that number came out of R code I
+   wrote*. Deliberately unexplained. It gets paid off on slide 7.
+2. **Journey** (slides 2–13) — left to right across the timeline. Era one (ElicitN, 2012) →
+   era two (black data, dredging thresholds, packages, then SSDs and `ssdtools`).
 3. **The AI turn** (slides 14–21) — what changed, what didn't, and the standard of evidence
    that carries across.
+
+The arc escalates in scale: a number for **one campaign at one site** (slide 7) → a number
+for **every discharge in the country** (slides 9–10) → a method agreed across **three
+jurisdictions** (slides 12–13).
 
 ### Two routes to a regulatory number — keep these separate
 
@@ -23,17 +34,19 @@ The talk deliberately shows **two different statistical routes** to a number tha
 activity. Do not let them blur together; they are separate bodies of work from different
 periods.
 
-| | Route A — guideline values | Route B — site-specific thresholds |
+| | Route B — site-specific thresholds | Route A — guideline values |
 |---|---|---|
-| Method | Species sensitivity distribution over many species' toxicity estimates | *In situ* dose–response for one receptor + ROC curves on Type I / Type II error |
-| Data | Laboratory toxicity tests | Industry monitoring data ("black literature") |
-| Software | `ssdtools`, `bayesnec` | Bespoke Bayesian models (JAGS) |
-| Where in the talk | Slides 2–3, 11–13 | Slides 9–10 |
-| Reference | Fox et al. 2021; Fisher et al. 2024; Thorley et al. 2025 | **Fisher et al. 2018, *J. Appl. Ecol.* 55:415** |
-| Era | ~2020 onwards | ~2015–2019, **predates the SSD work** |
+| Method | *In situ* dose–response for one receptor + ROC curves on Type I / Type II error | Species sensitivity distribution over many species' toxicity estimates |
+| Data | Industry monitoring data ("black literature") | Laboratory toxicity tests |
+| Software | Bespoke Bayesian models (JAGS + R), never packaged | `ssdtools`, `bayesnec` |
+| Scope | One campaign, one site | Every discharge in the country |
+| Where in the talk | Slides 1, 6–7 | Slides 9–13 |
+| Reference | **Fisher et al. 2018, *J. Appl. Ecol.* 55:415** | Fox et al. 2021; Fisher et al. 2024; Thorley et al. 2025 |
+| Era | ~2015–2019, **predates the SSD work** | ~2020 onwards |
 
-**The dredging thresholds were never SSD-based**, and could not have been — there was one
-habitat-forming receptor, one site, one campaign. Slide 10 says this explicitly.
+Route B comes **first** in this cut, because it came first in real life. **The dredging
+thresholds were never SSD-based**, and could not have been — one habitat-forming receptor,
+one site, one campaign. Slide 7 says this explicitly, and flags forward to Route A.
 
 ---
 
@@ -41,19 +54,19 @@ habitat-forming receptor, one site, one campaign. Slide 10 says this explicitly.
 
 | # | Slide | Visual | Beat | Time |
 |---|---|---|---|---|
-| 1 | The sewage outfall at your local beach | `assets/stopsign.png` + punch line | Cold open. A licensed discharge runs against a number. Relatable *and* industrial. | 0:45 |
-| 2 | Where the number comes from | `ssd-model-average.png` | 30 s of SSD, then leave it. Blood-alcohol analogy. | 1:00 |
-| 3 | Which curve, though? | `ssd-model-spread.png` | Six distributions, six legal limits. The problem that made me a developer. | 1:00 |
-| 4 | **Divider — Part one: How I got here** | — | Transition. | 0:10 |
-| 5 | Fifteen years, three eras | `journey-timeline.png` | The spine. y-axis = how far the software could travel. | 0:50 |
-| 6 | Era one: the lone scripter | Two columns, `.arrows` list | ElicitN: 57 scripts, Tcl/Tk, SourceForge, no tests. | 1:15 |
-| 7 | The science outlived the software | Full-bleed punch line | The lesson. Pause here. | 0:30 |
-| 8 | Era two: packages and the discipline they impose | Two columns | FSSgam, epower. GitHub as delivery, not collaboration. `R CMD check` as reviewer. | 1:25 |
-| 9 | The data most of you will never see | `assets/confidential.jpg` | White / grey / **black** literature. Barrow Island scale. Open code as the release valve. | 1:30 |
-| 10 | What that data bought: a number, without an SSD | `roc-thresholds.png` | **Route B.** In-situ dose–response + ROC. Fisher et al. 2018 JAE. Says out loud that this predates the SSD work. | 1:05 |
-| 11 | Era two, part two: the ecotoxicology pivot | `no-effect-estimates.png` | Back to Route A. Four "no effects". bayesnec. Software made the method possible, not the reverse. | 1:35 |
+| 1 | When a dredge works off the Pilbara coast | `assets/stopsign.png` + punch line | Cold open. *"That number came out of R code that I wrote."* Do **not** explain it yet. | 0:45 |
+| 2 | **Divider — Part one: How I got here** | — | Transition. | 0:10 |
+| 3 | Fifteen years, three eras | `journey-timeline.png` | The spine, up front. Introduce yourself here. Point out the orange triangle: slide 1's number, lowest reach on the chart. "We're going to walk left to right." | 0:55 |
+| 4 | Era one: the lone scripter | Two columns, `.arrows` list | ElicitN (2012): 57 scripts, Tcl/Tk, SourceForge, no tests. | 1:15 |
+| 5 | The science outlived the software | Full-bleed punch line | The lesson. Pause here. | 0:30 |
+| 6 | The data most of you will never see | `assets/confidential.jpg` | Era two opens. White / grey / **black** literature. Barrow Island scale. Ends on *"that dataset is where the number on slide one came from"*. | 1:30 |
+| 7 | What that data bought: the number from slide one | `roc-thresholds.png` | **Route B, and the payoff for the cold open.** In-situ dose–response + ROC. Fisher et al. 2018 JAE. Flags forward: no SSD here, hold that thought. | 1:15 |
+| 8 | Meanwhile: packages and the discipline they impose | Two columns | Same years, 2018–19. FSSgam, epower. GitHub as delivery, not collaboration. `R CMD check` as reviewer. | 1:25 |
+| 9 | The other kind of number | `ssd-model-average.png` | **Route A enters.** ~2020. The discharge licence framing + the blood-alcohol analogy. National, not site-specific. | 1:00 |
+| 10 | Which curve, though? | `ssd-model-spread.png` | Six distributions, six legal limits. The problem that pulled me into `ssdtools`. Note the jump in scale from slide 7. | 1:00 |
+| 11 | One level down: what is a "no effect"? | `no-effect-estimates.png` | Four "no effects". bayesnec, NSEC. Software made the method possible, not the reverse. | 1:35 |
 | 12 | `ssdtools`: the part I did not expect | Two columns | AU–CA joint evaluation vs Burrlioz. Benchmarks + simulation. Adopted. | 1:25 |
-| 13 | You cannot get three regulators to agree on a black box | Full-bleed punch line | **The keystone slide**, and now the close of act two. Open source as governance mechanism. Shiny as the last mile. | 1:10 |
+| 13 | You cannot get three regulators to agree on a black box | Full-bleed punch line | **The keystone slide**, closing act two. Open source as governance mechanism. Shiny as the last mile. | 1:10 |
 | 14 | **Divider — Part two: And then the AI arrived** | — | Transition. | 0:05 |
 | 15 | I have not written a line of code in about a year | Full-bleed punch line | The claim, stated plainly, plus a flag that "5×" needs unpacking. | 0:40 |
 | 16 | The speed-up is not in the typing | `where-work-goes.png` | **Say out loud that this chart is illustrative.** The tax on doing it properly collapsed. | 1:25 |
@@ -63,48 +76,47 @@ habitat-forming receptor, one site, one campaign. Slide 10 says this explicitly.
 | 20 | Three things I'd tell 2012 me | Numbered `.arrows` + punch | The take-homes. Slow down. | 1:10 |
 | 21 | Thank you | Contacts + repos | Links, acknowledgements, invitation to question. | 0:25 |
 
-**Total ≈ 20 min 30 s.** Deliberately ~30 s over: conference talks lose time to the room,
-not gain it, and slides 7, 12 and 15 all have deliberate pauses that can absorb it.
+**Total ≈ 20 min 45 s.** Deliberately ~45 s over: conference talks lose time to the room,
+not gain it, and slides 5, 13 and 15 all have deliberate pauses that can absorb it.
 
 ---
 
 ## The 15-minute cut
 
-Need to lose ~5 min 30 s. Do it by **removing two slides and trimming six**, not by talking
-faster.
+Need to lose **5 min 45 s**. Do it by removing two slides and trimming eleven, not by talking
+faster. The plan below saves 5 min 40 s, landing at ≈15:05.
 
-**Remove entirely (2 min 0 s):**
+**Do not cut slide 7 in this version.** It is the payoff for the cold open — cutting it
+leaves slide 1's promise unanswered. That was possible in the `discharge-first` cut; it is
+not possible here. This is the main cost of the chronological order.
 
-- Slide 10 — *What that data bought*. Self-contained; nothing downstream depends on it. If
-  you cut it, add one clause to slide 9 so Route B still gets acknowledged:
-  *"— and what we got out of it was a set of in-situ dredging thresholds, derived from ROC
-  curves rather than from an SSD."* Without that clause the black-data slide has no payoff.
-- Slide 19 — *Provenance, out loud*. Fold one sentence into slide 18 instead:
+**Remove entirely (1 min 55 s):**
+
+- Slide 19 — *Provenance, out loud* (0:55). Fold one sentence into slide 18 instead:
   *"— and I log every AI-assisted session to the repo, because reproducibility now has to
   cover how the code came to exist."*
+- Slide 10 — *Which curve, though?* (1:00). Painful but survivable: say the sentence
+  *"and there are six defensible distributions you could fit, which give six different
+  limits"* over slide 9's figure, which already shows the fan of candidate curves.
 
-**Also remove if the 15 minutes is hard (1 min 10 s):**
+**Trim (3 min 45 s total):**
 
-- Slide 18 — *The awkward symmetry*. Painful, because it is the intellectual centre of act
-  three. Prefer trimming elsewhere first.
+| Slide | From | To | Saves | How |
+|---|---|---|---|---|
+| 3 Timeline | 0:55 | 0:40 | 0:15 | Cut the "same statistics in 2012" aside. Keep the y-axis point and the triangle. |
+| 4 Era one | 1:15 | 0:40 | 0:35 | Drop the "how you ran it" detail. Keep: 57 scripts, zip file, dead in five years. |
+| 6 Black data | 1:30 | 1:00 | 0:30 | Drop the ten-minute water quality logging detail. Keep 1,500 corals / 530 days. |
+| 7 Dredging thresholds | 1:15 | 0:55 | 0:20 | Keep the ROC trade-off and the no-SSD flag; drop the posterior-probability construction. |
+| 8 Packages | 1:25 | 0:55 | 0:30 | Drop the FSSgam origin anecdote. Keep GitHub-as-delivery and `R CMD check`. |
+| 9 The other kind of number | 1:00 | 0:50 | 0:10 | Keep the blood-alcohol line; drop the "not derived per site" aside. |
+| 11 "No effect" | 1:35 | 1:00 | 0:35 | Name NEC and EC10 only; skip NOEC and NSEC derivation. Keep the causation point. |
+| 12 `ssdtools` | 1:25 | 1:10 | 0:15 | Drop the collaborator list; it's on the slide. |
+| 16 Speed-up | 1:25 | 1:10 | 0:15 | Keep "typing was never the bottleneck" and the illustrative caveat; drop the list of skipped tasks. |
+| 17 What changed | 1:00 | 0:50 | 0:10 | Read the columns, don't gloss each line. |
+| 20 Three things | 1:10 | 1:00 | 0:10 | Deliver the three; drop the elaboration on each. |
 
-**Trim (2 min 25 s total):**
-
-| Slide | From | To | How |
-|---|---|---|---|
-| 6 Era one | 1:15 | 0:40 | Drop the "how you ran it" detail. Keep: 57 scripts, zip file, dead in five years. |
-| 8 Era two packages | 1:25 | 1:00 | Drop the FSSgam origin anecdote. Keep GitHub-as-delivery and `R CMD check`. |
-| 9 Black data | 1:30 | 1:00 | Drop the ten-minute water quality logging detail. Keep 1,500 corals / 530 days. |
-| 10 Ecotox pivot | 1:35 | 1:00 | Name NEC and EC10 only; skip NOEC and NSEC derivation. Keep the causation point. |
-| 11 `ssdtools` | 1:25 | 1:10 | Drop the collaborator list; it's on the slide. |
-| 3 Which curve | 1:00 | 0:45 | State the spread, skip the "aesthetic grounds" aside. |
-
-Slide numbers above refer to the 20-minute running order. Note that slides 12 and 13 swapped
-roles relative to an earlier draft: the keystone now *closes* act two, and the ROC material
-sits with the black-data slide it belongs to.
-
-**Never cut:** 1 (the hook), 5 (the spine), 13 (the keystone), 16 (the honest mechanism of
-the speed-up), 20 (the take-homes).
+**Never cut:** 1 (the hook), 3 (the spine), 7 (the payoff), 13 (the keystone), 16 (the honest
+mechanism of the speed-up), 20 (the take-homes).
 
 ---
 

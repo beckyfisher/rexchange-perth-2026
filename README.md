@@ -22,7 +22,7 @@ Talk materials for **[R Exchange Perth 2026](https://epi.group/events/r-exchange
 | `talk/figures/` | Generated figures — **do not hand-edit** |
 | `R/figures.R` | Reproducible figure code (`ggplot2`, `ssdtools`) |
 | `notes/slide-outline.md` | Slide-by-slide outline with timings and the 15-minute cut |
-| `notes/speaker-notes.md` | Full narration script + anticipated questions |
+| `notes/speaker-notes.md` | Full narration script + anticipated questions — **generated** from the deck by `R/build-speaker-notes.R` |
 | `notes/visuals-brief.md` | Visual system, sourcing, alt text, suggested additions |
 | `notes/source-synthesis.md` | What was read to build this, and the themes extracted |
 | `assets/` | Static images reused from earlier decks |
@@ -36,9 +36,17 @@ Requires R (≥ 4.4) and Quarto (≥ 1.4).
 # 1. figures
 Rscript R/figures.R
 
-# 2. slides + abstract  ->  _output/
+# 2. narration file, regenerated from the deck's speaker notes
+Rscript R/build-speaker-notes.R
+
+# 3. slides + abstract  ->  _output/
 quarto render
 ```
+
+The speaker notes live in `talk/index.qmd` inside `::: {.notes}` blocks and are the single
+source of truth; `notes/speaker-notes.md` is generated from them so the two can't drift. A
+line beginning `> ` inside a notes block is a **stage direction** — something to do, not
+something to say.
 
 On the author's Windows machine neither is on `PATH`:
 

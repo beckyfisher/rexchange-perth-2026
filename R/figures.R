@@ -93,6 +93,17 @@ journey <- tribble(
     nx    = case_when(hj == 1 ~ -0.18, hj == 0 ~ 0.18, TRUE ~ 0)
   )
 
+# The Barrow Island dredging analysis is plotted separately, as a triangle off the
+# step line. It is not packaged software, and its reach is deliberately *low* while
+# its stakes are the highest in the talk — that non-monotonicity is the point, and
+# folding it into the step line would hide it.
+oneoff <- tibble(
+  year  = 2018,
+  reach = factor("On my hard drive", levels = reach_levels),
+  label = "Barrow Island analysis",
+  note  = "bespoke JAGS + R, never packaged"
+)
+
 p_journey <- ggplot(journey, aes(year, as.numeric(reach))) +
   annotate("rect", xmin = 2009, xmax = 2015.5, ymin = 0.4, ymax = 5.6,
            fill = pal[["era1"]], alpha = 0.07) +
@@ -115,6 +126,20 @@ p_journey <- ggplot(journey, aes(year, as.numeric(reach))) +
             colour = pal[["accent"]]) +
   geom_text(aes(x = year + nx, label = note, hjust = hj),
             vjust = 2.4, size = 3.05, colour = "grey45") +
+  # the one-off analysis behind the talk's cold open
+  geom_point(data = oneoff, aes(year, as.numeric(reach)),
+             inherit.aes = FALSE, shape = 17, size = 5, colour = pal[["era3"]]) +
+  geom_text(data = oneoff, aes(year - 0.18, as.numeric(reach), label = label),
+            inherit.aes = FALSE, hjust = 1, size = 4.1, fontface = "bold",
+            colour = pal[["era3"]]) +
+  geom_text(data = oneoff, aes(year, as.numeric(reach), label = note),
+            inherit.aes = FALSE, vjust = 2.5, size = 3.05, colour = "grey45") +
+  annotate("curve", x = 2021.4, xend = 2018.3, y = 1.42, yend = 1.09,
+           curvature = 0.3, linewidth = 0.4, colour = pal[["era3"]],
+           arrow = arrow(length = unit(0.16, "cm"), type = "closed")) +
+  annotate("text", x = 2021.6, y = 1.46, hjust = 0, size = 3.5,
+           fontface = "italic", colour = pal[["era3"]],
+           label = "the number that stops a dredge") +
   scale_colour_manual(values = pal) +
   scale_y_continuous(breaks = seq_along(reach_levels), labels = reach_levels,
                      limits = c(0.4, 5.7)) +
@@ -154,9 +179,12 @@ p_ssd <- ggplot() +
   geom_line(data = pred_ma, aes(est, proportion),
             colour = pal[["accent"]], linewidth = 1.5) +
   geom_point(data = pts, aes(Conc, prop), size = 2.6, colour = "grey25") +
-  geom_segment(aes(x = -Inf, xend = hc5$est, y = 0.05, yend = 0.05),
+  # -Inf would be log(-Inf) = NaN on a log10 axis and the segment would be dropped,
+  # so anchor the guide lines to finite values just outside the data range.
+  geom_segment(aes(x = min(pred_each$est) * 0.8, xend = hc5$est,
+                   y = 0.05, yend = 0.05),
                colour = pal[["era3"]], linetype = "22", linewidth = 0.7) +
-  geom_segment(aes(x = hc5$est, xend = hc5$est, y = -Inf, yend = 0.05),
+  geom_segment(aes(x = hc5$est, xend = hc5$est, y = 0, yend = 0.05),
                colour = pal[["era3"]], linetype = "22", linewidth = 0.7) +
   annotate("point", x = hc5$est, y = 0.05, size = 4, colour = pal[["era3"]]) +
   annotate("text", x = hc5$est * 0.75, y = 0.30,
@@ -253,7 +281,7 @@ p_cr <- ggplot(cr, aes(conc, resp)) +
              inherit.aes = FALSE, size = 4.2, show.legend = FALSE) +
   geom_label(data = marks, aes(x = lab_x, y = lab_y, label = label, colour = col),
              inherit.aes = FALSE, fontface = "bold", size = 5,
-             fill = "white", label.size = 0, show.legend = FALSE) +
+             fill = "white", linewidth = 0, show.legend = FALSE) +
   scale_colour_identity() +
   scale_y_continuous(limits = c(0, 126), breaks = c(0, 50, 100)) +
   scale_x_continuous(expand = expansion(mult = c(0.01, 0.04))) +

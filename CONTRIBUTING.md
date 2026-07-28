@@ -20,8 +20,9 @@ order, or which lessons are drawn. The narrative is load-bearing and heavily tim
 ## Working on it
 
 ```bash
-Rscript R/figures.R     # regenerate figures into talk/figures/
-quarto render           # build slides + abstract into _output/
+Rscript R/figures.R              # regenerate figures into talk/figures/
+Rscript R/build-speaker-notes.R  # regenerate notes/speaker-notes.md from the deck
+quarto render                    # build slides, pptx and abstract into _output/
 ```
 
 Neither tool is on `PATH` on the author's machine — see `README.md` for the absolute paths.
@@ -32,6 +33,8 @@ Neither tool is on `PATH` on the author's machine — see `README.md` for the ab
   `CLAUDE.md`.
 - R style: snake_case, native pipe `|>`, tidyverse for analysis code.
 - **Never hand-edit `talk/figures/`.** Change `R/figures.R` and regenerate.
+- **Never hand-edit the generated region of `notes/speaker-notes.md`.** Change the
+  `::: {.notes}` block in `talk/index.qmd` and run `R/build-speaker-notes.R`. CI checks this.
 - Comment at decision points — explain *why* an approach was chosen over a plausible
   alternative, not what the code does.
 - Keep the timings table in `notes/slide-outline.md` in sync with the deck. If you add a

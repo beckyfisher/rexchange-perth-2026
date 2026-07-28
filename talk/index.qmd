@@ -24,24 +24,25 @@ format:
     # reference-doc: reference.pptx   # uncomment once you've made a template
 ---
 
-## The sewage outfall at your local beach {.smaller}
+
+## When a dredge works off the Pilbara coast {.smaller}
 
 ::: {.columns}
 
 ::: {.column width="52%"}
-It discharges under a licence. So does a produced-water stream on the North West Shelf.
+It is running against a **number**.
 
-Both are licensed against a **number** — a safe concentration, contaminant by contaminant.
+If turbidity at the monitoring site crosses it, the vessel stops.
 
-Exceed it and operations get modified. Or stopped.
+Someone has to defend that number to a regulator, a proponent, and eventually a lawyer.
 :::
 
 ::: {.column width="48%"}
 ![](../assets/stopsign.png){width="42%" fig-alt="A stop sign."}
 
 ::: {.punch}
-That number comes out of\
-**an R package**.
+That number came out of\
+**R code that I wrote**.
 :::
 
 :::
@@ -49,71 +50,31 @@ That number comes out of\
 :::
 
 ::: {.notes}
-Open cold. Don't introduce yourself yet — earn the next 19 minutes first.
+> Open cold. Don't introduce yourself yet — earn the next 19 minutes first.
 
-The sewage outfall at your local beach discharges under a licence. So does a produced-water
-stream off the North West Shelf. Both of them are licensed against a number — a safe
-concentration, contaminant by contaminant.
+When a dredge works off the Pilbara coast in WA, it is running against a number. If
+turbidity at the compliance monitoring site crosses that number, the vessel stops. That
+costs a proponent a very large amount of money per day. Get the number wrong in the other
+direction and you lose a coral reef.
 
-Exceed it and operations get modified, or shut down, sometimes at enormous expense. Set it
-too high and you quietly lose the receiving environment. Somebody has to be able to defend
-that number — to the regulator, to the proponent, and eventually, possibly, to a court.
+Somebody has to be able to defend that number — to the regulator, to the proponent, and
+eventually, possibly, to a court.
 
-That number comes out of an R package. Some of you in this room maintain packages. I want
-you to sit with that for a second.
+That number came out of R code that I wrote.
+
+*(beat)*
+
+Some of you in this room write code like that. I want you to sit with that for a second.
+
+I'm going to tell you where that number came from, what happened to the code that produced
+it, and how I ended up — fifteen years later — maintaining software that sets numbers like
+it across three countries.
 
 [~45 s]
 :::
 
 ---
 
-## Where the number comes from {.smaller}
-
-![](figures/ssd-model-average.png){.fig-full fig-alt="A species sensitivity distribution fitted to CCME boron data on a log concentration axis, showing six thin candidate distribution curves, a bold model-average curve, and the PC95 guideline value marked at 1.26 mg/L."}
-
-::: {.notes}
-Thirty seconds of ecotoxicology, then I'll leave it alone.
-
-This is a species sensitivity distribution — an SSD. It's the workhorse of water quality
-guideline derivation in Australia, New Zealand, Canada, the EU, the US.
-
-Each black dot is a single species. Someone ran a toxicity experiment on it. You fit a
-distribution through those points, and you read off the concentration that protects, say,
-95% of the community. That's the guideline value. In Australia we call the default ones
-DGVs, and they are the environmental equivalent of the 0.05 blood alcohol limit — below it
-you're assumed fine, above it things stop.
-
-Which is a lot of weight to hang on twenty-odd dots and a curve.
-
-[~60 s]
-:::
-
----
-
-## Which curve, though?
-
-![](figures/ssd-model-spread.png){.fig-full fig-alt="Lollipop chart of the PC95 guideline value from six single-distribution fits to the same boron dataset, spanning roughly 1.07 to 1.77 mg/L, with the model average highlighted at 1.26."}
-
-::: {.notes}
-Here's the problem that made me a software developer.
-
-Same data. Six perfectly defensible distributions. Six different legal limits. There is no
-theoretical basis — none — for preferring one of these distributions over another. It's not
-like there's a mechanism that says toxicity is log-normal.
-
-So the choice of distribution is doing real regulatory work, and it's being made on
-essentially aesthetic grounds.
-
-The statistical answer is: don't choose. Model-average over all of them, weighted. That's
-the orange line.
-
-The *software* answer is that until recently, the tool mandated for this in Australia
-fitted exactly one distribution — and you couldn't see inside it.
-
-[~60 s]
-:::
-
----
 
 ## [Part one]{.era-num} How I got here {.divider}
 
@@ -127,24 +88,33 @@ Badly, is the answer. Let me show you the shape of it.
 
 ---
 
+
 ## Fifteen years, three eras {.smaller}
 
 ![](figures/journey-timeline.png){.fig-full fig-alt="Timeline from 2010 to 2026 plotting software artefacts against how far they could travel: hard drive, zip file on request, public repository, CRAN, named in regulation. Three shaded eras: lone scripter, packages and GitHub, AI."}
 
 ::: {.notes}
-The y-axis here is the only thing I want you to take from this slide. It isn't
-"sophistication". It's **how far the thing could travel**.
+First, who's talking. I'm a quantitative ecologist. I have a PhD in marine biology. I have
+had exactly zero formal training in programming. What I had was a solid grasp of applied
+statistics and a supply of real problems.
 
-Same person. Same statistics, honestly — I understood mixture distributions in 2012 about
-as well as I do now. What changed was entirely about distribution, maintenance and trust.
+This is fifteen years of that. The dredging number from slide one is roughly in the middle —
+2018, the second era.
 
-I'm a quantitative ecologist. I have a PhD in marine biology. I have had exactly zero
-formal training in programming. What I had was applied statistics and real problems.
+The y-axis is the only thing I want you to take from this slide. It isn't "sophistication".
+It's **how far the thing could travel**.
 
-[~50 s]
+Same person throughout. And honestly, much the same statistics — I understood mixture
+distributions in 2012 about as well as I do now. What changed was entirely about
+distribution, maintenance and trust.
+
+We're going to walk left to right.
+
+[~55 s]
 :::
 
 ---
+
 
 ## Era one: the lone scripter {.smaller}
 
@@ -197,6 +167,7 @@ effectively dead. The paper is still cited. The tool is a fossil.
 
 ---
 
+
 ::: {.punch}
 The science outlived the software\
 by about *fifteen years*.
@@ -207,7 +178,7 @@ That is a reproducibility failure, and it was entirely mine.
 :::
 
 ::: {.notes}
-Pause here. Let it land.
+> Pause here. Let it land.
 
 This is the lesson I'd hand to anyone starting out: your paper will outlive your code by
 a decade, and nobody warns you about that. The peer review process interrogated my
@@ -219,7 +190,103 @@ software would still run in 2017.
 
 ---
 
-## Era two: packages, and the discipline they impose {.smaller}
+
+## The data most of you will never see {.smaller}
+
+::: {.columns}
+
+::: {.column width="58%"}
+Scientific literature is **white**.\
+Reports and theses are **grey**.
+
+::: {.punch style="text-align:left; margin-top:0.6em;"}
+Industry monitoring data is [black]{.e3}.
+:::
+
+::: {.aside style="margin-top:0.8em;"}
+One dredging campaign at Barrow Island: over **1,500 individual coral heads** scored every
+two weeks for **530 days**, alongside water quality logged every **10 minutes**.
+
+I have never seen a research grant that could fund data collection at that scale.
+:::
+
+:::
+
+::: {.column width="42%"}
+![](../assets/confidential.jpg){width="72%" fig-alt="A red CONFIDENTIAL stamp."}
+:::
+
+:::
+
+::: {.notes}
+Era two, and the thing that changed everything for me: I stopped writing tools for
+researchers and started working with industry data.
+
+We talk about white literature — peer-reviewed papers — and grey literature — reports,
+theses, things public but not indexed. I've started calling the third tier black. It's
+industry monitoring data. Compliance data. It's real, it's enormous, it's high quality
+because a regulator is watching, and it is confidential.
+
+One example. A single capital dredging campaign at Barrow Island: over fifteen hundred
+individual coral colonies, tagged and scored every fortnight, for five hundred and thirty
+days. Water quality logged every ten minutes across three pressure pathways. No research
+funding programme I have ever seen comes close.
+
+Here's the tension, and it's the centre of my whole career: I cannot give you that data.
+I genuinely cannot.
+
+But I can give you the method. Open code is how black data becomes public good. The
+dataset stays confidential; the thing we learned to do with it doesn't.
+
+And that dataset is where the number on slide one came from.
+
+[~90 s]
+:::
+
+---
+
+
+## What that data bought: the number from slide one {.smaller}
+
+![](figures/roc-thresholds.png){.fig-full fig-alt="Two panels. Left: overlapping control and impact distributions with two vertical thresholds marked high power and low alarm rate. Right: the corresponding ROC curve with those two operating points marked."}
+
+::: {.notes}
+> This is the payoff for slide one. Say so explicitly.
+
+So — this is where that number came from.
+
+At Barrow Island we had one receptor that mattered: coral, the habitat-forming organism.
+One site, one dredging campaign. So we built the dose–response relationship *in situ* —
+dredging exposure metrics on one axis, and on the other, the Bayesian posterior probability
+of non-zero coral mortality at each site relative to the controls.
+
+Then, to turn that into a threshold, we used ROC curves. Because a threshold is a decision
+rule, and decision rules have error rates. A false positive costs a proponent money. A false
+negative costs you a reef. Not symmetric, not commensurable, and almost nobody sets
+thresholds with that in mind.
+
+So you pick your operating point deliberately. A high-power threshold — cheap to trigger,
+tells you mortality is *possible*. A low-alarm-rate threshold — hard to trigger, tells you
+mortality is *probable*. Different management actions hang off each.
+
+That's Fisher et al. 2018 in *Journal of Applied Ecology*.
+
+And I want to flag something for later, because it matters: **there is no SSD anywhere in
+this**. An SSD needs toxicity estimates across many species; we had one. This is a
+site-specific number built from one campaign's data, and it long predates anything I did
+with SSDs. Hold that thought — I'll show you the other kind of number shortly.
+
+The transferable point: any time your software emits a threshold, someone downstream is
+making a decision with asymmetric costs — and you have more influence over that than you
+think.
+
+[~75 s]
+:::
+
+---
+
+
+## Meanwhile: packages, and the discipline they impose {.smaller}
 
 ::: {.columns}
 
@@ -253,7 +320,8 @@ seismic study.
 :::
 
 ::: {.notes}
-Era two starts, honestly, with a filing problem.
+Running alongside all of that — same years, 2018, 2019 — I finally started making packages.
+And it began, honestly, with a filing problem.
 
 FSSgam began life as a function I'd written for one paper. Then people emailed asking for
 it. Then they emailed asking why it didn't work on their data. Making it a package was
@@ -274,100 +342,72 @@ consistently, exactly what was wrong.
 
 ---
 
-## The data most of you will never see {.smaller}
 
-::: {.columns}
+## The other kind of number {.smaller}
 
-::: {.column width="58%"}
-Scientific literature is **white**.\
-Reports and theses are **grey**.
-
-::: {.punch style="text-align:left; margin-top:0.6em;"}
-Industry monitoring data is [black]{.e3}.
-:::
-
-::: {.aside style="margin-top:0.8em;"}
-One dredging campaign at Barrow Island: over **1,500 individual coral heads** scored every
-two weeks for **530 days**, alongside water quality logged every **10 minutes**.
-
-I have never seen a research grant that could fund data collection at that scale.
-:::
-
-:::
-
-::: {.column width="42%"}
-![](../assets/confidential.jpg){width="72%" fig-alt="A red CONFIDENTIAL stamp."}
-:::
-
-:::
+![](figures/ssd-model-average.png){.fig-full fig-alt="A species sensitivity distribution fitted to CCME boron data on a log concentration axis, showing six thin candidate distribution curves, a bold model-average curve, and the PC95 guideline value marked at 1.26 mg/L."}
 
 ::: {.notes}
-A detour that matters for the argument.
+Now the pivot. Around 2020 I moved into statistical ecotoxicology, and met the *other* kind
+of regulatory number — the one that isn't site-specific.
 
-We talk about white literature — peer-reviewed papers — and grey literature — reports,
-theses, things public but not indexed. I've started calling the third tier black. It's
-industry monitoring data. Compliance data. It's real, it's enormous, it's high quality
-because a regulator is watching, and it is confidential.
+The sewage outfall at your local beach discharges under a licence. So does a produced-water
+stream off the North West Shelf. Both are licensed against a concentration limit for each
+contaminant, and those limits are national defaults — they aren't derived per site from
+someone's monitoring data.
 
-One example. A single capital dredging campaign at Barrow Island: over fifteen hundred
-individual coral colonies, tagged and scored every fortnight, for five hundred and thirty
-days. Water quality logged every ten minutes across three pressure pathways. No research
-funding programme I have ever seen comes close.
+They come from this. A species sensitivity distribution — an SSD. It's the workhorse of
+water quality guideline derivation in Australia, New Zealand, Canada, the EU and the US.
 
-Here's the tension, and it's the centre of my whole career: I cannot give you that data.
-I genuinely cannot.
+Each black dot is a single species; somebody ran a toxicity experiment on it. You fit a
+distribution through those points and read off the concentration that protects, say, 95% of
+the community. That's your guideline value. In Australia the default ones are called DGVs,
+and they're the environmental equivalent of the 0.05 blood alcohol limit — below it you're
+assumed fine, above it things stop.
 
-But I can give you the method. Open code is how black data becomes public good. The
-dataset stays confidential; the thing we learned to do with it doesn't.
+Which is a lot of weight to hang on twenty-odd dots and a curve.
 
-[~90 s]
+[~60 s]
 :::
 
 ---
 
-## What that data bought: a number, without an SSD {.smaller}
 
-![](figures/roc-thresholds.png){.fig-full fig-alt="Two panels. Left: overlapping control and impact distributions with two vertical thresholds marked high power and low alarm rate. Right: the corresponding ROC curve with those two operating points marked."}
+## Which curve, though?
+
+![](figures/ssd-model-spread.png){.fig-full fig-alt="Lollipop chart of the PC95 guideline value from six single-distribution fits to the same boron dataset, spanning roughly 1.07 to 1.77 mg/L, with the model average highlighted at 1.26."}
 
 ::: {.notes}
-[CUT THIS SLIDE FOR THE 15-MINUTE VERSION.]
+Here's the problem that pulled me into `ssdtools`.
 
-Here's what we did with it, and it's a completely different route to a regulatory number.
+Same data. Six perfectly defensible distributions. Six different legal limits. There is no
+theoretical basis — none — for preferring one of these distributions over another. It's not
+like there's a mechanism that says toxicity is log-normal.
 
-No SSD here. An SSD needs toxicity estimates for many species. At Barrow Island we had one
-receptor that mattered — coral, the habitat-forming organism — one site, one campaign. So
-instead we built dose–response relationships *in situ*: dredging exposure metrics on one
-axis, the Bayesian posterior probability of non-zero coral mortality on the other.
+So the choice of distribution is doing real regulatory work, and it's being made on
+essentially aesthetic grounds.
 
-Then, to get a threshold out of that, we used ROC curves. Because a threshold is a decision
-rule, and decision rules have error rates. A false positive costs a proponent money. A false
-negative costs you a reef. Not symmetric, not commensurable, and almost nobody sets
-thresholds with that in mind.
+The statistical answer is: don't choose. Model-average over all of them, weighted. That's
+the orange line.
 
-So you pick your operating point deliberately. A high-power threshold — cheap to trigger,
-tells you mortality is *possible*. A low-alarm-rate threshold — hard to trigger, tells you
-mortality is *probable*. Different management actions hang off each.
+The *software* answer is that until recently, the tool mandated for this in Australia
+fitted exactly one distribution — and you couldn't see inside it.
 
-That's Fisher et al. 2018 in *Journal of Applied Ecology*, and it long predates any of my
-SSD work. Two quite different statistical routes, both ending in a number that stops a
-vessel.
+And notice the difference in scale from the dredging work. That number applied to one
+campaign at one site. This one applies to every discharge in the country.
 
-The transferable point: any time your software emits a threshold, someone downstream is
-making a decision with asymmetric costs — and you have more influence over that than you
-think.
-
-[~65 s]
+[~60 s]
 :::
 
 ---
 
-## Era two, part two: the ecotoxicology pivot
+
+## One level down: what is a "no effect"?
 
 ![](figures/no-effect-estimates.png){.fig-full fig-alt="Schematic concentration-response curve with four endpoints marked and labelled with leader lines: NEC, NSEC, EC10 and NOEC, with the pre-threshold region shaded and labelled no effect."}
 
 ::: {.notes}
-Around 2020 I moved properly into statistical ecotoxicology — so, back to the SSD strand —
-and hit the same shape of problem one level down.
+And then the same shape of problem, one level down.
 
 Remember each dot on that SSD is one species' "no effect" estimate. It turns out there are
 at least four things the field calls "no effect", and only one of them actually means it.
@@ -391,6 +431,7 @@ software made the method possible.
 :::
 
 ---
+
 
 ## `ssdtools`: the part I did not expect {.smaller}
 
@@ -448,6 +489,7 @@ jurisdictions, and I'm a contributor to it.
 
 ---
 
+
 ::: {.punch}
 You cannot get three regulators\
 to agree on a *black box*.
@@ -459,7 +501,7 @@ It was the **precondition for the agreement**.
 :::
 
 ::: {.notes}
-This is the slide I'd keep if I could only keep one.
+> This is the slide I'd keep if I could only keep one.
 
 The reason the Australian and Canadian experts could reach collective agreement is that
 every one of us could read the source, run the benchmarks, and disagree in public about
@@ -479,6 +521,7 @@ the person making the decision.
 
 ---
 
+
 ## [Part two]{.era-num} And then the AI arrived {.divider}
 
 ::: {.notes}
@@ -488,6 +531,7 @@ Right. The bit you're actually here for.
 :::
 
 ---
+
 
 ::: {.punch}
 I have not written a line of code\
@@ -512,12 +556,13 @@ where it actually comes from — because it is *not* where I assumed it would be
 
 ---
 
+
 ## The speed-up is not in the typing {.smaller}
 
 ![](figures/where-work-goes.png){.fig-full fig-alt="Stacked bar chart comparing where effort goes before and with an AI assistant. Time spent writing code and fighting the tooling shrinks; time spent thinking about the problem, tests, documentation and packaging grows."}
 
 ::: {.notes}
-Be explicit that this bar chart is my own estimate, not a measurement. Say it out loud.
+> Be explicit that this bar chart is my own estimate, not a measurement. Say it out loud.
 
 Typing was never the bottleneck. I could always type. Badly, but I could type.
 
@@ -537,6 +582,7 @@ itself. That's the trade I made, and it is a much better one than "I type faster
 :::
 
 ---
+
 
 ## What actually changed {.smaller}
 
@@ -588,6 +634,7 @@ the syntax.
 
 ---
 
+
 ## The awkward symmetry {.smaller}
 
 ::: {.lede}
@@ -619,6 +666,7 @@ out to be exactly the methods I need for this.
 :::
 
 ---
+
 
 ## Provenance, out loud {.smaller}
 
@@ -653,6 +701,7 @@ while we figure it out.
 
 ---
 
+
 ## Three things I'd tell 2012 me {.smaller}
 
 ::: {.arrows}
@@ -670,7 +719,7 @@ And: the boring work is the work.\
 :::
 
 ::: {.notes}
-Land these deliberately. Slow down.
+> Land these deliberately. Slow down.
 
 One. Regulation runs on software, and most people writing that software have no idea of the
 blast radius. If you work in a regulated domain — health, finance, environment — go and
@@ -690,6 +739,7 @@ enough that there's no longer an excuse.
 :::
 
 ---
+
 
 ## Thank you {.smaller}
 
@@ -735,3 +785,4 @@ like now.
 
 [~25 s]
 :::
+
