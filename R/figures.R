@@ -30,10 +30,15 @@ dir.create(fig_dir, showWarnings = FALSE, recursive = TRUE)
 # Deliberately close to the visual language of the speaker's existing decks:
 # almost no chrome, one idea per panel, annotation carrying the argument.
 
+# The three eras are about *distribution* and map onto the y-axis of the timeline:
+# scripts on a disk -> a public repo -> CRAN. AI is deliberately NOT an era: it is
+# Part two of the talk, and it gets its own colour so the two framings don't
+# collide on the same chart.
 pal <- c(
   era1   = "#9E9E9E",  # era 1: scripts, not software
-  era2   = "#1B7F79",  # packages + GitHub (AIMS teal)
-  era3   = "#E4572E",  # AI
+  era2   = "#1B7F79",  # era 2: GitHub (AIMS teal)
+  era3   = "#0F5257",  # era 3: CRAN (deeper teal — further along the same road)
+  hi     = "#E4572E",  # highlight / AI accent, used for "look here"
   accent = "#2E4057",
   light  = "#C9D6DF"
 )
@@ -74,19 +79,18 @@ reach_levels <- c(
 
 # `hj` staggers labels left/right so points one year apart never overplot.
 #
-# TODO (author to confirm): the years below are reconstructed from the CV and the
-# earlier decks, not from CRAN/GitHub metadata. `bayesnec` is placed at 2021 on
-# the strength of the 2021 SETAC presentation and the 2022 AIMS talk describing
-# it as already on CRAN — check the actual first release before presenting.
+# The 2021 CRAN date is now verified rather than guessed: ssddata 1.0.0 was
+# published to CRAN on 2021-11-05, and bayesnec's CRAN-review commits run from
+# June to October 2021. The earlier years are still reconstructed from the CV.
 journey <- tribble(
-  ~year, ~artefact,        ~reach,                ~era,   ~hj,  ~note,
-  2010,  "CReefs scripts", "On my hard drive",    "era1", 0.5,  "25 stats scripts + 32 tcl/tk scripts",
-  2012,  "ElicitN",        "Zip file on request", "era1", 0.5,  "with O'Leary, Low-Choy, Mengersen & Caley",
-  2018,  "FSSgam",         "Public repository",   "era2", 1.0,  "the \"simple function\" people kept asking for",
-  2019,  "epower",         "Public repository",   "era2", 0.0,  "Methods Ecol. Evol.; industry-funded",
-  2021,  "bayesnec",       "On CRAN",             "era2", 0.5,  "with D. Barneche, G. Ricardo, D. Fox · JSS 2024",
-  2024,  "ssdtools",       "Named in regulation", "era2", 1.0,  "adopted as the default for GV derivation",
-  2025,  "ssdtools v2",    "Named in regulation", "era3", 0.0,  "JOSS · AU / NZ / CA"
+  ~year, ~artefact,             ~reach,                ~era,   ~hj,  ~note,
+  2010,  "CReefs scripts",      "On my hard drive",    "era1", 0.5,  "25 stats scripts + 32 tcl/tk scripts",
+  2012,  "ElicitN",             "Zip file on request", "era1", 0.5,  "with O'Leary, Low-Choy, Mengersen & Caley",
+  2018,  "FSSgam",              "Public repository",   "era2", 1.0,  "the \"simple function\" people kept asking for",
+  2019,  "epower",              "Public repository",   "era2", 0.0,  "Methods Ecol. Evol.; industry-funded",
+  2021,  "bayesnec + ssddata",  "On CRAN",             "era3", 0.5,  "both on CRAN by Nov 2021 · bayesnec in JSS 2024",
+  2024,  "ssdtools",            "Named in regulation", "era3", 1.0,  "adopted as the default for GV derivation",
+  2025,  "ssdtools v2",         "Named in regulation", "era3", 0.0,  "JOSS · AU / NZ / CA"
 ) |>
   mutate(
     reach = factor(reach, levels = reach_levels),
@@ -107,19 +111,25 @@ oneoff <- tibble(
 p_journey <- ggplot(journey, aes(year, as.numeric(reach))) +
   annotate("rect", xmin = 2009, xmax = 2015.5, ymin = 0.4, ymax = 5.6,
            fill = pal[["era1"]], alpha = 0.07) +
-  annotate("rect", xmin = 2015.5, xmax = 2024.5, ymin = 0.4, ymax = 5.6,
+  annotate("rect", xmin = 2015.5, xmax = 2020.6, ymin = 0.4, ymax = 5.6,
            fill = pal[["era2"]], alpha = 0.07) +
-  annotate("rect", xmin = 2024.5, xmax = 2026.6, ymin = 0.4, ymax = 5.6,
-           fill = pal[["era3"]], alpha = 0.09) +
-  # Era labels describe the *artefact and its practice*, not the people. ElicitN
-  # was a five-author collaboration; what was solitary was the code, not the
-  # science. "lone scripter" invited exactly the wrong reading.
+  annotate("rect", xmin = 2020.6, xmax = 2027.9, ymin = 0.4, ymax = 5.6,
+           fill = pal[["era3"]], alpha = 0.07) +
+  # Era labels describe the *artefact and how far it could travel*, not the
+  # people. ElicitN was a five-author collaboration; what was solitary was the
+  # code, not the science. "lone scripter" invited exactly the wrong reading.
   annotate("text", x = 2012.2, y = 5.45, label = "1. scripts, not software",
            colour = pal[["era1"]], fontface = "bold", size = 4.2, hjust = 0.5) +
-  annotate("text", x = 2020.0, y = 5.45, label = "2. packages + GitHub",
+  annotate("text", x = 2018.0, y = 5.45, label = "2. GitHub",
            colour = pal[["era2"]], fontface = "bold", size = 4.2, hjust = 0.5) +
-  annotate("text", x = 2025.5, y = 5.45, label = "3. AI",
+  annotate("text", x = 2022.2, y = 5.45, label = "3. CRAN",
            colour = pal[["era3"]], fontface = "bold", size = 4.2, hjust = 0.5) +
+  # AI is Part two of the talk, not a fourth era — a marker, not a band. Label
+  # sits low and right, the only clear space once the 2025 labels are placed.
+  annotate("segment", x = 2026.47, xend = 2026.47, y = 0.4, yend = 5.6,
+           colour = pal[["hi"]], linetype = "22", linewidth = 0.6) +
+  annotate("text", x = 2026.62, y = 0.85, label = "AI\nJun 2026", hjust = 0,
+           colour = pal[["hi"]], fontface = "bold", size = 3.6, lineheight = 0.9) +
   geom_step(data = journey |> arrange(year),
             aes(year, as.numeric(reach)), colour = "grey70",
             linewidth = 0.6, direction = "hv") +
@@ -131,22 +141,22 @@ p_journey <- ggplot(journey, aes(year, as.numeric(reach))) +
             vjust = 2.4, size = 3.05, colour = "grey45") +
   # the one-off analysis behind the talk's cold open
   geom_point(data = oneoff, aes(year, as.numeric(reach)),
-             inherit.aes = FALSE, shape = 17, size = 5, colour = pal[["era3"]]) +
+             inherit.aes = FALSE, shape = 17, size = 5, colour = pal[["hi"]]) +
   geom_text(data = oneoff, aes(year - 0.18, as.numeric(reach), label = label),
             inherit.aes = FALSE, hjust = 1, size = 4.1, fontface = "bold",
-            colour = pal[["era3"]]) +
+            colour = pal[["hi"]]) +
   geom_text(data = oneoff, aes(year, as.numeric(reach), label = note),
             inherit.aes = FALSE, vjust = 2.5, size = 3.05, colour = "grey45") +
   annotate("curve", x = 2021.4, xend = 2018.3, y = 1.42, yend = 1.09,
-           curvature = 0.3, linewidth = 0.4, colour = pal[["era3"]],
+           curvature = 0.3, linewidth = 0.4, colour = pal[["hi"]],
            arrow = arrow(length = unit(0.16, "cm"), type = "closed")) +
   annotate("text", x = 2021.6, y = 1.46, hjust = 0, size = 3.5,
-           fontface = "italic", colour = pal[["era3"]],
+           fontface = "italic", colour = pal[["hi"]],
            label = "the number that stops a dredge") +
   scale_colour_manual(values = pal) +
   scale_y_continuous(breaks = seq_along(reach_levels), labels = reach_levels,
                      limits = c(0.4, 5.7)) +
-  scale_x_continuous(breaks = seq(2010, 2026, 2), limits = c(2009, 2026.6)) +
+  scale_x_continuous(breaks = seq(2010, 2026, 2), limits = c(2009, 2027.9)) +
   labs(x = NULL, y = NULL,
        title = "Same statistician. Same statistics. Very different blast radius.") +
   theme_talk() +
@@ -186,13 +196,13 @@ p_ssd <- ggplot() +
   # so anchor the guide lines to finite values just outside the data range.
   geom_segment(aes(x = min(pred_each$est) * 0.8, xend = hc5$est,
                    y = 0.05, yend = 0.05),
-               colour = pal[["era3"]], linetype = "22", linewidth = 0.7) +
+               colour = pal[["hi"]], linetype = "22", linewidth = 0.7) +
   geom_segment(aes(x = hc5$est, xend = hc5$est, y = 0, yend = 0.05),
-               colour = pal[["era3"]], linetype = "22", linewidth = 0.7) +
-  annotate("point", x = hc5$est, y = 0.05, size = 4, colour = pal[["era3"]]) +
+               colour = pal[["hi"]], linetype = "22", linewidth = 0.7) +
+  annotate("point", x = hc5$est, y = 0.05, size = 4, colour = pal[["hi"]]) +
   annotate("text", x = hc5$est * 0.75, y = 0.30,
            label = paste0("PC95 = ", signif(hc5$est, 3), " mg/L"),
-           colour = pal[["era3"]], size = 4.6, fontface = "bold", hjust = 0.5) +
+           colour = pal[["hi"]], size = 4.6, fontface = "bold", hjust = 0.5) +
   annotate("text", x = 400, y = 0.35,
            label = paste0(n_dist, " candidate\ndistributions"),
            colour = "grey55", size = 3.8, hjust = 0.5, lineheight = 0.95) +
@@ -227,7 +237,7 @@ p_spread <- ggplot(hc_each, aes(hc5, dist, colour = is_ma)) +
   geom_point(size = 4.4) +
   geom_text(aes(label = signif(hc5, 3)), hjust = -0.45, size = 3.9,
             fontface = "bold", show.legend = FALSE) +
-  scale_colour_manual(values = c(`FALSE` = pal[["light"]], `TRUE` = pal[["era3"]])) +
+  scale_colour_manual(values = c(`FALSE` = pal[["light"]], `TRUE` = pal[["hi"]])) +
   scale_x_continuous(expand = expansion(mult = c(0, 0.18))) +
   labs(x = "PC95 guideline value (mg/L)", y = NULL,
        title = paste0("Same data. ", n_dist,
@@ -268,8 +278,8 @@ marks <- tribble(
   ~x,    ~label,  ~lab_x, ~col,
   nec,   "NEC",   13,     pal[["era2"]],
   nsec,  "NSEC",  20,     pal[["era2"]],
-  ec10,  "EC10",  27,     pal[["era3"]],
-  noec,  "NOEC",  34,     pal[["era3"]]
+  ec10,  "EC10",  27,     pal[["hi"]],
+  noec,  "NOEC",  34,     pal[["hi"]]
 ) |> mutate(y = at_conc(x), lab_y = 118)
 
 p_cr <- ggplot(cr, aes(conc, resp)) +
@@ -315,12 +325,12 @@ t_alarm <- qnorm(0.95, 0, 1)       # only 5% of control sites exceed it -> low a
 p_dens <- ggplot(dens, aes(x, d, fill = grp, colour = grp)) +
   geom_area(position = "identity", alpha = 0.28, linewidth = 0.9) +
   geom_vline(xintercept = t_power, colour = pal[["era2"]], linewidth = 1) +
-  geom_vline(xintercept = t_alarm, colour = pal[["era3"]], linewidth = 1) +
+  geom_vline(xintercept = t_alarm, colour = pal[["hi"]], linewidth = 1) +
   annotate("text", x = t_power - 0.2, y = 0.46, label = "high power\n\u2192 mortality possible",
            colour = pal[["era2"]], size = 3.8, hjust = 1, fontface = "bold",
            lineheight = 0.95) +
   annotate("text", x = t_alarm + 0.2, y = 0.46, label = "low alarm rate\n\u2192 mortality probable",
-           colour = pal[["era3"]], size = 3.8, hjust = 0, fontface = "bold",
+           colour = pal[["hi"]], size = 3.8, hjust = 0, fontface = "bold",
            lineheight = 0.95) +
   annotate("text", x = -1.9, y = 0.18, label = "control", colour = "grey30", size = 4) +
   annotate("text", x = 4.6, y = 0.13, label = "impact", colour = pal[["accent"]], size = 4) +
@@ -344,7 +354,7 @@ p_roc <- ggplot(roc, aes(fp, tp)) +
              size = 4.4, colour = pal[["era2"]]) +
   geom_point(data = tibble(fp = 0.05,
                            tp = pnorm(t_alarm, 2.0, 1.3, lower.tail = FALSE)),
-             size = 4.4, colour = pal[["era3"]]) +
+             size = 4.4, colour = pal[["hi"]]) +
   scale_x_continuous(labels = percent) +
   scale_y_continuous(labels = percent) +
   labs(x = "False positive rate  (type I \u2192 cost to the developer)",
@@ -420,5 +430,40 @@ p_work <- ggplot(work, aes(share, era, fill = category)) +
         plot.caption = element_text(size = rel(0.62)))
 
 save_fig(p_work, "where-work-goes.png", width = 11.5, height = 5.4)
+
+# ===========================================================================
+# 6. Two small graphics, drawn rather than borrowed
+# ===========================================================================
+# The deck originally used clip-art for these. Third-party images of unknown
+# provenance are fine on a slide you present once and awkward in a public
+# repository, so they are generated here instead. Nothing to attribute, nothing
+# to license, and they match the deck's palette.
+
+octagon <- function(r = 1) {
+  a <- seq(pi / 8, 2 * pi + pi / 8, length.out = 9)
+  data.frame(x = r * cos(a), y = r * sin(a))
+}
+
+# ggplot text `size` is millimetres of font height, so it does not scale with the
+# figure — these values are tuned to the width/height passed to save_fig() below
+# and need re-tuning if those change.
+p_stop <- ggplot(octagon(), aes(x, y)) +
+  geom_polygon(fill = "#C1272D", colour = "white", linewidth = 3) +
+  annotate("text", x = 0, y = 0, label = "STOP", colour = "white",
+           fontface = "bold", size = 13, family = "sans") +
+  coord_equal(xlim = c(-1.08, 1.08), ylim = c(-1.08, 1.08)) +
+  theme_void()
+
+save_fig(p_stop, "stop-sign.png", width = 3, height = 3, dpi = 220)
+
+p_conf <- ggplot() +
+  annotate("rect", xmin = -1, xmax = 1, ymin = -0.30, ymax = 0.30,
+           fill = NA, colour = "#C1272D", linewidth = 1.8) +
+  annotate("text", x = 0, y = 0, label = "CONFIDENTIAL", colour = "#C1272D",
+           fontface = "bold", size = 8.5, family = "sans") +
+  coord_equal(xlim = c(-1.15, 1.15), ylim = c(-0.5, 0.5)) +
+  theme_void()
+
+save_fig(p_conf, "confidential-stamp.png", width = 4.2, height = 1.9, dpi = 220)
 
 message("\nAll figures written to ", normalizePath(fig_dir))

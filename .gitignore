@@ -1,10 +1,17 @@
 # --- Source material that must NOT be committed ---------------------------
+# This repository is public. Everything below is either third-party copyright,
+# unpublished, or simply an input rather than an output. None of it is needed to
+# rebuild the talk: see notes/source-synthesis.md for what was taken from it.
+
 # Publisher PDFs of the background literature: copyright, and ~60 MB.
 Relevant_publication_history_pdfs/
 
-# Source .pptx decks are 20–45 MB each and are only inputs, not outputs.
-old_talks_and_background/*.pptx
-old_talks_and_background/*.docx
+# Source decks, CV, bio, and the clip art they used. The two images the talk
+# needs are redrawn in R/figures.R.
+old_talks_and_background/
+
+# The original briefing note.
+I need to write an abstract to give.txt
 
 # Any confidential industry data, anywhere. See CLAUDE.md §4.
 **/confidential_data/
@@ -17,6 +24,12 @@ _freeze/
 *_files/
 *_cache/
 /.luarc.json
+
+# Render outputs land in _output/, but a locked file (Word/PowerPoint holding
+# the previous build open) makes Quarto leave them beside the source instead.
+talk/*.html
+talk/*.pptx
+talk/*.docx
 
 .Rproj.user/
 .Rhistory

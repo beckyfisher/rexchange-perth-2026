@@ -54,17 +54,17 @@ one site, one campaign. Slide 7 says this explicitly, and flags forward to Route
 
 | # | Slide | Visual | Beat | Time |
 |---|---|---|---|---|
-| 1 | When a dredge works off the Pilbara coast | `assets/stopsign.png` + punch line | Cold open. *"That number came out of R code that I wrote."* Do **not** explain it yet. | 0:45 |
+| 1 | When the next dredge works off the Pilbara coast | `figures/stop-sign.png` + punch line | Cold open. *"That number came out of R code that I wrote."* Do **not** explain it yet. | 0:45 |
 | 2 | **Divider — Part one: How I got here** | — | Transition. | 0:10 |
 | 3 | Fifteen years, three eras | `journey-timeline.png` | The spine, up front. Introduce yourself here. Point out the orange triangle: slide 1's number, lowest reach on the chart. "We're going to walk left to right." | 0:55 |
 | 4 | Era one: scripts, not software | Two columns, `.arrows` list | ElicitN (2012), **credited to all five authors**: 57 scripts, Tcl/Tk, SourceForge, no tests. The point is that none of the five asked about longevity. | 1:15 |
 | 5 | The science outlived the software | Full-bleed punch line | The lesson. Pause here. | 0:30 |
-| 6 | The data most of you will never see | `assets/confidential.jpg` | Era two opens. White / grey / **black** literature. Barrow Island scale. Ends on *"that dataset is where the number on slide one came from"*. | 1:30 |
+| 6 | Era two: the data most of you will never see | `figures/confidential-stamp.png` | Era two opens. White / grey / **black** literature. Barrow Island scale. Ends on *"that dataset is where the number on slide one came from"*. | 1:30 |
 | 7 | What that data bought: the number from slide one | `roc-thresholds.png` | **Route B, and the payoff for the cold open.** In-situ dose–response + ROC. Fisher et al. 2018 JAE. Flags forward: no SSD here, hold that thought. | 1:15 |
-| 8 | Meanwhile: packages and the discipline they impose | Two columns | Same years, 2018–19. FSSgam, epower. GitHub as delivery, not collaboration. `R CMD check` as reviewer. | 1:25 |
+| 8 | Era two, meanwhile: onto GitHub | Two columns | Same years, 2018–19. FSSgam, epower. GitHub as delivery, not collaboration. `R CMD check` as reviewer. | 1:25 |
 | 9 | The other kind of number | `ssd-model-average.png` | **Route A enters.** ~2020. The discharge licence framing + the blood-alcohol analogy. National, not site-specific. | 1:00 |
 | 10 | Which curve, though? | `ssd-model-spread.png` | Six distributions, six legal limits. The problem that pulled me into `ssdtools`. Note the jump in scale from slide 7. | 1:00 |
-| 11 | One level down: what is a "no effect"? | `no-effect-estimates.png` | Four "no effects". bayesnec, NSEC. Software made the method possible, not the reverse. | 1:35 |
+| 11 | Era three: onto CRAN | `no-effect-estimates.png` | bayesnec + ssddata to CRAN, Nov 2021. **First real use of `R CMD check`** — moved here from slide 8. Then four "no effects"; software made the method possible, not the reverse. | 1:50 |
 | 12 | `ssdtools`: the part I did not expect | Two columns | AU–CA joint evaluation vs Burrlioz. Benchmarks + simulation. Adopted. | 1:25 |
 | 13 | You cannot get three regulators to agree on a black box | Full-bleed punch line | **The keystone slide**, closing act two. Open source as governance mechanism. Shiny as the last mile. | 1:10 |
 | 14 | **Divider — Part two: And then the AI arrived** | — | Transition. | 0:05 |
@@ -77,22 +77,24 @@ one site, one campaign. Slide 7 says this explicitly, and flags forward to Route
 | 21 | Three things I'd tell 2012 me | Numbered `.arrows` + punch | The take-homes. Slow down. | 1:10 |
 | 22 | Thank you | Contacts + repos | Links, acknowledgements, invitation to question. | 0:25 |
 
-**Total ≈ 21 min 55 s** — over a 20-minute slot. See the two cuts below.
+**Total ≈ 22 min 10 s** — over a 20-minute slot. See the two cuts below.
 
-### The 20-minute cut (lose 2 min)
+### The 20-minute cut (lose 2 min 10 s)
 
 - Drop slide 20, *Provenance, out loud* (0:55) — fold one clause into slide 19.
 - Trim slide 4, *Era one*, 1:15 → 0:40 (0:35).
-- Trim slide 6, *Black data*, 1:30 → 1:00 (0:30).
+- Trim slide 6, *Era two: black data*, 1:30 → 1:00 (0:30).
+- Trim slide 11, *Era three*, 1:50 → 1:35 (0:15) — keep CRAN and `R CMD check`, name NEC and
+  EC10 only.
 
-Lands at ≈19:55. This is the version to rehearse first.
+Lands at ≈20:00. This is the version to rehearse first.
 
 ---
 
 ## The 15-minute cut
 
-Need to lose **6 min 55 s**. Do it by removing three slides and trimming eleven, not by
-talking faster. The plan below saves 6 min 50 s, landing at ≈15:05.
+Need to lose **7 min 10 s**. Do it by removing three slides and trimming eleven, not by
+talking faster. The plan below saves 7 min 5 s, landing at ≈15:05.
 
 Slide numbers are the 22-slide running order above.
 
@@ -124,7 +126,7 @@ not possible here. This is the main cost of the chronological order.
 | 7 Dredging thresholds | 1:15 | 0:55 | 0:20 | Keep the ROC trade-off and the no-SSD flag; drop the posterior-probability construction. |
 | 8 Packages | 1:25 | 0:55 | 0:30 | Drop the FSSgam origin anecdote. Keep GitHub-as-delivery and `R CMD check`. |
 | 9 The other kind of number | 1:00 | 0:50 | 0:10 | Keep the blood-alcohol line; drop the "not derived per site" aside. |
-| 11 "No effect" | 1:35 | 1:00 | 0:35 | Name NEC and EC10 only; skip NOEC and NSEC derivation. Keep the causation point. |
+| 11 Era three | 1:50 | 1:00 | 0:50 | Keep "CRAN made me run ``R CMD check``" and name NEC and EC10 only; skip NOEC, NSEC and the causation point. |
 | 12 `ssdtools` | 1:25 | 1:10 | 0:15 | Drop the collaborator list; it's on the slide. |
 | 16 Speed-up | 1:25 | 1:10 | 0:15 | Give the three numbers and the method in one breath; drop the list of skipped tasks. |
 | 18 What changed | 1:00 | 0:50 | 0:10 | Read the columns, don't gloss each line. |

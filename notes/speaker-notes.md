@@ -22,17 +22,17 @@ For the running order, timings and the 15-minute cut, see
 
 <!-- BEGIN GENERATED -->
 
-## 1 · When a dredge works off the Pilbara coast — 45 s
+## 1 · When the next dredge works off the Pilbara coast — 45 s
 
 > Open cold. Don't introduce yourself yet — earn the next 19 minutes first.
 
-When a dredge works off the Pilbara coast in WA, it is running against a number. If
-turbidity at the compliance monitoring site crosses that number, the vessel stops. That
+When the next dredge works off the Pilbara coast in WA, it will be running against a number.
+If turbidity at the compliance monitoring site crosses that number, the vessel stops. That
 costs a proponent a very large amount of money per day. Get the number wrong in the other
 direction and you lose a coral reef.
 
-Somebody has to be able to defend that number — to the regulator, to the proponent, and
-eventually, possibly, to a court.
+Somebody has to be able to defend that number — to the regulator, to the proponent, and if
+things go badly, to a court.
 
 That number came out of R code that I wrote.
 
@@ -118,7 +118,7 @@ software would still run in 2017.
 
 ---
 
-## 6 · The data most of you will never see — 90 s
+## 6 · Era two: the data most of you will never see — 90 s
 
 Era two, and the thing that changed everything for me: I stopped writing tools for
 researchers and started working with industry data.
@@ -176,7 +176,7 @@ think.
 
 ---
 
-## 8 · Meanwhile: packages, and the discipline they impose — 85 s
+## 8 · Era two, meanwhile: onto GitHub — 85 s
 
 Running alongside all of that — same years, 2018, 2019 — I finally started making packages.
 And it began, honestly, with a filing problem.
@@ -190,10 +190,8 @@ collaboration. I went because I needed a way to send someone a thing that worked
 could then fix without re-emailing a zip file. The collaboration came later, and it came
 as a surprise.
 
-And `R CMD check` — I want to be sincere about this — is the most patient and least
-political reviewer I have ever worked with. It never once told me my approach was
-interesting but perhaps better suited to a specialist journal. It just told me,
-consistently, exactly what was wrong.
+But be clear about what era two was and wasn't. It solved *distribution*. It did not make me
+disciplined. There were still no tests, and nothing had been near CRAN.
 
 ---
 
@@ -242,27 +240,38 @@ campaign at one site. This one applies to every discharge in the country.
 
 ---
 
-## 11 · One level down: what is a "no effect"? — 95 s
+## 11 · Era three: onto CRAN — 110 s
 
-And then the same shape of problem, one level down.
+Era three is CRAN, and it starts in 2021 with two packages: `bayesnec`, and `ssddata`, which
+is just the datasets and has no paper at all.
 
-Remember each dot on that SSD is one species' "no effect" estimate. It turns out there are
-at least four things the field calls "no effect", and only one of them actually means it.
+And I'll tell you what era three actually taught me, because it isn't what I expected. It's
+the first time I ran `R CMD check` in anger. Not because I'd become disciplined — because
+CRAN wouldn't take the package until I did.
 
-The NEC is a genuine threshold — a parameter in a model that says below here, nothing
-happens. The NOEC is the highest concentration somebody happened to test that wasn't
-statistically distinguishable from the control — which makes it a fact about your
-experimental design, not about the organism. And the EC10 is, by definition, a 10% effect.
-We are calling a 10% effect "no effect".
+`R CMD check` is the most patient and least political reviewer I have ever worked with. It
+never once told me my approach was interesting but might be better suited to a specialist
+journal. It just told me, consistently and immediately, exactly what was wrong. Getting to
+CRAN was the first time anything external had ever held my code to a standard.
 
-Whichever one your software computes becomes the input to the SSD, and therefore becomes
-the guideline value.
+*(beat)*
 
-So we built `bayesnec` — Bayesian concentration-response modelling, model averaging again,
-this time over curve shapes rather than distributions. And along the way David Fox and I
-defined a new statistic, the NSEC, because having the software made it testable. That's
-the direction of causation I want to flag: the software didn't implement the method. The
-software made the method possible.
+Now, what `bayesnec` is for. Every dot on that SSD is one species' "no effect" estimate — and
+it turns out there are at least four things this field calls "no effect", and only one of them
+means it.
+
+The NEC is a genuine threshold: below here, nothing happens. The NOEC is the highest
+concentration somebody happened to test that wasn't statistically distinguishable from the
+control — a fact about your experimental design, not about the organism. And the EC10 is, by
+definition, a ten per cent effect. We are calling a ten per cent effect "no effect".
+
+Whichever one your software computes becomes the input to the SSD, and therefore the
+guideline value.
+
+So `bayesnec` does Bayesian concentration-response modelling — model averaging again, this
+time over curve shapes. And along the way David Fox and I defined a new statistic, the NSEC,
+because having the software made it testable. That's the direction of causation I want to
+flag: the software didn't implement the method. The software made the method possible.
 
 ---
 

@@ -16,7 +16,7 @@ every claim in `talk/index.qmd` should be traceable to something here.
 | `Abstract.docx` | Short abstract for the AIMS 50th talk | Preferred framing sentence (see below) |
 | `Rebecca_Fisher_bio_WQ.docx` | Speaker bio | Bio for the abstract submission |
 | `Cirriculum Vitae_RFisher2025.docx` | Full CV | Software list, publication chronology, employment chronology |
-| `tripple_planetary_crisis.png`, `confidential.jpg`, `stopsign.png` | Reusable image assets | Copied to `assets/` |
+| `tripple_planetary_crisis.png`, `confidential.jpg`, `stopsign.png` | Third-party clip art | **Not reused** — redrawn in `R/figures.R` so the repo carries no borrowed images |
 
 ### `Relevant_publication_history_pdfs/` (19 PDFs)
 
