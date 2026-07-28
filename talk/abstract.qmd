@@ -12,73 +12,88 @@ format:
 
 ## Talk title
 
-**Setting the legal limit with an R package: 15 years from scripts on a hard drive to
-open-source regulatory infrastructure — and what changed when the AI arrived**
+**Setting the legal limit with an R package: fifteen years of open-source software in
+environmental regulation**
 
-Shorter alternatives:
+Alternatives, in roughly decreasing order of restraint:
 
-- *From SourceForge to statute: how open-source R ended up setting water quality limits in
-  three countries*
+- *From scripts on a hard drive to open-source regulatory infrastructure — and what changed
+  when the AI arrived*
 - *White, grey and black: open code, confidential data, and the numbers that stop an operation*
-- *Seven years without a test, then four days: an accidental software developer's field notes*
+- *From SourceForge to statute: how an open-source R package ended up setting water quality
+  limits in three countries*
 
 ---
 
-## Abstract (250 words) — primary version
+## Abstract — primary version
 
-When a dredge works off the Pilbara coast, it runs against a number. Cross it and the vessel
-stops. Set it wrong the other way and you quietly lose a reef. Somebody has to defend that
-number to a regulator, and eventually to a lawyer.
+Environmental regulation runs on numbers. A dredging campaign operates against turbidity
+triggers that stop the vessel if they are exceeded; a discharge is licensed against a safe
+concentration for each contaminant. Those numbers have to be defensible — to a regulator, to
+a proponent, and occasionally in court — and increasingly they are produced by open-source R
+packages.
 
-That number came out of R code that I wrote.
+I am a quantitative ecologist at the Australian Institute of Marine Science, with a sound
+applied grasp of statistics and no formal training in programming. This talk traces fifteen
+years of accidental software development, organised around a single question: how far could
+the software travel?
 
-I am a quantitative ecologist with sound applied statistics and no training in programming.
-This talk is the honest version of how I ended up maintaining software that sets water
-quality limits in three countries.
+**Era one produced scripts rather than software.** `ElicitN`, published in *Environmental
+Modelling & Software* in 2012 with four co-authors, was 57 R scripts distributed as a zip
+file. The statistics were novel; the tool was effectively unreproducible within five years.
+None of the five of us thought to ask whether it would still run.
 
-Three eras. Scripts rather than software: a 57-script expert-elicitation tool, published in
-2012 with four co-authors, unreproducible within five years — and none of the five of us
-asked whether it would still run. Then packages, GitHub, and industry data I cannot show you
-— `FSSgam`, `epower`, `bayesnec`, `ssdtools` — where open code turned out to be the
-*precondition* for agreement rather than a nicety. You cannot get three regulators to sign
-off on a black box.
+**Era two was GitHub, and industry monitoring data.** Using confidential data from a large
+dredging campaign at Barrow Island — over 1,500 coral colonies scored fortnightly for 530
+days — we derived *in situ* dose–response relationships and probabilistic thresholds from ROC
+curves. `FSSgam` and `epower` were published in the same years. Neither had tests, and
+neither went near CRAN.
 
-Then the part I did not expect. I stopped writing code by hand in June, and think I am five
-times more productive. That is precisely the claim this audience should distrust, so I
-measured it. Across 1,340 of my own commits: tests tripled as a share of the work, packaging
-and CI rose fivefold, and source code went *down*. One package sat seven years without a
-test, then got a suite in four days — surfacing two bugs it had shipped since 2018.
+**Era three was CRAN.** `bayesnec` and `ssddata` were released in 2021, and CRAN submission
+was the first time anything external held my code to a standard. That work fed into a joint
+Australian–Canadian evaluation of `ssdtools` against the incumbent closed-source tool, and
+its adoption as the default for deriving water quality guideline values in Australia, New
+Zealand and Canada. Open source was not a convenience in that process; it was the
+precondition for multi-jurisdictional agreement, because three regulators cannot audit a
+black box.
 
-The judgement, though, is still mine. It has to be.
+The talk closes on the last few months. I stopped writing code by hand in June. Rather than
+assert a productivity gain, I measured it across 1,340 of my own commits: tests tripled as a
+share of the work, packaging and continuous integration rose fivefold, and source code fell.
+I will show where the change actually is — it is not in the typing — and which parts of the
+job it does not touch.
 
-*(261 words)*
+*(374 words)*
 
 ---
 
-## Abstract (150 words) — short version
+## Abstract — short version
 
-When a dredge works off the Pilbara coast, it runs against a number. Cross it and the vessel
-stops. That number came out of R code that I wrote.
+Environmental regulation runs on numbers: the turbidity trigger that stops a dredge, the
+concentration limit written into a discharge licence. Increasingly, those numbers come out of
+open-source R packages.
 
-I am a quantitative ecologist with no training in programming who now maintains software
-that sets water quality limits in three countries. This talk is the honest version of how
-that happened: a 2012 tool that was a 57-script zip file and unreproducible within five
-years; then `FSSgam`, `epower`, `bayesnec` and `ssdtools`, and the discovery that you cannot
-get three regulators to sign off on a black box.
+I am a quantitative ecologist with no formal training in programming who now maintains
+software used to derive water quality guideline values in Australia, New Zealand and Canada.
+This talk traces fifteen years of accidental software development in three eras — scripts,
+GitHub, and CRAN — from a 2012 tool that was unreproducible within five years, through
+`FSSgam` and `epower` and a large body of confidential industry monitoring data, to
+`bayesnec`, `ssddata` and `ssdtools` and their adoption in regulation.
 
-Then the part I did not expect. I stopped writing code by hand in June and I think I am five
-times more productive — so I measured it, across 1,340 of my own commits. The speed-up is not
-in the typing, and I will show you exactly where it is.
+It closes on the last few months. I stopped writing code by hand in June. Rather than assert
+a productivity gain I measured it, across 1,340 of my own commits: tests tripled as a share of
+the work, packaging and continuous integration rose fivefold, and source code fell. I will
+show where the change actually is, and which parts of the job it does not touch.
 
-*(147 words)*
+*(174 words)*
 
 ---
 
 ## One-line hook (for the programme)
 
-> How a quantitative ecologist with no programming training ended up maintaining the R
-> package that sets water quality limits in three countries — and what her own commit
-> history says actually changed when she stopped writing code by hand.
+> A quantitative ecologist with no programming training on fifteen years of building
+> open-source R software for environmental regulation — and what her own commit history says
+> actually changed when she stopped writing code by hand.
 
 ---
 
@@ -107,11 +122,12 @@ GitHub: [beckyfisher](https://github.com/beckyfisher) ·
 
 - **Event:** R Exchange Perth 2026, 14–15 October 2026, Perth CBD (Epi).
 - **Suggested session:** Day two, session three — *real-life applications*.
-- **Requested length:** 20 minutes. The deck runs 21:55 in full; 20-minute and 15-minute
+- **Requested length:** 20 minutes. The deck runs 22:10 in full; 20-minute and 15-minute
   cuts are specified in `notes/slide-outline.md`.
-- **Contact for submission:** events@epi.group — no formal call for abstracts or word
-  limit was published at the time of writing, so both a 150- and a 255-word version are
-  provided.
+- **Contact for submission:** events@epi.group — no formal call for abstracts or word limit
+  was published at the time of writing, so a ~370-word version and a ~175-word version are
+  provided. Send the short one if a limit is imposed; the long one otherwise, since the
+  three-era structure needs the room to read as description rather than as a pitch.
 - **AV:** standard laptop + HDMI. Slides are self-contained HTML (reveal.js); no internet
   required. A `.pptx` export with speaker notes is also built.
 
