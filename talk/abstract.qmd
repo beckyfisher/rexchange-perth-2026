@@ -20,65 +20,65 @@ Shorter alternatives:
 - *From SourceForge to statute: how open-source R ended up setting water quality limits in
   three countries*
 - *White, grey and black: open code, confidential data, and the numbers that stop an operation*
-- *I haven't written a line of code in a year: an accidental software developer's field notes*
+- *Seven years without a test, then four days: an accidental software developer's field notes*
 
 ---
 
 ## Abstract (250 words) — primary version
 
-The sewage outfall at your local beach discharges under a licence, and so does a
-produced-water stream off the North West Shelf. Both are licensed against a number: a safe
-concentration for each contaminant. Exceed it and operations are modified, or stopped. That
-number comes out of a species sensitivity distribution, and until recently it came out of a
-closed desktop program that fitted one distribution and showed you none of its workings.
+When a dredge works off the Pilbara coast, it runs against a number. Cross it and the vessel
+stops. Set it wrong the other way and you quietly lose a reef. Somebody has to defend that
+number to a regulator, and eventually to a lawyer.
 
-It now comes out of an R package.
+That number came out of R code that I wrote.
 
-I am a quantitative ecologist with a solid grasp of applied statistics and no training in
-programming. This talk is the honest version of how I got from there to maintaining software
-that underpins environmental regulation in Australia, New Zealand and Canada.
+I am a quantitative ecologist with sound applied statistics and no training in programming.
+This talk is the honest version of how I got from there to maintaining software that sets
+water quality limits in three countries.
 
-Three eras. First, the lone scripter: a 57-script expert-elicitation tool, published in
-2012, distributed as a zip file, and unreproducible within five years. Second, packages and
-GitHub — `FSSgam`, `epower`, `bayesnec`, `ssdtools` — where I discovered that `R CMD check`
-is the most patient reviewer I have had, and that open code is what makes
-multi-jurisdictional agreement on a method even *possible*: you cannot get three regulators
-to sign off on a black box. Third, and most disorienting: I have not written a line of code
-since subscribing to Claude Code, and I am roughly five times more productive.
+Three eras. The lone scripter: a 57-script expert-elicitation tool, published in 2012,
+distributed as a zip file, unreproducible within five years. Then packages, GitHub, and
+industry data I am not allowed to show you — `FSSgam`, `epower`, `bayesnec`, `ssdtools` —
+where open code turned out to be the *precondition* for agreement, not a nice-to-have. You
+cannot get three regulators to sign off on a black box.
 
-I will be specific about where that speed-up comes from — it is not typing — and about what
-has not changed. In regulatory software, someone still has to know whether the answer is
-right.
+Then the part I did not expect. I no longer write code by hand, and I think I am five times
+more productive. That is precisely the claim this audience should distrust, so I measured it.
+Across 1,340 of my own commits: tests tripled as a share of the work, packaging and CI rose
+fivefold, and source code went *down*. One package sat seven years without a single test,
+then got a suite in four days — which immediately surfaced two bugs it had shipped since
+2018.
 
-*(257 words)*
+The judgement, though, is still mine. It has to be.
+
+*(255 words)*
 
 ---
 
 ## Abstract (150 words) — short version
 
-I am a quantitative ecologist with no training in programming who now maintains R software
-that underpins water quality regulation in Australia, New Zealand and Canada. This talk is
-the honest version of how that happened.
+When a dredge works off the Pilbara coast, it runs against a number. Cross it and the vessel
+stops. That number came out of R code that I wrote.
 
-Three eras: the lone scripter, whose 2012 published software was a 57-script zip file and
-was unreproducible within five years; the package builder, who learned that `R CMD check`
-is a patient reviewer and that you cannot get three regulators to agree on a black box; and
-the last twelve months, in which I have not written a line of code and am roughly five
-times more productive.
+I am a quantitative ecologist with no training in programming who now maintains software
+that sets water quality limits in three countries. This talk is the honest version of how
+that happened: a 2012 tool that was a 57-script zip file and unreproducible within five
+years; then `FSSgam`, `epower`, `bayesnec` and `ssdtools`, and the discovery that you cannot
+get three regulators to sign off on a black box.
 
-Along the way: `FSSgam`, `epower`, `bayesnec`, `ssdtools`, and a lot of confidential
-industry data turned into public method. I will be specific about where the AI speed-up
-actually comes from, and about the part of the job it cannot take.
+Then the part I did not expect. I no longer write code by hand and I think I am five times
+more productive — so I measured it, across 1,340 of my own commits. The speed-up is not in
+the typing, and I will show you exactly where it is.
 
-*(148 words)*
+*(147 words)*
 
 ---
 
 ## One-line hook (for the programme)
 
 > How a quantitative ecologist with no programming training ended up maintaining the R
-> package that sets water quality limits in three countries — and what changed when she
-> stopped writing code.
+> package that sets water quality limits in three countries — and what her own commit
+> history says actually changed when she stopped writing code by hand.
 
 ---
 
@@ -107,9 +107,22 @@ GitHub: [beckyfisher](https://github.com/beckyfisher) ·
 
 - **Event:** R Exchange Perth 2026, 14–15 October 2026, Perth CBD (Epi).
 - **Suggested session:** Day two, session three — *real-life applications*.
-- **Requested length:** 20 minutes (a 15-minute cut is prepared).
+- **Requested length:** 20 minutes. The deck runs 21:55 in full; 20-minute and 15-minute
+  cuts are specified in `notes/slide-outline.md`.
 - **Contact for submission:** events@epi.group — no formal call for abstracts or word
-  limit was published at the time of writing, so both a 150- and a 250-word version are
+  limit was published at the time of writing, so both a 150- and a 255-word version are
   provided.
 - **AV:** standard laptop + HDMI. Slides are self-contained HTML (reveal.js); no internet
-  required.
+  required. A `.pptx` export with speaker notes is also built.
+
+### Check before submitting
+
+- [ ] **How long have you actually been working this way?** Both abstracts now say "I no
+      longer write code by hand" without a duration, deliberately. Slide 15 of the deck
+      still says **"in about a year"** — that was my assumption, not something I verified.
+      The public commit record only shows AI co-authored commits from **20 June 2026**, and
+      the busiest pre-AI day in the same year is 1 May 2026. If the real answer is months
+      rather than a year, change slide 15; if the earlier work was private or predates the
+      co-author trailer, the slide is fine as it stands.
+- [ ] Confirm the timeline years on `journey-timeline.png` (see the `TODO` in `R/figures.R`).
+- [ ] Add your ORCID to `CITATION.cff`.
