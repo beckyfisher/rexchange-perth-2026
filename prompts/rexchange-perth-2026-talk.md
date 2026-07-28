@@ -91,13 +91,9 @@ Actions render workflow with a stale-figure check) and pushed as a **private** r
 <https://github.com/beckyfisher/rexchange-perth-2026>. Publisher PDFs and the large source
 `.pptx` files are `.gitignore`d for copyright and repo-size reasons.
 
-**Outstanding:** the workflow file `.github/workflows/render.yml` is committed locally but
-**not yet pushed** — the current `gh` token lacks the `workflow` OAuth scope. To finish:
-
-```powershell
-gh auth refresh -h github.com -s workflow
-git push
-```
+Note: `gh repo create --push` refused to create `.github/workflows/render.yml` (the OAuth
+app lacks the `workflow` scope), so the workflow was committed separately and pushed with
+plain `git push`, which succeeded.
 
 **Note flagged to user:** the original prompt says *15 minute talk* in the first line and
 *20-minute conference talk* in the brief. Built for 20 minutes with an explicitly marked
