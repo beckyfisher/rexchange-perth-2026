@@ -40,7 +40,9 @@ $code-block-font-size: 0.62em;
 #title-slide .subtitle { color: $era2; font-weight: 400; margin-top: 0.5em; }
 #title-slide .quarto-title-authors { color: $muted; }
 
-// Section dividers
+// Section dividers. The class is set on the heading (`{.divider}`), which Quarto
+// promotes onto the enclosing <section> — do not wrap these in a fenced div, or
+// you get an empty slide before each one and orphaned speaker notes.
 .reveal section.divider h1,
 .reveal section.divider h2 {
   border: none;

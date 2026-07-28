@@ -34,3 +34,6 @@ desktop.ini
 *~
 .vscode/
 .positron/
+
+/.quarto/
+**/*.quarto_ipynb

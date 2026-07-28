@@ -108,9 +108,7 @@ fitted exactly one distribution — and you couldn't see inside it.
 
 ---
 
-::: {.divider}
-## [Part one]{.era-num} How I got here
-:::
+## [Part one]{.era-num} How I got here {.divider}
 
 ::: {.notes}
 So: how does a person with no programming training end up responsible for that?
@@ -462,9 +460,7 @@ influence over that than you think.
 
 ---
 
-::: {.divider}
-## [Part two]{.era-num} And then the AI arrived
-:::
+## [Part two]{.era-num} And then the AI arrived {.divider}
 
 ::: {.notes}
 Right. The bit you're actually here for.

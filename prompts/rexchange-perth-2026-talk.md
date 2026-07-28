@@ -87,9 +87,17 @@ Extracted the recurring themes, terminology and visual style (see
 
 Repo scaffolded to current open-science standards (`CITATION.cff`, `CODE_OF_CONDUCT.md`,
 `CONTRIBUTING.md`, dual `LICENSE` CC-BY-4.0 / `LICENSE-CODE` MIT, `_quarto.yml`, GitHub
-Actions render-and-publish workflow) and pushed as a **private** repo under
-`github.com/beckyfisher`. Publisher PDFs and the large source `.pptx` files are
-`.gitignore`d for copyright and repo-size reasons.
+Actions render workflow with a stale-figure check) and pushed as a **private** repo:
+<https://github.com/beckyfisher/rexchange-perth-2026>. Publisher PDFs and the large source
+`.pptx` files are `.gitignore`d for copyright and repo-size reasons.
+
+**Outstanding:** the workflow file `.github/workflows/render.yml` is committed locally but
+**not yet pushed** — the current `gh` token lacks the `workflow` OAuth scope. To finish:
+
+```powershell
+gh auth refresh -h github.com -s workflow
+git push
+```
 
 **Note flagged to user:** the original prompt says *15 minute talk* in the first line and
 *20-minute conference talk* in the brief. Built for 20 minutes with an explicitly marked
