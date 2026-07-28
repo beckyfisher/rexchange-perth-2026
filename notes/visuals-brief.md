@@ -16,7 +16,7 @@ slides read as one thing.
 
 | Role | Hex | Used for |
 |---|---|---|
-| Era 1 — lone scripter | `#9E9E9E` | grey; the pre-GitHub era |
+| Era 1 — scripts, not software | `#9E9E9E` | grey; the pre-GitHub era |
 | Era 2 — packages + GitHub | `#1B7F79` | teal; the working era, and "safe / protective" |
 | Era 3 — AI | `#E4572E` | orange; also the "this is the number that matters" highlight |
 | Accent | `#2E4057` | headings, primary curve, body emphasis |

@@ -1,6 +1,6 @@
 ---
 title: "Setting the legal limit with an R package"
-subtitle: "From lone scripter, to open-source regulatory infrastructure, to whatever this year is"
+subtitle: "From scripts on a hard drive, to open-source regulatory infrastructure, to whatever this year is"
 author: "Rebecca Fisher · Australian Institute of Marine Science"
 date: 2026-10-15
 date-format: "D MMMM YYYY"
@@ -91,7 +91,7 @@ Badly, is the answer. Let me show you the shape of it.
 
 ## Fifteen years, three eras {.smaller}
 
-![](figures/journey-timeline.png){.fig-full fig-alt="Timeline from 2010 to 2026 plotting software artefacts against how far they could travel: hard drive, zip file on request, public repository, CRAN, named in regulation. Three shaded eras: lone scripter, packages and GitHub, AI."}
+![](figures/journey-timeline.png){.fig-full fig-alt="Timeline from 2010 to 2026 plotting software artefacts against how far they could travel: hard drive, zip file on request, public repository, CRAN, named in regulation. Three shaded eras: scripts not software, packages and GitHub, AI."}
 
 ::: {.notes}
 First, who's talking. I'm a quantitative ecologist. I have a PhD in marine biology. I have
@@ -116,13 +116,17 @@ We're going to walk left to right.
 ---
 
 
-## Era one: the lone scripter {.smaller}
+## Era one: scripts, not software {.smaller}
 
 ::: {.columns}
 
 ::: {.column width="55%"}
 **ElicitN** — software for rigorous expert elicitation.\
 *Environmental Modelling & Software*, 2012.
+
+::: {.aside}
+with R.A. O'Leary, S. Low-Choy, K. Mengersen & M.J. Caley
+:::
 
 ::: {.arrows}
 - 25 scripts of statistics
@@ -148,19 +152,30 @@ It worked.\
 ::: {.notes}
 This is the paper I'm least embarrassed by and the software I'm most embarrassed by.
 
-ElicitN was a tool for eliciting expert judgement — we used it to produce the first
-expert-based estimate of global coral reef diversity. The statistics were genuinely novel.
+ElicitN was a tool for eliciting expert judgement rigorously — we used it to produce the
+first expert-based estimate of global coral reef diversity.
 
-The software was 57 R scripts. Twenty-five doing statistics, thirty-two driving a Tcl/Tk
-graphical interface, because I'd decided the experts needed a GUI. You ran it by sourcing a
-control script called `wElicitN.r`. You got it by emailing me, or off SourceForge.
+And I want to be careful with the credit, because it matters to the point I'm about to make.
+This was a real collaboration: Rebecca O'Leary, Sam Low-Choy, Kerrie Mengersen and Julian
+Caley. The elicitation methodology was theirs at least as much as mine — Kerrie and Sam are
+elicitation specialists; I was the ecologist who could write R.
 
-Not a package. No tests. No version control. Nothing that would tell me — or anyone — if it
+So the science was collaborative. What was solitary was the **code**.
+
+Fifty-seven R scripts. Twenty-five doing statistics, thirty-two more driving a Tcl/Tk
+graphical interface, because the experts needed something to click on. You ran it by sourcing
+a control script called `wElicitN.r`. You got it by emailing me, or off SourceForge.
+
+Not a package. No tests. No version control. Nothing anywhere that would tell any of us if it
 broke.
 
-And it worked. It genuinely worked. And then R changed, and Tcl/Tk changed, and the hard
-drive it was developed on went away, and within about five years that software was
-effectively dead. The paper is still cited. The tool is a fossil.
+*(beat)*
+
+And here's what I'd like you to notice. There were five of us on that paper. Three were
+serious statisticians. Not one of us asked whether the software would still run in five
+years.
+
+That isn't a personal failing — it's what the norms were. And it's why I'm standing here.
 
 [~75 s]
 :::
@@ -174,15 +189,17 @@ by about *fifteen years*.
 :::
 
 ::: {.aside .center}
-That is a reproducibility failure, and it was entirely mine.
+The code was mine. The blind spot was everyone's.
 :::
 
 ::: {.notes}
 > Pause here. Let it land.
 
-This is the lesson I'd hand to anyone starting out: your paper will outlive your code by
-a decade, and nobody warns you about that. The peer review process interrogated my
-statistics extremely thoroughly. It asked precisely zero questions about whether the
+This is the lesson I'd hand to anyone starting out: your paper will outlive your code by a
+decade, and nobody warns you about that.
+
+Peer review interrogated our statistics extremely thoroughly — five reviewers' worth of
+scrutiny on the elicitation model. It asked precisely zero questions about whether the
 software would still run in 2017.
 
 [~30 s]

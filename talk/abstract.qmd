@@ -12,8 +12,8 @@ format:
 
 ## Talk title
 
-**Setting the legal limit with an R package: 15 years from lone scripter to open-source
-regulatory infrastructure — and what changed when the AI arrived**
+**Setting the legal limit with an R package: 15 years from scripts on a hard drive to
+open-source regulatory infrastructure — and what changed when the AI arrived**
 
 Shorter alternatives:
 
@@ -33,26 +33,25 @@ number to a regulator, and eventually to a lawyer.
 That number came out of R code that I wrote.
 
 I am a quantitative ecologist with sound applied statistics and no training in programming.
-This talk is the honest version of how I got from there to maintaining software that sets
-water quality limits in three countries.
+This talk is the honest version of how I ended up maintaining software that sets water
+quality limits in three countries.
 
-Three eras. The lone scripter: a 57-script expert-elicitation tool, published in 2012,
-distributed as a zip file, unreproducible within five years. Then packages, GitHub, and
-industry data I am not allowed to show you — `FSSgam`, `epower`, `bayesnec`, `ssdtools` —
-where open code turned out to be the *precondition* for agreement, not a nice-to-have. You
-cannot get three regulators to sign off on a black box.
+Three eras. Scripts rather than software: a 57-script expert-elicitation tool, published in
+2012 with four co-authors, unreproducible within five years — and none of the five of us
+asked whether it would still run. Then packages, GitHub, and industry data I cannot show you
+— `FSSgam`, `epower`, `bayesnec`, `ssdtools` — where open code turned out to be the
+*precondition* for agreement rather than a nicety. You cannot get three regulators to sign
+off on a black box.
 
-Then the part I did not expect. I stopped writing code by hand in June, and I think I am five
+Then the part I did not expect. I stopped writing code by hand in June, and think I am five
 times more productive. That is precisely the claim this audience should distrust, so I
-measured it.
-Across 1,340 of my own commits: tests tripled as a share of the work, packaging and CI rose
-fivefold, and source code went *down*. One package sat seven years without a single test,
-then got a suite in four days — which immediately surfaced two bugs it had shipped since
-2018.
+measured it. Across 1,340 of my own commits: tests tripled as a share of the work, packaging
+and CI rose fivefold, and source code went *down*. One package sat seven years without a
+test, then got a suite in four days — surfacing two bugs it had shipped since 2018.
 
 The judgement, though, is still mine. It has to be.
 
-*(255 words)*
+*(261 words)*
 
 ---
 

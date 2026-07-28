@@ -57,7 +57,7 @@ one site, one campaign. Slide 7 says this explicitly, and flags forward to Route
 | 1 | When a dredge works off the Pilbara coast | `assets/stopsign.png` + punch line | Cold open. *"That number came out of R code that I wrote."* Do **not** explain it yet. | 0:45 |
 | 2 | **Divider — Part one: How I got here** | — | Transition. | 0:10 |
 | 3 | Fifteen years, three eras | `journey-timeline.png` | The spine, up front. Introduce yourself here. Point out the orange triangle: slide 1's number, lowest reach on the chart. "We're going to walk left to right." | 0:55 |
-| 4 | Era one: the lone scripter | Two columns, `.arrows` list | ElicitN (2012): 57 scripts, Tcl/Tk, SourceForge, no tests. | 1:15 |
+| 4 | Era one: scripts, not software | Two columns, `.arrows` list | ElicitN (2012), **credited to all five authors**: 57 scripts, Tcl/Tk, SourceForge, no tests. The point is that none of the five asked about longevity. | 1:15 |
 | 5 | The science outlived the software | Full-bleed punch line | The lesson. Pause here. | 0:30 |
 | 6 | The data most of you will never see | `assets/confidential.jpg` | Era two opens. White / grey / **black** literature. Barrow Island scale. Ends on *"that dataset is where the number on slide one came from"*. | 1:30 |
 | 7 | What that data bought: the number from slide one | `roc-thresholds.png` | **Route B, and the payoff for the cold open.** In-situ dose–response + ROC. Fisher et al. 2018 JAE. Flags forward: no SSD here, hold that thought. | 1:15 |

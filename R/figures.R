@@ -31,7 +31,7 @@ dir.create(fig_dir, showWarnings = FALSE, recursive = TRUE)
 # almost no chrome, one idea per panel, annotation carrying the argument.
 
 pal <- c(
-  era1   = "#9E9E9E",  # lone scripter
+  era1   = "#9E9E9E",  # era 1: scripts, not software
   era2   = "#1B7F79",  # packages + GitHub (AIMS teal)
   era3   = "#E4572E",  # AI
   accent = "#2E4057",
@@ -81,7 +81,7 @@ reach_levels <- c(
 journey <- tribble(
   ~year, ~artefact,        ~reach,                ~era,   ~hj,  ~note,
   2010,  "CReefs scripts", "On my hard drive",    "era1", 0.5,  "25 stats scripts + 32 tcl/tk scripts",
-  2012,  "ElicitN",        "Zip file on request", "era1", 0.5,  "Env. Modelling & Software; SourceForge",
+  2012,  "ElicitN",        "Zip file on request", "era1", 0.5,  "with O'Leary, Low-Choy, Mengersen & Caley",
   2018,  "FSSgam",         "Public repository",   "era2", 1.0,  "the \"simple function\" people kept asking for",
   2019,  "epower",         "Public repository",   "era2", 0.0,  "Methods Ecol. Evol.; industry-funded",
   2021,  "bayesnec",       "On CRAN",             "era2", 0.5,  "with D. Barneche, G. Ricardo, D. Fox · JSS 2024",
@@ -111,7 +111,10 @@ p_journey <- ggplot(journey, aes(year, as.numeric(reach))) +
            fill = pal[["era2"]], alpha = 0.07) +
   annotate("rect", xmin = 2024.5, xmax = 2026.6, ymin = 0.4, ymax = 5.6,
            fill = pal[["era3"]], alpha = 0.09) +
-  annotate("text", x = 2012.2, y = 5.45, label = "1. lone scripter",
+  # Era labels describe the *artefact and its practice*, not the people. ElicitN
+  # was a five-author collaboration; what was solitary was the code, not the
+  # science. "lone scripter" invited exactly the wrong reading.
+  annotate("text", x = 2012.2, y = 5.45, label = "1. scripts, not software",
            colour = pal[["era1"]], fontface = "bold", size = 4.2, hjust = 0.5) +
   annotate("text", x = 2020.0, y = 5.45, label = "2. packages + GitHub",
            colour = pal[["era2"]], fontface = "bold", size = 4.2, hjust = 0.5) +

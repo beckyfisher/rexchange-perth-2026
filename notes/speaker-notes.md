@@ -74,23 +74,34 @@ We're going to walk left to right.
 
 ---
 
-## 4 · Era one: the lone scripter — 75 s
+## 4 · Era one: scripts, not software — 75 s
 
 This is the paper I'm least embarrassed by and the software I'm most embarrassed by.
 
-ElicitN was a tool for eliciting expert judgement — we used it to produce the first
-expert-based estimate of global coral reef diversity. The statistics were genuinely novel.
+ElicitN was a tool for eliciting expert judgement rigorously — we used it to produce the
+first expert-based estimate of global coral reef diversity.
 
-The software was 57 R scripts. Twenty-five doing statistics, thirty-two driving a Tcl/Tk
-graphical interface, because I'd decided the experts needed a GUI. You ran it by sourcing a
-control script called `wElicitN.r`. You got it by emailing me, or off SourceForge.
+And I want to be careful with the credit, because it matters to the point I'm about to make.
+This was a real collaboration: Rebecca O'Leary, Sam Low-Choy, Kerrie Mengersen and Julian
+Caley. The elicitation methodology was theirs at least as much as mine — Kerrie and Sam are
+elicitation specialists; I was the ecologist who could write R.
 
-Not a package. No tests. No version control. Nothing that would tell me — or anyone — if it
+So the science was collaborative. What was solitary was the **code**.
+
+Fifty-seven R scripts. Twenty-five doing statistics, thirty-two more driving a Tcl/Tk
+graphical interface, because the experts needed something to click on. You ran it by sourcing
+a control script called `wElicitN.r`. You got it by emailing me, or off SourceForge.
+
+Not a package. No tests. No version control. Nothing anywhere that would tell any of us if it
 broke.
 
-And it worked. It genuinely worked. And then R changed, and Tcl/Tk changed, and the hard
-drive it was developed on went away, and within about five years that software was
-effectively dead. The paper is still cited. The tool is a fossil.
+*(beat)*
+
+And here's what I'd like you to notice. There were five of us on that paper. Three were
+serious statisticians. Not one of us asked whether the software would still run in five
+years.
+
+That isn't a personal failing — it's what the norms were. And it's why I'm standing here.
 
 ---
 
@@ -98,9 +109,11 @@ effectively dead. The paper is still cited. The tool is a fossil.
 
 > Pause here. Let it land.
 
-This is the lesson I'd hand to anyone starting out: your paper will outlive your code by
-a decade, and nobody warns you about that. The peer review process interrogated my
-statistics extremely thoroughly. It asked precisely zero questions about whether the
+This is the lesson I'd hand to anyone starting out: your paper will outlive your code by a
+decade, and nobody warns you about that.
+
+Peer review interrogated our statistics extremely thoroughly — five reviewers' worth of
+scrutiny on the elicitation model. It asked precisely zero questions about whether the
 software would still run in 2017.
 
 ---
