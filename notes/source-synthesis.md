@@ -114,6 +114,28 @@ Read via a custom text extractor (see `prompts/`). The set traces the arc:
 | White/grey/black literature | Confidential industry data as a third, unexploited tier | AIMS50 s34 |
 | Barrow Island scale | >1500 coral heads, fortnightly, 530 days; WQ every 10 min | AIMS50 notes s33 |
 
+## Technical correction (author, 2026-07-28)
+
+An early draft of the talk opened on a dredge stopping against a turbidity trigger and then
+went straight into the SSD — implying the dredging thresholds were SSD-derived. **They were
+not.** That is two separate bodies of work:
+
+- **Dredging thresholds** (Barrow Island): *in situ* dose–response relationships between
+  dredging exposure metrics and the Bayesian posterior probability of non-zero coral
+  mortality, with thresholds read off **ROC curves** on Type I / Type II error. One
+  habitat-forming receptor, one site, one campaign — an SSD was neither used nor available.
+  **Fisher et al. (2018) *J. Appl. Ecol.* 55:415.** This work **predates** the SSD work.
+- **Guideline values** (`ssdtools`, `bayesnec`): default guideline values derived from
+  laboratory toxicity estimates across many species via an SSD. ~2020 onwards.
+
+The deck now opens on a **licensed discharge** instead — which genuinely is an SSD-derived
+number, and is the speaker's own framing (ANZG deck, slide 6: *"the sewerage outflow at your
+local beach, or waste streams associated with offshore oil and gas activities"*). The
+dredging/ROC material moved to sit immediately after the black-data slide, where it belongs,
+and says explicitly that no SSD is involved.
+
+See `notes/slide-outline.md` §"Two routes to a regulatory number".
+
 ## What NOT to duplicate
 
 The previous decks already exist and some of this audience may have seen the ecotox

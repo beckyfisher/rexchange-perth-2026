@@ -9,14 +9,16 @@ honest, but the delivery should be looser than the text.
 
 ---
 
-## 1 · When a dredge works off the Pilbara coast — 0:45
+## 1 · The sewage outfall at your local beach — 0:45
 
 > Open cold. Do not introduce yourself yet — earn the next nineteen minutes first.
 
-When a dredge works off the Pilbara coast in Western Australia, it is running against a
-number. If turbidity at the compliance monitoring site crosses that number, the vessel
-stops. That costs a proponent a very large amount of money per day. Get the number wrong in
-the other direction and you lose a coral reef.
+The sewage outfall at your local beach discharges under a licence. So does a produced-water
+stream off the North West Shelf. Both of them are licensed against a number — a safe
+concentration, contaminant by contaminant.
+
+Exceed it and operations get modified, or shut down, sometimes at enormous expense. Set it
+too high and you quietly lose the receiving environment.
 
 Somebody has to be able to defend that number — to the regulator, to the proponent, and
 eventually, possibly, to a court.
@@ -175,10 +177,49 @@ stays confidential. The thing we learned to do with it does not have to.
 
 ---
 
-## 10 · Era two, part two: the ecotoxicology pivot — 1:35
+## 10 · What that data bought: a number, without an SSD — 1:05  *(first to cut)*
 
-Around 2020 I moved properly into statistical ecotoxicology, and hit the same shape of
-problem one level down.
+> **This slide carries a technical distinction that matters.** The dredging thresholds are
+> not SSD-based and never were — that work predates my SSD involvement entirely. Don't let
+> the two strands blur.
+
+Here's what we did with it, and it is a completely different route to a regulatory number.
+
+No SSD here. An SSD needs toxicity estimates for a lot of species. At Barrow Island we had
+one receptor that mattered — coral, the habitat-forming organism — one site, one campaign.
+An SSD wasn't available to us, and wouldn't have been the right tool anyway.
+
+So instead we built the dose–response relationship *in situ*. Dredging exposure metrics on
+one axis; on the other, the Bayesian posterior probability of non-zero coral mortality at
+each site relative to the controls.
+
+And then, to get a threshold out of that, we used ROC curves. Because a threshold is a
+decision rule, and decision rules have error rates. A false positive costs a proponent
+money. A false negative costs you a reef. Those two are not symmetric and they are not
+really commensurable, and almost nobody sets thresholds with that in mind.
+
+So you pick your operating point deliberately. A high-power threshold — cheap to trigger,
+tells you mortality is *possible*. A low-alarm-rate threshold — hard to trigger, tells you
+mortality is *probable*. Different management actions hang off each one.
+
+That's Fisher et al. 2018 in the *Journal of Applied Ecology*, and it long predates any of
+my SSD work. Two quite different statistical routes, both ending in a number that stops a
+vessel.
+
+And the transferable point for you: any time your software emits a threshold, somebody
+downstream is making a decision with asymmetric costs — and you probably have more influence
+over how that goes than you think you do.
+
+> **If you cut this slide,** add a clause to slide 9 so the black-data slide still has a
+> payoff: *"— and what we got out of it was a set of in-situ dredging thresholds, derived
+> from ROC curves rather than from an SSD."*
+
+---
+
+## 11 · Era two, part two: the ecotoxicology pivot — 1:35
+
+Around 2020 I moved properly into statistical ecotoxicology — so, back to the SSD strand —
+and hit the same shape of problem one level down.
 
 Remember that every dot on that SSD is one species' "no effect" estimate. It turns out
 there are at least four things this field calls "no effect", and only one of them actually
@@ -205,7 +246,7 @@ The software made the method possible.
 
 ---
 
-## 11 · `ssdtools`: the part I did not expect — 1:25
+## 12 · `ssdtools`: the part I did not expect — 1:25
 
 And then this happened, which I still find slightly absurd.
 
@@ -227,9 +268,10 @@ values across three jurisdictions — and I'm a contributor to it.
 
 ---
 
-## 12 · You cannot get three regulators to agree on a black box — 1:10
+## 13 · You cannot get three regulators to agree on a black box — 1:10
 
-> This is the keystone. If you only keep one slide from act two, keep this one.
+> This is the keystone, and it now closes act two. If you only keep one slide from act two,
+> keep this one.
 
 The reason the Australian and the Canadian experts could reach collective agreement is that
 every single one of us could read the source, run the benchmarks, and disagree in public
@@ -247,25 +289,6 @@ And I'd add one practical rider. The Shiny front end matters as much as the pack
 regulator in a state agency is not going to sit down and write R. `shinyssdtools` is how the
 open method actually reaches the person making the decision. Open source that only reaches
 people who already write R isn't finished.
-
----
-
-## 13 · Thresholds have error rates — 1:05  *(first to cut)*
-
-One more idea, briefly, because it's the thing I'd most like this particular audience to
-steal.
-
-A threshold is a decision rule, and decision rules have error rates. A false positive costs
-a proponent money. A false negative costs you a reef. Those two are not symmetric and they
-are not really commensurable, and almost nobody sets thresholds with that in mind.
-
-You can pick your operating point deliberately. A high-power threshold — cheap to trigger,
-tells you mortality is *possible*. A low-alarm-rate threshold — hard to trigger, tells you
-mortality is *probable*. Different management actions hang off each one.
-
-The point for you: this is entirely generic. Any time your software emits a threshold,
-somebody downstream is making a decision with asymmetric costs — and you probably have more
-influence over how that goes than you think you do.
 
 ---
 
@@ -421,6 +444,15 @@ precisely why it's now the scarce one.
 **"Is your work confidential? Can we see the data?"**
 No to the data, in most cases. Yes to the methods and the code, always. That's the point of
 slide 9.
+
+**"Are the dredging thresholds SSD-based?"**
+No — and this is worth being precise about, because the talk shows two different routes to a
+regulatory number. The dredging work (Fisher et al. 2018, *J. Appl. Ecol.* 55:415) derived
+thresholds from *in situ* dose–response relationships and ROC curves, for a single
+habitat-forming receptor at a single site. It predates my SSD work entirely. The SSD strand
+— `ssdtools`, `bayesnec` — is about national default guideline values derived from
+laboratory toxicity data across many species. Same destination, completely different
+machinery.
 
 **"Why R and not Python?"**
 Because the regulatory community, the statistics, and the reviewers were all already in R,

@@ -16,25 +16,32 @@ format:
     footer: "R Exchange Perth 2026 · github.com/beckyfisher"
     preview-links: false
     fig-align: center
+  # PowerPoint fallback. Content, images and speaker notes carry across; the
+  # reveal.js styling in custom.scss does not (PowerPoint gets its look from a
+  # reference-doc template instead). See README.md § "PowerPoint".
+  pptx:
+    slide-level: 2
+    # reference-doc: reference.pptx   # uncomment once you've made a template
 ---
 
-## When a dredge works off the Pilbara coast {.smaller}
+## The sewage outfall at your local beach {.smaller}
 
 ::: {.columns}
 
 ::: {.column width="52%"}
-It is running against a **number**.
+It discharges under a licence. So does a produced-water stream on the North West Shelf.
 
-If turbidity at the monitoring site crosses it, the vessel stops.
+Both are licensed against a **number** — a safe concentration, contaminant by contaminant.
 
-Someone has to defend that number in front of a regulator, a proponent, and a lawyer.
+Exceed it and operations get modified. Or stopped.
 :::
 
 ::: {.column width="48%"}
 ![](../assets/stopsign.png){width="42%" fig-alt="A stop sign."}
 
 ::: {.punch}
-That number comes out of<br>**an R package**.
+That number comes out of\
+**an R package**.
 :::
 
 :::
@@ -44,13 +51,13 @@ That number comes out of<br>**an R package**.
 ::: {.notes}
 Open cold. Don't introduce yourself yet — earn the next 19 minutes first.
 
-When a dredge works off the Pilbara coast in WA, it runs against a number. If turbidity at
-the compliance monitoring site crosses that number, the vessel stops. That costs a proponent
-a very large amount of money per day. Get the number wrong the other way and you lose a
-coral reef.
+The sewage outfall at your local beach discharges under a licence. So does a produced-water
+stream off the North West Shelf. Both of them are licensed against a number — a safe
+concentration, contaminant by contaminant.
 
-Somebody has to be able to defend that number — to the regulator, to the proponent, and
-eventually possibly to a court.
+Exceed it and operations get modified, or shut down, sometimes at enormous expense. Set it
+too high and you quietly lose the receiving environment. Somebody has to be able to defend
+that number — to the regulator, to the proponent, and eventually, possibly, to a court.
 
 That number comes out of an R package. Some of you in this room maintain packages. I want
 you to sit with that for a second.
@@ -144,7 +151,7 @@ formal training in programming. What I had was applied statistics and real probl
 ::: {.columns}
 
 ::: {.column width="55%"}
-**ElicitN** — software for rigorous expert elicitation.<br>
+**ElicitN** — software for rigorous expert elicitation.\
 *Environmental Modelling & Software*, 2012.
 
 ::: {.arrows}
@@ -160,7 +167,7 @@ formal training in programming. What I had was applied statistics and real probl
 ::: {.column width="45%"}
 
 ::: {.punch}
-It worked.<br>
+It worked.\
 [And then it didn't.]{.e3}
 :::
 
@@ -191,7 +198,7 @@ effectively dead. The paper is still cited. The tool is a fossil.
 ---
 
 ::: {.punch}
-The science outlived the software<br>
+The science outlived the software\
 by about *fifteen years*.
 :::
 
@@ -217,13 +224,13 @@ software would still run in 2017.
 ::: {.columns}
 
 ::: {.column width="50%"}
-**FSSgam** (2018) — full-subsets model selection.<br>
+**FSSgam** (2018) — full-subsets model selection.
 
 ::: {.aside}
 Started as "a simple function". Became a package because people kept asking for it.
 :::
 
-**epower** (2019) — power analysis for BACI designs.<br>
+**epower** (2019) — power analysis for BACI designs.
 
 ::: {.aside}
 Industry-funded. *Methods in Ecology and Evolution*. Later used for the North West Shelf
@@ -272,7 +279,7 @@ consistently, exactly what was wrong.
 ::: {.columns}
 
 ::: {.column width="58%"}
-Scientific literature is **white**.<br>
+Scientific literature is **white**.\
 Reports and theses are **grey**.
 
 ::: {.punch style="text-align:left; margin-top:0.6em;"}
@@ -318,13 +325,49 @@ dataset stays confidential; the thing we learned to do with it doesn't.
 
 ---
 
+## What that data bought: a number, without an SSD {.smaller}
+
+![](figures/roc-thresholds.png){.fig-full fig-alt="Two panels. Left: overlapping control and impact distributions with two vertical thresholds marked high power and low alarm rate. Right: the corresponding ROC curve with those two operating points marked."}
+
+::: {.notes}
+[CUT THIS SLIDE FOR THE 15-MINUTE VERSION.]
+
+Here's what we did with it, and it's a completely different route to a regulatory number.
+
+No SSD here. An SSD needs toxicity estimates for many species. At Barrow Island we had one
+receptor that mattered — coral, the habitat-forming organism — one site, one campaign. So
+instead we built dose–response relationships *in situ*: dredging exposure metrics on one
+axis, the Bayesian posterior probability of non-zero coral mortality on the other.
+
+Then, to get a threshold out of that, we used ROC curves. Because a threshold is a decision
+rule, and decision rules have error rates. A false positive costs a proponent money. A false
+negative costs you a reef. Not symmetric, not commensurable, and almost nobody sets
+thresholds with that in mind.
+
+So you pick your operating point deliberately. A high-power threshold — cheap to trigger,
+tells you mortality is *possible*. A low-alarm-rate threshold — hard to trigger, tells you
+mortality is *probable*. Different management actions hang off each.
+
+That's Fisher et al. 2018 in *Journal of Applied Ecology*, and it long predates any of my
+SSD work. Two quite different statistical routes, both ending in a number that stops a
+vessel.
+
+The transferable point: any time your software emits a threshold, someone downstream is
+making a decision with asymmetric costs — and you have more influence over that than you
+think.
+
+[~65 s]
+:::
+
+---
+
 ## Era two, part two: the ecotoxicology pivot
 
 ![](figures/no-effect-estimates.png){.fig-full fig-alt="Schematic concentration-response curve with four endpoints marked and labelled with leader lines: NEC, NSEC, EC10 and NOEC, with the pre-threshold region shaded and labelled no effect."}
 
 ::: {.notes}
-Around 2020 I moved properly into statistical ecotoxicology, and hit the same shape of
-problem one level down.
+Around 2020 I moved properly into statistical ecotoxicology — so, back to the SSD strand —
+and hit the same shape of problem one level down.
 
 Remember each dot on that SSD is one species' "no effect" estimate. It turns out there are
 at least four things the field calls "no effect", and only one of them actually means it.
@@ -372,7 +415,8 @@ Benchmark datasets, plus **simulated** data with a known true value → bias and
 ::: {.column width="45%"}
 
 ::: {.punch style="font-size:1.15em;"}
-Recommendation:<br>adopt `ssdtools` as the [default software]{.e3}.
+Recommendation:\
+adopt `ssdtools` as the [default software]{.e3}.
 :::
 
 ::: {.aside style="text-align:center; margin-top:0.6em;"}
@@ -405,11 +449,12 @@ jurisdictions, and I'm a contributor to it.
 ---
 
 ::: {.punch}
-You cannot get three regulators<br>to agree on a *black box*.
+You cannot get three regulators\
+to agree on a *black box*.
 :::
 
 ::: {.aside .center style="margin-top:1.2em;"}
-Open source wasn't a nice-to-have here.<br>
+Open source wasn't a nice-to-have here.\
 It was the **precondition for the agreement**.
 :::
 
@@ -434,32 +479,6 @@ the person making the decision.
 
 ---
 
-## Thresholds have error rates {.smaller}
-
-![](figures/roc-thresholds.png){.fig-full fig-alt="Two panels. Left: overlapping control and impact distributions with two vertical thresholds marked high power and low alarm rate. Right: the corresponding ROC curve with those two operating points marked."}
-
-::: {.notes}
-[CUT THIS SLIDE FOR THE 15-MINUTE VERSION.]
-
-One more idea, briefly, because it's the thing I'd most like this audience to steal.
-
-A threshold is a decision rule, and decision rules have error rates. A false positive costs
-a proponent money. A false negative costs you a reef. Those are not symmetric and they are
-not commensurable, and almost nobody sets thresholds with that in mind.
-
-You can pick your operating point deliberately. A high-power threshold — cheap to trigger,
-tells you mortality is *possible*. A low-alarm-rate threshold — hard to trigger, tells you
-mortality is *probable*. Different management actions hang off each.
-
-The point for you: this is completely generic. Any time your software emits a threshold,
-someone downstream is making a decision with asymmetric costs, and you probably have more
-influence over that than you think.
-
-[~65 s]
-:::
-
----
-
 ## [Part two]{.era-num} And then the AI arrived {.divider}
 
 ::: {.notes}
@@ -471,11 +490,12 @@ Right. The bit you're actually here for.
 ---
 
 ::: {.punch}
-I have not written a line of code<br>in [about a year]{.e3}.
+I have not written a line of code\
+in [about a year]{.e3}.
 :::
 
 ::: {.aside .center style="margin-top:1.4em;"}
-I am roughly **five times more productive**.<br>
+I am roughly **five times more productive**.\
 Those two facts are related, but not in the way I expected.
 :::
 
@@ -576,7 +596,8 @@ inspect, benchmark against simulated data with a known answer, and reason about.
 :::
 
 ::: {.punch style="margin-top:1.0em;"}
-I do not get to lower that bar<br>because the author is now [a model]{.e3}.
+I do not get to lower that bar\
+because the author is now [a model]{.e3}.
 :::
 
 ::: {.notes}
@@ -644,7 +665,7 @@ while we figure it out.
 :::
 
 ::: {.punch style="margin-top:0.7em; font-size:1.15em;"}
-And: the boring work is the work.<br>
+And: the boring work is the work.\
 [It just got a lot cheaper.]{.e3}
 :::
 
@@ -675,8 +696,8 @@ enough that there's no longer an excuse.
 ::: {.columns}
 
 ::: {.column width="55%"}
-**Rebecca Fisher**<br>
-Australian Institute of Marine Science<br>
+**Rebecca Fisher**\
+Australian Institute of Marine Science\
 [r.fisher@aims.gov.au](mailto:r.fisher@aims.gov.au)
 
 ::: {.aside style="margin-top:1.0em;"}
@@ -700,7 +721,7 @@ Australian Institute of Marine Science<br>
 
 ::: {.aside style="margin-top:1.2em;"}
 With: David Fox, Joe Thorley, Carl Schwarz, Diego Barneche, Gerard Ricardo, Ross Jones,
-Andrew Negri, and the AIMS Tropical Ecotoxicology & Risk Assessment team.<br>
+Andrew Negri, and the AIMS Tropical Ecotoxicology & Risk Assessment team.\
 Barrow Island data via WAMSI Dredging Science Node (Chevron, Woodside, BHP).
 :::
 

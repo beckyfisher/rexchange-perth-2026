@@ -73,11 +73,15 @@ fanning out to a single label row, and the pre-threshold region shaded "no effec
 - The four estimates genuinely sit close together in concentration; the leader lines exist
   so that fact is visible rather than illegible.
 
-### `roc-thresholds.png` — slide 13
+### `roc-thresholds.png` — slide 10
 
 Two panels: overlapping control/impact densities with two operating thresholds marked, and
 the corresponding ROC curve with those two points.
 
+- **This is Route B, not Route A.** It illustrates the dredging work (Fisher et al. 2018,
+  *J. Appl. Ecol.* 55:415) — *in situ* dose–response plus ROC, with **no SSD involved**.
+  Keep it visually distinct from the SSD figures and never let a caption imply otherwise;
+  the plot caption already cites the paper.
 - Distribution separation is tuned (`2.0, 1.3`) so the two thresholds are visibly different.
   If you make the groups more separated, the trade-off looks trivial and the slide stops
   working.
@@ -99,6 +103,7 @@ Carried over from earlier decks, in `assets/`:
 |---|---|---|
 | `stopsign.png` | 1 | The cold open. Small, right column — it's punctuation, not decoration. |
 | `confidential.jpg` | 9 | The black-literature slide. The whole visual argument in one stamp. |
+| — | 10 | **Worth adding:** a map or photo of the Barrow Island monitoring layout would help slide 10 land, but check the confidentiality position on any operational imagery first. |
 | `tripple_planetary_crisis.png` | *unused* | Available if you ever need to open on the global pollution framing instead — but that's the ecotox opening, and this talk deliberately opens on a single dredge instead. |
 
 ---

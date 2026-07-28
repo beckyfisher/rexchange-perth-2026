@@ -59,6 +59,43 @@ R dependencies: `ggplot2`, `dplyr`, `tidyr`, `tibble`, `forcats`, `scales`, `pat
 Open `_output/talk/index.html` and press **`s`** for the speaker view (notes, timer, next
 slide). The deck is self-contained — no network connection required in the room.
 
+## PowerPoint
+
+`talk/index.qmd` declares two formats, so `quarto render` produces both. For just the deck:
+
+```powershell
+quarto render talk/index.qmd --to pptx      # -> _output/talk/index.pptx
+quarto render talk/index.qmd --to revealjs  # -> _output/talk/index.html
+```
+
+**What carries across:** all slides in order, all images, and **every speaker note** — they
+land in PowerPoint's notes pane, so presenter view works normally.
+
+**What does not:** the reveal.js styling in `custom.scss`. PowerPoint gets its look from a
+*reference document* instead. To brand it (AIMS template, conference template, your own):
+
+```powershell
+# 1. produce a starting template
+quarto pandoc -o reference.pptx --print-default-data-file reference.pptx
+# 2. open reference.pptx, edit the SLIDE MASTER only (fonts, colours, logo) — not the
+#    example slides, which exist only to define layouts
+# 3. move it to talk/reference.pptx and uncomment `reference-doc:` in the YAML
+```
+
+Any `.pptx` works as a reference doc as long as it has the standard layouts (Title Slide,
+Title and Content, Two Content, Title Only, Blank) — so you can point it at an existing AIMS
+template.
+
+**Known cosmetic quirks in the pptx:**
+
+- The acknowledgements block overflows onto a 23rd slide, because PowerPoint can't do the
+  free positioning reveal.js does. Either leave it as a genuine acknowledgements slide, or
+  shorten it.
+- Full-bleed figures are placed in the content region rather than edge to edge.
+
+**If you want the reveal.js look in a static file**, don't use pptx — export to PDF instead:
+open the HTML with `?print-pdf` appended to the URL, then print to PDF from the browser.
+
 ## The software this talk is about
 
 | Package | Where |

@@ -19,38 +19,38 @@ Shorter alternatives:
 
 - *From SourceForge to statute: how open-source R ended up setting water quality limits in
   three countries*
-- *White, grey and black: open code, confidential data, and the numbers that stop a dredger*
+- *White, grey and black: open code, confidential data, and the numbers that stop an operation*
 - *I haven't written a line of code in a year: an accidental software developer's field notes*
 
 ---
 
 ## Abstract (250 words) — primary version
 
-Somewhere in Australia right now, a dredging campaign is running against a number. If the
-turbidity at a monitoring site crosses it, work stops. That number came out of a species
-sensitivity distribution, and until recently it came out of a closed desktop program that
-fitted exactly one probability distribution and showed you none of its workings.
+The sewage outfall at your local beach discharges under a licence, and so does a
+produced-water stream off the North West Shelf. Both are licensed against a number: a safe
+concentration for each contaminant. Exceed it and operations are modified, or stopped. That
+number comes out of a species sensitivity distribution, and until recently it came out of a
+closed desktop program that fitted one distribution and showed you none of its workings.
 
 It now comes out of an R package.
 
-I am a quantitative ecologist with a solid grasp of applied statistics and no training
-whatsoever in programming. This talk is the honest version of how I got from there to
-maintaining software that underpins environmental regulation in Australia, New Zealand and
-Canada — and what I got wrong on the way.
+I am a quantitative ecologist with a solid grasp of applied statistics and no training in
+programming. This talk is the honest version of how I got from there to maintaining software
+that underpins environmental regulation in Australia, New Zealand and Canada.
 
 Three eras. First, the lone scripter: a 57-script expert-elicitation tool, published in
-2012, distributed as a zip file, and effectively unreproducible within five years. Second,
-packages and GitHub — `FSSgam`, `epower`, `bayesnec`, `ssdtools` — where I discovered that
-`R CMD check` is the most patient reviewer I have ever had, and that open code is what
-makes multi-jurisdictional agreement on a method even *possible*: you cannot get three
-regulators to sign off on a black box. Third, and most disorienting: I have not written a
-line of code since subscribing to Claude Code, and I am roughly five times more productive.
+2012, distributed as a zip file, and unreproducible within five years. Second, packages and
+GitHub — `FSSgam`, `epower`, `bayesnec`, `ssdtools` — where I discovered that `R CMD check`
+is the most patient reviewer I have had, and that open code is what makes
+multi-jurisdictional agreement on a method even *possible*: you cannot get three regulators
+to sign off on a black box. Third, and most disorienting: I have not written a line of code
+since subscribing to Claude Code, and I am roughly five times more productive.
 
-I will be specific about where that speed-up actually comes from — it is not typing — and
-equally specific about what has not changed, and must not. In regulatory software, someone
-still has to know whether the answer is right.
+I will be specific about where that speed-up comes from — it is not typing — and about what
+has not changed. In regulatory software, someone still has to know whether the answer is
+right.
 
-*(249 words)*
+*(257 words)*
 
 ---
 
