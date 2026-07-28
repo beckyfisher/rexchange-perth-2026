@@ -95,6 +95,20 @@ Note: `gh repo create --push` refused to create `.github/workflows/render.yml` (
 app lacks the `workflow` scope), so the workflow was committed separately and pushed with
 plain `git push`, which succeeded.
 
+**History rewrite, 2026-07-28.** In preparation for making the repo public, three
+third-party clip-art files (`stopsign.png`, `confidential.jpg`,
+`tripple_planetary_crisis.png`) were removed from the tip *and* from history. The stop sign
+and CONFIDENTIAL stamp are now drawn in `R/figures.R`; the planetary-crisis infographic is a
+third-party creative work and is simply not used.
+
+The rewrite used `git filter-branch --index-filter` over `--all`, which **preserves every
+commit, message, author and date** and changes only the object SHAs. Both branches were
+verified against a fresh `--mirror` clone: no clip-art blob reachable from any ref, 12
+commits on `main` and 6 on `discharge-first`, and the tip tree byte-identical to before.
+
+Old SHAs, for the record: `main` was `df2f338`, `discharge-first` was `7ca83db`. The
+pre-rewrite objects remain locally under `refs/original/` until deleted.
+
 **Note flagged to user:** the original prompt says *15 minute talk* in the first line and
 *20-minute conference talk* in the brief. Built for 20 minutes with an explicitly marked
 15-minute cut.
