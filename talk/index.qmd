@@ -559,10 +559,10 @@ where it actually comes from — because it is *not* where I assumed it would be
 
 ## The speed-up is not in the typing {.smaller}
 
-![](figures/where-work-goes.png){.fig-full fig-alt="Stacked bar chart comparing where effort goes before and with an AI assistant. Time spent writing code and fighting the tooling shrinks; time spent thinking about the problem, tests, documentation and packaging grows."}
+![](figures/where-work-goes.png){.fig-full fig-alt="Stacked bar chart of the share of files touched by category, before versus with an AI assistant, measured from 1,340 authored commits across seven public repositories. Tests rise from 3 to 10 per cent; packaging and CI from 4 to 20 per cent; source code falls from 41 to 25 per cent."}
 
 ::: {.notes}
-> Be explicit that this bar chart is my own estimate, not a measurement. Say it out loud.
+> This chart is measured, from my own commit history. Say that — it is the whole point.
 
 Typing was never the bottleneck. I could always type. Badly, but I could type.
 
@@ -571,14 +571,90 @@ coverage on a package with one user — me. Vignettes. Refactoring something tha
 Setting up CI. Responding properly to a CRAN note. Every one of those had a real cost and
 a diffuse benefit, and so every one of them lost, every time, to the next paper.
 
-What's actually changed is that the tax on doing it properly collapsed. The unglamorous
-work — which is precisely the work that determines whether software is still alive in five
-years — got cheap.
+Now — I could stand here and assert that. Instead I went and measured it, because this is
+the claim in the talk most likely to be wrong.
 
-Look at the left of that bottom bar: nearly half my time is now spent on the problem
-itself. That's the trade I made, and it is a much better one than "I type faster".
+Every commit I've authored across seven public repositories. Thirteen hundred and forty of
+them. Each file in each commit classified by what the file is *for*. And "with an AI
+assistant" isn't my recollection — it's the commits that carry a `Co-Authored-By: Claude`
+trailer, which is a verifiable floor rather than a vibe.
+
+Tests: three per cent of what I touched, to ten. Packaging, CI and CRAN: four per cent, to
+twenty — a five-fold increase. And source code went *down* as a share, from forty-one per
+cent to twenty-five.
+
+That last one is the finding. I am not writing more code. I am writing about the same
+amount of code, with far more of the scaffolding that determines whether it is still alive
+in five years.
+
+The tax on doing it properly collapsed. That's the whole mechanism.
 
 [~85 s]
+:::
+
+---
+
+
+## One package, in detail {.smaller}
+
+::: {.columns}
+
+::: {.column width="54%"}
+`FSSgam` — first commit **14 September 2018**.
+
+::: {.arrows}
+- first test file: **20 June 2026**
+- first CI workflow: **20 June 2026**
+- that is **7 years, 9 months** with neither
+:::
+
+::: {.aside style="margin-top:0.7em;"}
+Then, in **four consecutive days**: 32 commits, 9 test files, roxygen docs, a pkgdown site,
+`NEWS.md`, a snake_case API with deprecation wrappers, and CRAN submission prep.
+:::
+
+:::
+
+::: {.column width="46%"}
+
+::: {.punch style="font-size:1.1em;"}
+Writing the tests found\
+[two silent bugs]{.e3}\
+that had shipped since 2018.
+:::
+
+:::
+
+:::
+
+::: {.notes}
+> Slow down on the last line. It is the most useful thing in this section.
+
+One concrete case, because aggregates are easy to hide behind.
+
+`FSSgam` is the full-subsets package from era two. First commit, September 2018. It went
+seven years and nine months without a single test file and without any continuous
+integration. Not because I didn't know I should. Because it never once won against the next
+deadline.
+
+Both arrived on the same day — the 20th of June this year. And then over four consecutive
+days: thirty-two commits, nine test files, roxygen documentation, a pkgdown site, a NEWS
+file, a proper snake_case API with deprecation wrappers so I didn't break anyone, and CRAN
+submission prep.
+
+*(beat)*
+
+And here's the part I'd ask you to sit with. Writing those tests immediately surfaced two
+bugs that had been in the package since 2018. Both silent. One was a deprecated argument
+that warned correctly and then did nothing at all. The other returned `NULL` for two fields
+of the output because the code was reading the wrong element names.
+
+Every person who used those features for seven years got the wrong behaviour, quietly.
+
+That is what the untested years actually cost. It wasn't hypothetical, and I didn't find it
+by being cleverer — I found it because writing the tests finally became cheap enough to do.
+
+[~70 s]
 :::
 
 ---

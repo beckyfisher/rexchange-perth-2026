@@ -88,9 +88,14 @@ Ask before adding to it.
   values", "fit-for-purpose", and the blood-alcohol analogy for a DGV.
 - **Visual style:** sparse text, one idea per slide, build up in layers with reveal.js
   fragments, `→` as the connector, schematic redraws rather than screenshots.
-- **Every factual claim must be traceable** to `notes/source-synthesis.md` or the CV. Do
-  not invent download counts, dates, productivity multipliers or quotes. Where a figure is
-  illustrative rather than measured, label it "illustrative" on the slide itself.
+- **Every factual claim must be traceable** to `notes/source-synthesis.md`, the CV, or
+  `data/git-evidence-*.csv`. Do not invent download counts, dates, productivity multipliers
+  or quotes.
+- **Do not put invented numbers in a figure, even labelled "illustrative".** An early draft
+  did exactly that for the productivity slide; it was plausible, directionally right and
+  numerically wrong. It has been replaced by `R/git-evidence.R`, which measures the same
+  thing from the commit history. If a claim is worth a figure, it is worth measuring — and
+  if it genuinely cannot be measured, make it a sentence rather than a chart.
 
 ---
 

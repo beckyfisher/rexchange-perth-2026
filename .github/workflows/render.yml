@@ -51,6 +51,10 @@ jobs:
             any::ssdtools
             any::ssddata
 
+      # NOTE: R/git-evidence.R is deliberately NOT run here. It clones seven
+      # repositories and its output changes as those repos gain commits, which
+      # would make the staleness check below fail for reasons unrelated to this
+      # repo. Regenerate data/*.csv by hand when you want fresher numbers.
       - name: Build figures
         run: Rscript R/figures.R
 

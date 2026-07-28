@@ -310,7 +310,7 @@ where it actually comes from — because it is *not* where I assumed it would be
 
 ## 16 · The speed-up is not in the typing — 85 s
 
-> Be explicit that this bar chart is my own estimate, not a measurement. Say it out loud.
+> This chart is measured, from my own commit history. Say that — it is the whole point.
 
 Typing was never the bottleneck. I could always type. Badly, but I could type.
 
@@ -319,16 +319,57 @@ coverage on a package with one user — me. Vignettes. Refactoring something tha
 Setting up CI. Responding properly to a CRAN note. Every one of those had a real cost and
 a diffuse benefit, and so every one of them lost, every time, to the next paper.
 
-What's actually changed is that the tax on doing it properly collapsed. The unglamorous
-work — which is precisely the work that determines whether software is still alive in five
-years — got cheap.
+Now — I could stand here and assert that. Instead I went and measured it, because this is
+the claim in the talk most likely to be wrong.
 
-Look at the left of that bottom bar: nearly half my time is now spent on the problem
-itself. That's the trade I made, and it is a much better one than "I type faster".
+Every commit I've authored across seven public repositories. Thirteen hundred and forty of
+them. Each file in each commit classified by what the file is *for*. And "with an AI
+assistant" isn't my recollection — it's the commits that carry a `Co-Authored-By: Claude`
+trailer, which is a verifiable floor rather than a vibe.
+
+Tests: three per cent of what I touched, to ten. Packaging, CI and CRAN: four per cent, to
+twenty — a five-fold increase. And source code went *down* as a share, from forty-one per
+cent to twenty-five.
+
+That last one is the finding. I am not writing more code. I am writing about the same
+amount of code, with far more of the scaffolding that determines whether it is still alive
+in five years.
+
+The tax on doing it properly collapsed. That's the whole mechanism.
 
 ---
 
-## 17 · What actually changed — 60 s
+## 17 · One package, in detail — 70 s
+
+> Slow down on the last line. It is the most useful thing in this section.
+
+One concrete case, because aggregates are easy to hide behind.
+
+`FSSgam` is the full-subsets package from era two. First commit, September 2018. It went
+seven years and nine months without a single test file and without any continuous
+integration. Not because I didn't know I should. Because it never once won against the next
+deadline.
+
+Both arrived on the same day — the 20th of June this year. And then over four consecutive
+days: thirty-two commits, nine test files, roxygen documentation, a pkgdown site, a NEWS
+file, a proper snake_case API with deprecation wrappers so I didn't break anyone, and CRAN
+submission prep.
+
+*(beat)*
+
+And here's the part I'd ask you to sit with. Writing those tests immediately surfaced two
+bugs that had been in the package since 2018. Both silent. One was a deprecated argument
+that warned correctly and then did nothing at all. The other returned `NULL` for two fields
+of the output because the code was reading the wrong element names.
+
+Every person who used those features for seven years got the wrong behaviour, quietly.
+
+That is what the untested years actually cost. It wasn't hypothetical, and I didn't find it
+by being cleverer — I found it because writing the tests finally became cheap enough to do.
+
+---
+
+## 18 · What actually changed — 60 s
 
 Left column: things that used to lose to the next deadline, every time. They don't now.
 
@@ -343,7 +384,7 @@ the syntax.
 
 ---
 
-## 18 · The awkward symmetry — 70 s
+## 19 · The awkward symmetry — 70 s
 
 Here's the thing that keeps me honest.
 
@@ -361,7 +402,7 @@ out to be exactly the methods I need for this.
 
 ---
 
-## 19 · Provenance, out loud — 55 s
+## 20 · Provenance, out loud — 55 s
 
 Briefly, because I think this is under-discussed and this is the right room for it.
 
@@ -379,7 +420,7 @@ while we figure it out.
 
 ---
 
-## 20 · Three things I'd tell 2012 me — 70 s
+## 21 · Three things I'd tell 2012 me — 70 s
 
 > Land these deliberately. Slow down.
 
@@ -399,7 +440,7 @@ enough that there's no longer an excuse.
 
 ---
 
-## 21 · Thank you — 25 s
+## 22 · Thank you — 25 s
 
 Thank you. Everything's open — packages, the code behind every figure in this deck, and the
 prompt log for how the deck got made.
@@ -414,10 +455,23 @@ like now.
 ## Anticipated questions
 
 **"Five times is a big claim — how did you measure it?"**
-I didn't, and I say so on the slide. It's a subjective estimate and the honest version is
-that the multiplier is largest on work I previously wasn't doing at all. Nothing in my
-throughput of *novel statistical methods* went up 5×; my throughput of tests, documentation
-and maintenance did.
+The 5× is my subjective sense of overall productivity and I won't defend the number. What I
+*have* measured is the composition, and that's on slide 16: across 1,340 authored commits in
+seven public repos, tests went from 3% to 10% of files touched, packaging and CI from 4% to
+20%, and source code *fell* from 41% to 25%. The honest version is that the multiplier is
+largest on work I previously wasn't doing at all. My throughput of novel statistical methods
+did not go up 5×.
+
+**"How did you classify a commit as AI-assisted?"**
+By the `Co-Authored-By: Claude` trailer — nothing else. It's verifiable by anyone who clones
+the repos, and it's a floor rather than an estimate: it misses AI-assisted work I did before
+adopting the trailer, so the real contrast is larger than the chart shows. The derivation is
+`R/git-evidence.R` in the talk repo, and the CSVs it produces are committed.
+
+**"Isn't a 36-commit sample too small?"**
+For the aggregate percentages, it's a fair challenge — the AI-era bars rest on 189 file
+touches. That's why slide 17 exists: one package, followed end to end, where the effect is
+unambiguous and doesn't depend on how I drew the categories.
 
 **"How do you verify code you didn't write?"**
 Exactly the way we verified Burrlioz: simulate data with a known answer, measure bias and

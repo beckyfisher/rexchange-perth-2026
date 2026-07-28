@@ -69,35 +69,50 @@ one site, one campaign. Slide 7 says this explicitly, and flags forward to Route
 | 13 | You cannot get three regulators to agree on a black box | Full-bleed punch line | **The keystone slide**, closing act two. Open source as governance mechanism. Shiny as the last mile. | 1:10 |
 | 14 | **Divider — Part two: And then the AI arrived** | — | Transition. | 0:05 |
 | 15 | I have not written a line of code in about a year | Full-bleed punch line | The claim, stated plainly, plus a flag that "5×" needs unpacking. | 0:40 |
-| 16 | The speed-up is not in the typing | `where-work-goes.png` | **Say out loud that this chart is illustrative.** The tax on doing it properly collapsed. | 1:25 |
-| 17 | What actually changed | Two columns | Now routine / still mine. Statistical judgement is the moat. | 1:00 |
-| 18 | The awkward symmetry | Lede + punch | Same standard of evidence I demanded of Burrlioz. Fluent-and-wrong as a new hazard. | 1:10 |
-| 19 | Provenance, out loud | `.arrows` list | Prompt logging. Reproducibility now covers how the code came to exist. | 0:55 |
-| 20 | Three things I'd tell 2012 me | Numbered `.arrows` + punch | The take-homes. Slow down. | 1:10 |
-| 21 | Thank you | Contacts + repos | Links, acknowledgements, invitation to question. | 0:25 |
+| 16 | The speed-up is not in the typing | `where-work-goes.png` | **Measured**, from 1,340 authored commits. Tests 3×, packaging/CI 5×, source code share *down*. Say that it's measured — it's the point. | 1:25 |
+| 17 | One package, in detail | Two columns | `FSSgam`: 7 yr 9 mo with no tests and no CI, then four days. Writing the tests found two silent bugs shipping since 2018. | 1:10 |
+| 18 | What actually changed | Two columns | Now routine / still mine. Statistical judgement is the moat. | 1:00 |
+| 19 | The awkward symmetry | Lede + punch | Same standard of evidence I demanded of Burrlioz. Fluent-and-wrong as a new hazard. | 1:10 |
+| 20 | Provenance, out loud | `.arrows` list | Prompt logging. Reproducibility now covers how the code came to exist. | 0:55 |
+| 21 | Three things I'd tell 2012 me | Numbered `.arrows` + punch | The take-homes. Slow down. | 1:10 |
+| 22 | Thank you | Contacts + repos | Links, acknowledgements, invitation to question. | 0:25 |
 
-**Total ≈ 20 min 45 s.** Deliberately ~45 s over: conference talks lose time to the room,
-not gain it, and slides 5, 13 and 15 all have deliberate pauses that can absorb it.
+**Total ≈ 21 min 55 s** — over a 20-minute slot. See the two cuts below.
+
+### The 20-minute cut (lose 2 min)
+
+- Drop slide 20, *Provenance, out loud* (0:55) — fold one clause into slide 19.
+- Trim slide 4, *Era one*, 1:15 → 0:40 (0:35).
+- Trim slide 6, *Black data*, 1:30 → 1:00 (0:30).
+
+Lands at ≈19:55. This is the version to rehearse first.
 
 ---
 
 ## The 15-minute cut
 
-Need to lose **5 min 45 s**. Do it by removing two slides and trimming eleven, not by talking
-faster. The plan below saves 5 min 40 s, landing at ≈15:05.
+Need to lose **6 min 55 s**. Do it by removing three slides and trimming eleven, not by
+talking faster. The plan below saves 6 min 50 s, landing at ≈15:05.
+
+Slide numbers are the 22-slide running order above.
 
 **Do not cut slide 7 in this version.** It is the payoff for the cold open — cutting it
 leaves slide 1's promise unanswered. That was possible in the `discharge-first` cut; it is
 not possible here. This is the main cost of the chronological order.
 
-**Remove entirely (1 min 55 s):**
+**Remove entirely (3 min 5 s):**
 
-- Slide 19 — *Provenance, out loud* (0:55). Fold one sentence into slide 18 instead:
+- Slide 20 — *Provenance, out loud* (0:55). Fold one sentence into slide 19 instead:
   *"— and I log every AI-assisted session to the repo, because reproducibility now has to
   cover how the code came to exist."*
 - Slide 10 — *Which curve, though?* (1:00). Painful but survivable: say the sentence
   *"and there are six defensible distributions you could fit, which give six different
   limits"* over slide 9's figure, which already shows the fan of candidate curves.
+- Slide 17 — *One package, in detail* (1:10). **Last resort.** It is the most concrete
+  evidence in the talk and the two-silent-bugs line is the best thing in act three. Cut it
+  only if you must, and if you do, add one clause to slide 16: *"— and in one package that
+  meant a test suite arriving seven years and nine months late, which immediately turned up
+  two bugs that had been shipping since 2018."*
 
 **Trim (3 min 45 s total):**
 
@@ -111,12 +126,12 @@ not possible here. This is the main cost of the chronological order.
 | 9 The other kind of number | 1:00 | 0:50 | 0:10 | Keep the blood-alcohol line; drop the "not derived per site" aside. |
 | 11 "No effect" | 1:35 | 1:00 | 0:35 | Name NEC and EC10 only; skip NOEC and NSEC derivation. Keep the causation point. |
 | 12 `ssdtools` | 1:25 | 1:10 | 0:15 | Drop the collaborator list; it's on the slide. |
-| 16 Speed-up | 1:25 | 1:10 | 0:15 | Keep "typing was never the bottleneck" and the illustrative caveat; drop the list of skipped tasks. |
-| 17 What changed | 1:00 | 0:50 | 0:10 | Read the columns, don't gloss each line. |
-| 20 Three things | 1:10 | 1:00 | 0:10 | Deliver the three; drop the elaboration on each. |
+| 16 Speed-up | 1:25 | 1:10 | 0:15 | Give the three numbers and the method in one breath; drop the list of skipped tasks. |
+| 18 What changed | 1:00 | 0:50 | 0:10 | Read the columns, don't gloss each line. |
+| 21 Three things | 1:10 | 1:00 | 0:10 | Deliver the three; drop the elaboration on each. |
 
-**Never cut:** 1 (the hook), 3 (the spine), 7 (the payoff), 13 (the keystone), 16 (the honest
-mechanism of the speed-up), 20 (the take-homes).
+**Never cut:** 1 (the hook), 3 (the spine), 7 (the payoff), 13 (the keystone), 16 (the
+measured mechanism of the speed-up), 21 (the take-homes).
 
 ---
 

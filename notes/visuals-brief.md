@@ -88,10 +88,23 @@ the corresponding ROC curve with those two points.
 
 ### `where-work-goes.png` — slide 16
 
-Stacked bars, before vs with an AI assistant, over six categories of effort.
+Stacked bars, before vs with an AI assistant: the share of files touched, by what each file
+is for.
 
-- **This is the only figure that is not derived from data.** It carries an `ILLUSTRATIVE`
-  caption *and* the speaker notes instruct you to say so aloud. Keep both.
+- **This is measured, not estimated.** An earlier draft of this talk used an invented chart
+  here with plausible-looking made-up percentages. It was directionally right and
+  numerically wrong — precisely the failure mode slide 19 warns about — so it was replaced
+  with the real commit history.
+- Derived by `R/git-evidence.R` from 1,340 commits across seven public repos, written to
+  `data/git-evidence-shares.csv` and `data/git-evidence-facts.csv`. The figure reads the
+  CSVs, so it rebuilds offline; regenerate the CSVs only when you want fresher data.
+- "With an AI assistant" is defined as commits carrying a `Co-Authored-By: Claude` trailer.
+  That is deliberately conservative — it misses AI-assisted work done before the trailer
+  convention, so it understates the contrast. **Say so if asked**; the definition is the
+  most attackable part of the slide and owning it is stronger than defending it.
+- The unit is a *file touch*, not lines (dominated by generated `man/` output) and not
+  commits (one commit often spans categories).
+- Only public repos. Private work is invisible.
 
 ---
 
@@ -114,10 +127,8 @@ Not built, because the deck is already at time. In rough order of value:
 
 1. **A screenshot of `shinyssdtools`** on slide 12, to make the "last mile" argument
    concrete. One image, no annotation. This is the strongest missing visual.
-2. **A `git log --stat` or GitHub contribution graph** on slide 16 — real evidence for the
-   productivity claim, which currently rests on an illustrative chart. If you can extract a
-   defensible before/after commit or test-count series from the `open-AIMS` repos, it would
-   materially strengthen the weakest point in the talk.
+2. **A screenshot of the `FSSgam` test suite passing**, or of the two-bug fix commit, on
+   slide 17. The numbers are strong; seeing the actual commit message would be stronger.
 3. **A photograph of a dredge plume from the air** behind slide 1. Emotionally effective,
    but check the licence and the confidentiality position on any operational imagery before
    using it.

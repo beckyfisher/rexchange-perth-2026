@@ -354,58 +354,56 @@ save_fig(p_dens + p_roc + plot_layout(widths = c(1.25, 1)),
          "roc-thresholds.png", width = 12.5, height = 5.6)
 
 # ===========================================================================
-# 5. Where the work actually goes (illustrative)
+# 5. Where the work actually goes \u2014 MEASURED, from the commit history
 # ===========================================================================
-# LABELLED ILLUSTRATIVE ON THE SLIDE. This is the speaker's own estimate of how
-# effort is distributed, not a measurement. Do not present it as data.
+# Derived by R/git-evidence.R from the public repos; see that script for the
+# method and its limits. Earlier drafts of this talk used an invented chart
+# here. It was directionally right and numerically wrong, which is exactly the
+# failure mode the talk warns about, so it has been replaced with the data.
 
-work <- tribble(
-  ~phase,  ~task,                          ~share,
-  "before", "Thinking about the problem",   18,
-  "before", "Writing the code that works",  32,
-  "before", "Tests",                         6,
-  "before", "Documentation / vignettes",     9,
-  "before", "Packaging, CI, CRAN, review",  10,
-  "before", "Fighting the tooling",         25,
-  "after",  "Thinking about the problem",   46,
-  "after",  "Writing the code that works",   4,
-  "after",  "Tests",                        14,
-  "after",  "Documentation / vignettes",    12,
-  "after",  "Packaging, CI, CRAN, review",  16,
-  "after",  "Fighting the tooling",          8
-) |>
+shares <- read.csv(file.path("data", "git-evidence-shares.csv"),
+                   stringsAsFactors = FALSE)
+facts <- read.csv(file.path("data", "git-evidence-facts.csv"),
+                  stringsAsFactors = FALSE)
+fact <- function(k) facts$value[facts$key == k]
+
+cat_levels <- c("Source code", "Documentation (generated)",
+                "Documentation (written)", "Tests", "Packaging, CI, CRAN",
+                "Other")
+
+work <- shares |>
   mutate(
     # reversed so "Before" reads on top
-    phase = factor(phase, levels = c("after", "before"),
-                   labels = c("With an AI assistant", "Before")),
-    task = factor(task, levels = c("Thinking about the problem",
-                                   "Writing the code that works",
-                                   "Tests",
-                                   "Documentation / vignettes",
-                                   "Packaging, CI, CRAN, review",
-                                   "Fighting the tooling"))
+    era = factor(era, levels = c("With an AI assistant", "Before")),
+    category = factor(category, levels = cat_levels)
   )
 
-p_work <- ggplot(work, aes(share, phase, fill = task)) +
+p_work <- ggplot(work, aes(share, era, fill = category)) +
   geom_col(width = 0.5, colour = "white", linewidth = 0.8) +
-  geom_text(aes(label = ifelse(share >= 8, paste0(share, "%"), "")),
+  geom_text(aes(label = ifelse(share >= 7, paste0(round(share), "%"), "")),
             position = position_stack(vjust = 0.5),
             size = 3.4, colour = "white", fontface = "bold") +
   scale_fill_manual(values = c(
-    "Thinking about the problem"   = pal[["accent"]],
-    "Writing the code that works"  = pal[["era2"]],
-    "Tests"                        = "#4C9A94",
-    "Documentation / vignettes"    = "#7FBDB8",
-    "Packaging, CI, CRAN, review"  = "#A9D3CF",
-    "Fighting the tooling"         = "#B0B0B0"
+    "Source code"               = pal[["accent"]],
+    "Documentation (generated)" = pal[["era2"]],
+    "Documentation (written)"   = "#4C9A94",
+    "Tests"                     = "#7FBDB8",
+    "Packaging, CI, CRAN"       = "#A9D3CF",
+    "Other"                     = "#B0B0B0"
   )) +
   scale_x_continuous(labels = percent_format(scale = 1),
                      expand = expansion(mult = c(0, 0.02))) +
   labs(x = NULL, y = NULL,
        title = "The speed-up is not in the typing",
-       subtitle = "It is in the parts I used to skip \u2014 which are the parts that decide whether software survives.",
-       caption = "ILLUSTRATIVE. My own estimate of where effort goes, not a measurement.") +
-  guides(fill = guide_legend(nrow = 2, byrow = TRUE, reverse = FALSE)) +
+       subtitle = "Share of files touched, by what the file is for. Tests 3\u00d7. Packaging and CI 5\u00d7. Source code, proportionally, down.",
+       caption = paste0(
+         "Measured, not estimated: every commit I authored across ",
+         length(strsplit(fact("repos_analysed"), ";")[[1]]),
+         " public repos (", fact("commits_total"), " commits).\n",
+         "\u201cWith an AI assistant\u201d = the ", fact("commits_ai_trailer"),
+         " commits carrying a Co-Authored-By: Claude trailer \u2014 a conservative floor.",
+         "  Unit: one file changed in one commit.  Code: R/git-evidence.R")) +
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE)) +
   theme_talk() +
   theme(panel.grid.major.y = element_blank(),
         axis.text.x = element_blank(),
@@ -414,9 +412,10 @@ p_work <- ggplot(work, aes(share, phase, fill = task)) +
                                    size = rel(1.05)),
         legend.position = "bottom",
         legend.title = element_blank(),
-        legend.text = element_text(size = rel(0.8)),
-        legend.key.size = unit(0.9, "lines"))
+        legend.text = element_text(size = rel(0.78)),
+        legend.key.size = unit(0.9, "lines"),
+        plot.caption = element_text(size = rel(0.62)))
 
-save_fig(p_work, "where-work-goes.png", width = 11, height = 5.2)
+save_fig(p_work, "where-work-goes.png", width = 11.5, height = 5.4)
 
 message("\nAll figures written to ", normalizePath(fig_dir))

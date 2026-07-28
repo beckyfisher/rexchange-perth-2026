@@ -21,6 +21,8 @@ Talk materials for **[R Exchange Perth 2026](https://epi.group/events/r-exchange
 | `talk/custom.scss` | Slide theme; colours mirror `R/figures.R` |
 | `talk/figures/` | Generated figures — **do not hand-edit** |
 | `R/figures.R` | Reproducible figure code (`ggplot2`, `ssdtools`) |
+| `R/git-evidence.R` | Derives the productivity evidence on slides 16–17 from the actual commit history |
+| `data/` | The CSVs that script produces — committed, so figures build offline and the numbers are checkable |
 | `notes/slide-outline.md` | Slide-by-slide outline with timings and the 15-minute cut |
 | `notes/speaker-notes.md` | Full narration script + anticipated questions — **generated** from the deck by `R/build-speaker-notes.R` |
 | `notes/visuals-brief.md` | Visual system, sourcing, alt text, suggested additions |
@@ -128,6 +130,32 @@ here — see `CLAUDE.md` §4.
 Publisher PDFs of the background literature and the large source `.pptx` decks are
 deliberately excluded from version control (copyright, repo size); they exist only in the
 author's local working directory.
+
+## The productivity claim
+
+Slides 16–17 make an empirical claim about what changed with an AI assistant. It is
+**measured, not asserted**:
+
+```bash
+Rscript R/git-evidence.R    # clones the public repos, writes data/*.csv
+```
+
+Across **1,340 commits** authored by Rebecca in seven public repositories, comparing commits
+that carry a `Co-Authored-By: Claude` trailer against all the rest:
+
+| Category | Before | With an AI assistant |
+|---|---|---|
+| Tests | 3% | 10% |
+| Packaging, CI, CRAN | 4% | 20% |
+| Source code | 41% | 25% |
+
+And one package end to end: `FSSgam` was created in September 2018 and got its first test
+file and its first CI workflow on the **same day, 20 June 2026** — 7 years and 9 months
+later. Writing those tests surfaced two silent bugs that had been shipping since 2018.
+
+Caveats are stated on the slide and in `notes/visuals-brief.md`: public repos only, the
+trailer definition is a conservative floor, and the unit is a file touch rather than lines
+or commits.
 
 ## AI disclosure
 
