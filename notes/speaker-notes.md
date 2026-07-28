@@ -195,7 +195,40 @@ disciplined. There were still no tests, and nothing had been near CRAN.
 
 ---
 
-## 9 · The other kind of number — 60 s
+## 9 · Era two: two strands that never met — 90 s
+
+> This is the honest gap in the story. Don't smooth it over — it's the second take-home.
+
+Now, I've just told you about era two twice, and I want to be straight about something: those
+were two separate strands, and **they never properly came together**.
+
+On one side, the industry work. Enormous datasets, real regulatory stakes, numbers that are
+still being used today. And the code behind it was bespoke — written for one campaign, tangled
+up with data I am contractually not allowed to distribute. There is no package. There is
+nothing you could install and run.
+
+On the other side, the packages. `FSSgam` and `epower` are public, installable, genuinely
+reusable — and no regulation depends on either of them. They were built from data I *could*
+share, which is exactly why they could become software.
+
+*(beat)*
+
+So the pattern is backwards. The higher the stakes, the less shareable the tooling. My most
+consequential work produced the least reusable code, and my most reusable code came from my
+least consequential work.
+
+I did try. Building open tooling around confidential data means separating the method from the
+data cleanly enough that the method can travel alone — synthetic test fixtures, worked
+examples on public data, an API that doesn't assume the shape of one client's monitoring
+programme. It is a lot of work, it is nobody's funded deliverable, and I did not do it.
+
+I don't think our field has solved this. If anyone here has, I'd genuinely like to know —
+because it's the thing standing between a very large amount of high-quality industry data and
+any public benefit beyond a single paper.
+
+---
+
+## 10 · The other kind of number — 60 s
 
 Now the pivot. Around 2020 I moved into statistical ecotoxicology, and met the *other* kind
 of regulatory number — the one that isn't site-specific.
@@ -218,7 +251,7 @@ Which is a lot of weight to hang on twenty-odd dots and a curve.
 
 ---
 
-## 10 · Which curve, though? — 60 s
+## 11 · Which curve, though? — 60 s
 
 Here's the problem that pulled me into `ssdtools`.
 
@@ -240,7 +273,7 @@ campaign at one site. This one applies to every discharge in the country.
 
 ---
 
-## 11 · Era three: onto CRAN — 110 s
+## 12 · Era three: onto CRAN — 110 s
 
 Era three is CRAN, and it starts in 2021 with two packages: `bayesnec`, and `ssddata`, which
 is just the datasets and has no paper at all.
@@ -275,14 +308,24 @@ flag: the software didn't implement the method. The software made the method pos
 
 ---
 
-## 12 · `ssdtools`: the part I did not expect — 85 s
+## 13 · `ssdtools`: the part I did not expect — 85 s
 
 And then this happened, which I still find slightly absurd.
 
-I was brought into a joint Australian–Canadian project to evaluate whether `ssdtools` — an
-open-source R package originally written by Joe Thorley and Carl Schwarz in British
-Columbia — could replace Burrlioz 2.0, which was the mandated tool in Australia. Burrlioz
-fits one distribution family. It's closed.
+First, how I got into the room — because it was **not** the GitHub profile. Nobody in
+environmental regulation was reading my commit history. It was twenty years in the field,
+the publication record, and specifically convening workshops with the people who actually set
+these guidelines: the 2019 workshop on key issues in guideline value derivation, and the
+working relationships that came out of it. Domain credibility got me the seat. The software
+skills only mattered *once I was already at the table*.
+
+That's worth saying to a room of developers. The code was necessary. It was nowhere near
+sufficient.
+
+So: a joint Australian–Canadian project, funded by what is now DCCEEW, to evaluate whether
+`ssdtools` — an open-source R package originally written by Joe Thorley and Carl Schwarz in
+British Columbia — could replace Burrlioz 2.0, the mandated tool in Australia. Burrlioz fits
+one distribution family. It's closed.
 
 We didn't argue about it. We benchmarked it. Real datasets, and then simulated datasets
 where we knew the true answer, so we could measure bias and coverage. `ssdtools` won. And
@@ -294,7 +337,7 @@ jurisdictions, and I'm a contributor to it.
 
 ---
 
-## 13 · You cannot get three regulators — 70 s
+## 14 · You cannot get three regulators — 70 s
 
 > This is the slide I'd keep if I could only keep one.
 
@@ -313,13 +356,13 @@ the person making the decision.
 
 ---
 
-## 14 · [Part two] And then the AI arrived — 5 s
+## 15 · [Part two] And then the AI arrived — 5 s
 
 Right. The bit you're actually here for.
 
 ---
 
-## 15 · I stopped writing code by hand — 40 s
+## 16 · I stopped writing code by hand — 40 s
 
 > Check the elapsed figure before you present. First AI co-authored commit: **20 June 2026**.
 > As written this slide assumes an October delivery — say "four months".
@@ -335,7 +378,7 @@ out the interesting part isn't the multiplier at all.
 
 ---
 
-## 16 · The speed-up is not in the typing — 85 s
+## 17 · The speed-up is not in the typing — 85 s
 
 > This chart is measured, from my own commit history. Say that — it is the whole point.
 
@@ -366,7 +409,7 @@ The tax on doing it properly collapsed. That's the whole mechanism.
 
 ---
 
-## 17 · One package, in detail — 70 s
+## 18 · One package, in detail — 70 s
 
 > Slow down on the last line. It is the most useful thing in this section.
 
@@ -400,7 +443,7 @@ had just stopped paying the tax.
 
 ---
 
-## 18 · What actually changed — 60 s
+## 19 · What actually changed — 60 s
 
 Left column: things that used to lose to the next deadline, every time. They don't now.
 
@@ -415,7 +458,7 @@ the syntax.
 
 ---
 
-## 19 · The awkward symmetry — 70 s
+## 20 · The awkward symmetry — 70 s
 
 Here's the thing that keeps me honest.
 
@@ -433,7 +476,7 @@ out to be exactly the methods I need for this.
 
 ---
 
-## 20 · Provenance, out loud — 55 s
+## 21 · Provenance, out loud — 55 s
 
 Briefly, because I think this is under-discussed and this is the right room for it.
 
@@ -451,27 +494,38 @@ while we figure it out.
 
 ---
 
-## 21 · Three things I'd tell 2012 me — 70 s
+## 22 · What I'd tell 2012 me — 85 s
 
-> Land these deliberately. Slow down.
+> Land these deliberately. Slow down. The last one is the one to leave them with.
 
 One. Regulation runs on software, and most people writing that software have no idea of the
-blast radius. If you work in a regulated domain — health, finance, environment — go and
-find out what your code is load-bearing for. It's usually more than you think.
+blast radius. If you work in a regulated domain — health, finance, environment — go and find
+out what your code is load-bearing for. It's usually more than you think.
 
-Two. Open code is how you get public value out of data you are contractually forbidden from
-sharing. That's not a compromise position, it's the whole game in industry-partnered
-science.
+Two. Domain credibility is what got me into the rooms where these decisions get made. Not the
+repositories. For a room of developers that's worth hearing: the code was necessary and
+nowhere near sufficient.
 
 Three. I had no programming training. I had applied statistics and problems that mattered.
 That was enough to start, and starting badly in public beats not starting.
 
-And the last one — the unglamorous maintenance work was always the work. It just got cheap
-enough that there's no longer an excuse.
+Four. The unglamorous maintenance work was always the work. It just got cheap enough that
+there's no longer an excuse.
+
+*(beat)*
+
+And the open one. I can give you the methods from the industry work — they're in the papers.
+I cannot give you a tool, and I have not found a good way to build one. That gap is where a
+very large amount of high-quality data currently stops being useful to anyone but the client.
+
+Two things I'd like from this room. If you've solved the tooling-around-confidential-data
+problem, come and tell me. And if you're going to use AI to go five times faster — point some
+of it at the unglamorous work that makes software outlive the project. That's the part that
+was never worth doing before, and now is.
 
 ---
 
-## 22 · Thank you — 25 s
+## 23 · Thank you — 25 s
 
 Thank you. Everything's open — packages, the code behind every figure in this deck, and the
 prompt log for how the deck got made.
@@ -522,8 +576,22 @@ tell when an answer is wrong — and that skill is unaffected by this technology
 precisely why it's now the scarce one.
 
 **"Is your work confidential? Can we see the data?"**
-No to the data, in most cases. Yes to the methods and the code, always. That's the point of
-slide 6.
+No to the data, in most cases. Yes to the methods — they're in the papers. But *not* the
+tooling, and slide 9 is honest about why: I have never found a good way to build installable
+software on top of data I cannot ship. If you've solved that, I want to hear it.
+
+**"Why couldn't you package the dredging work?"**
+Because the method and the data were entangled. Building a shareable tool would have meant
+separating them cleanly enough for the method to travel alone — synthetic fixtures, worked
+examples on public data, an API that doesn't assume the shape of one client's monitoring
+programme. That's a substantial piece of work, it is nobody's funded deliverable, and I
+didn't do it. It is the clearest thing I'd do differently.
+
+**"So did open source get you onto the ssdtools project?"**
+No, and I'm careful to say so. Twenty years in the field, the publication record, and running
+workshops with the people who set these guidelines got me into that room. The software skills
+mattered once I was in it. For a room of developers that's the uncomfortable half of the
+lesson: the code was necessary and nowhere near sufficient.
 
 **"Are the dredging thresholds SSD-based?"**
 No — and this is worth being precise about, because the talk shows two different routes to a

@@ -43,19 +43,25 @@ Modelling & Software* in 2012 with four co-authors, was 57 R scripts distributed
 file. The statistics were novel; the tool was effectively unreproducible within five years.
 None of the five of us thought to ask whether it would still run.
 
-**Era two was GitHub, and industry monitoring data.** Using confidential data from a large
-dredging campaign at Barrow Island — over 1,500 coral colonies scored fortnightly for 530
-days — we derived *in situ* dose–response relationships and probabilistic thresholds from ROC
-curves. `FSSgam` and `epower` were published in the same years. Neither had tests, and
-neither went near CRAN.
+**Era two ran as two strands that never properly met.** One was industry monitoring data: a
+large dredging campaign at Barrow Island, over 1,500 coral colonies scored fortnightly for 530
+days, from which we derived *in situ* dose–response relationships and probabilistic thresholds
+using ROC curves. Those numbers are still in regulatory use. The code behind them is bespoke,
+entangled with data I cannot distribute, and has never been installable by anyone. The other
+strand was GitHub and packaging — `FSSgam` and `epower` — built from data I *could* share, and
+on which no regulation depends. The pattern is backwards: the higher the stakes, the less
+shareable the tooling. I will argue that building open tools around confidential data is a
+real and largely unsolved problem, and one worth more attention than it gets.
 
 **Era three was CRAN.** `bayesnec` and `ssddata` were released in 2021, and CRAN submission
-was the first time anything external held my code to a standard. That work fed into a joint
-Australian–Canadian evaluation of `ssdtools` against the incumbent closed-source tool, and
-its adoption as the default for deriving water quality guideline values in Australia, New
-Zealand and Canada. Open source was not a convenience in that process; it was the
-precondition for multi-jurisdictional agreement, because three regulators cannot audit a
-black box.
+was the first time anything external held my code to a standard. Separately — and this matters
+— a long track record in the field, and convening workshops with the people who set these
+guidelines, led to a joint Australian–Canadian evaluation of `ssdtools` against the incumbent
+closed-source tool, and its adoption as the default for deriving water quality guideline
+values in Australia, New Zealand and Canada. Domain credibility got me into that room; the
+software skills mattered once I was in it. Open source was not a convenience in that process:
+it was the precondition for multi-jurisdictional agreement, because three regulators cannot
+audit a black box.
 
 The talk closes on the last few months. I stopped writing code by hand in June. Rather than
 assert a productivity gain, I measured it across 1,340 of my own commits: tests tripled as a
@@ -63,7 +69,12 @@ share of the work, packaging and continuous integration rose fivefold, and sourc
 I will show where the change actually is — it is not in the typing — and which parts of the
 job it does not touch.
 
-*(374 words)*
+Two things I would like to leave the room with: that the unglamorous maintenance work which
+determines whether research software outlives its project has just become very much cheaper
+to do; and that we still have no good pattern for building open, reusable tooling on top of
+data that cannot be shared.
+
+*(537 words)*
 
 ---
 
@@ -77,15 +88,17 @@ I am a quantitative ecologist with no formal training in programming who now mai
 software used to derive water quality guideline values in Australia, New Zealand and Canada.
 This talk traces fifteen years of accidental software development in three eras — scripts,
 GitHub, and CRAN — from a 2012 tool that was unreproducible within five years, through
-`FSSgam` and `epower` and a large body of confidential industry monitoring data, to
-`bayesnec`, `ssddata` and `ssdtools` and their adoption in regulation.
+`FSSgam` and `epower`, to `bayesnec`, `ssddata` and `ssdtools` and their adoption in
+regulation. Alongside that runs a large body of confidential industry monitoring data which
+produced numbers still in regulatory use and no shareable software at all — a gap I will argue
+is real and largely unsolved.
 
 It closes on the last few months. I stopped writing code by hand in June. Rather than assert
 a productivity gain I measured it, across 1,340 of my own commits: tests tripled as a share of
 the work, packaging and continuous integration rose fivefold, and source code fell. I will
 show where the change actually is, and which parts of the job it does not touch.
 
-*(174 words)*
+*(200 words)*
 
 ---
 
@@ -122,10 +135,13 @@ GitHub: [beckyfisher](https://github.com/beckyfisher) ·
 
 - **Event:** R Exchange Perth 2026, 14–15 October 2026, Perth CBD (Epi).
 - **Suggested session:** Day two, session three — *real-life applications*.
-- **Requested length:** 20 minutes. The deck runs 22:10 in full; 20-minute and 15-minute
-  cuts are specified in `notes/slide-outline.md`.
+- **Requested length:** the programme suggests 20 minutes. The deck now runs **23:55** in
+  full, with 20-minute and 15-minute cuts specified in `notes/slide-outline.md`. **Worth
+  asking the organisers for a 25–30 minute slot** — the two-strands material and the
+  unsolved-tooling problem are what make this more than a personal-journey talk, and they are
+  the first things a 20-minute cut has to compress.
 - **Contact for submission:** events@epi.group — no formal call for abstracts or word limit
-  was published at the time of writing, so a ~370-word version and a ~175-word version are
+  was published at the time of writing, so a ~540-word version and a ~200-word version are
   provided. Send the short one if a limit is imposed; the long one otherwise, since the
   three-era structure needs the room to read as description rather than as a pitch.
 - **AV:** standard laptop + HDMI. Slides are self-contained HTML (reveal.js); no internet
