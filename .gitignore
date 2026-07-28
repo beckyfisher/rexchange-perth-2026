@@ -1,0 +1,36 @@
+# --- Source material that must NOT be committed ---------------------------
+# Publisher PDFs of the background literature: copyright, and ~60 MB.
+Relevant_publication_history_pdfs/
+
+# Source .pptx decks are 20–45 MB each and are only inputs, not outputs.
+old_talks_and_background/*.pptx
+old_talks_and_background/*.docx
+
+# Any confidential industry data, anywhere. See CLAUDE.md §4.
+**/confidential_data/
+*.confidential.*
+
+# --- Quarto / R -----------------------------------------------------------
+_output/
+_freeze/
+.quarto/
+*_files/
+*_cache/
+/.luarc.json
+
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# --- Safety-net backups (see C:/Rworking/CLAUDE.md §7) --------------------
+superceded/
+
+# --- OS / editor ----------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+.vscode/
+.positron/

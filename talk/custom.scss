@@ -1,0 +1,113 @@
+/*-- scss:defaults --*/
+
+// Colours picked to match R/figures.R (`pal`), so slides and plots read as one thing.
+$accent:      #2E4057;   // deep slate — body emphasis
+$era1:        #9E9E9E;   // era 1: lone scripter
+$era2:        #1B7F79;   // era 2: packages + GitHub (AIMS-ish teal)
+$era3:        #E4572E;   // era 3: AI
+$muted:       #6B7B8C;
+
+$body-bg:     #FFFFFF;
+$body-color:  #22282F;
+$link-color:  $era2;
+
+$font-family-sans-serif: "Source Sans Pro", "Segoe UI", -apple-system, sans-serif;
+$presentation-font-size-root: 34px;
+$presentation-heading-color: $accent;
+$presentation-heading-font-weight: 700;
+
+$code-block-font-size: 0.62em;
+
+/*-- scss:rules --*/
+
+.reveal .slides section {
+  text-align: left;
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.reveal h2 {
+  border-bottom: 3px solid #E8ECEF;
+  padding-bottom: 0.18em;
+  margin-bottom: 0.55em;
+}
+
+// Title slide
+#title-slide .title    { color: $accent; font-size: 1.55em; line-height: 1.1; }
+#title-slide .subtitle { color: $era2; font-weight: 400; margin-top: 0.5em; }
+#title-slide .quarto-title-authors { color: $muted; }
+
+// Section dividers
+.reveal section.divider h1,
+.reveal section.divider h2 {
+  border: none;
+  font-size: 2.0em;
+  margin-top: 1.2em;
+}
+.reveal section.divider .era-num {
+  display: block;
+  font-size: 0.42em;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $muted;
+  margin-bottom: 0.3em;
+}
+
+// The one-line punch slide
+.reveal .punch {
+  font-size: 1.45em;
+  font-weight: 700;
+  line-height: 1.25;
+  color: $accent;
+  text-align: center;
+  margin-top: 1.4em;
+}
+.reveal .punch em { color: $era3; font-style: normal; }
+
+.reveal .lede {
+  font-size: 1.12em;
+  line-height: 1.35;
+  color: $accent;
+}
+
+.reveal .aside {
+  font-size: 0.66em;
+  color: $muted;
+}
+
+// Colour utilities, used inline to carry the three-era thread
+.e1 { color: $era1; font-weight: 700; }
+.e2 { color: $era2; font-weight: 700; }
+.e3 { color: $era3; font-weight: 700; }
+.dim { color: $muted; }
+
+// Arrow-led bullets — matches the "→" habit in the speaker's existing decks
+.reveal .arrows ul { list-style: none; margin-left: 0; }
+.reveal .arrows ul li::before {
+  content: "→";
+  color: $era2;
+  font-weight: 700;
+  margin-right: 0.5em;
+  margin-left: -1.2em;
+}
+
+// Full-bleed figure slides
+.reveal .fig-full img {
+  max-height: 78vh;
+  width: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.reveal figcaption { font-size: 0.55em; color: $muted; }
+
+// Two-column helper spacing
+.reveal .columns { gap: 1.4em; }
+
+// Speaker-note-only cut markers (never rendered on the slide itself)
+.cut15 { display: none; }
+
+.reveal .footer { color: $muted; font-size: 0.5em; }

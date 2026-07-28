@@ -1,0 +1,14 @@
+project:
+  type: default
+  output-dir: _output
+  render:
+    - talk/index.qmd
+    - talk/abstract.qmd
+  # Figures are built by R/figures.R, not by chunks in the .qmd — see CLAUDE.md.
+  # Uncomment to regenerate them as part of `quarto render`:
+  # pre-render: R/figures.R
+
+execute:
+  freeze: auto
+
+editor: source

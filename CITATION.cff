@@ -1,0 +1,113 @@
+cff-version: 1.2.0
+message: "If you refer to this talk, please cite it as below."
+title: "Setting the legal limit with an R package: from lone scripter to open-source regulatory infrastructure"
+abstract: >-
+  Conference talk on fifteen years of building open-source R software for
+  environmental management and regulation — from an unreproducible 2012
+  expert-elicitation tool, through R packages and GitHub collaboration
+  (FSSgam, epower, bayesnec, ssdtools), to the adoption of ssdtools as the
+  default software for deriving water quality guideline values in Australia,
+  New Zealand and Canada — and on what changed, and what did not, with the
+  arrival of AI coding assistants.
+type: software
+authors:
+  - family-names: Fisher
+    given-names: Rebecca
+    affiliation: Australian Institute of Marine Science
+    # TODO: add your ORCID here, e.g. orcid: "https://orcid.org/0000-0000-0000-0000"
+license: CC-BY-4.0
+license-url: "https://creativecommons.org/licenses/by/4.0/"
+keywords:
+  - open science
+  - reproducible research
+  - R
+  - Quarto
+  - species sensitivity distribution
+  - ecotoxicology
+  - environmental regulation
+  - research software engineering
+  - AI-assisted programming
+date-released: 2026-10-15
+references:
+  - type: article
+    title: "ssdtools v2: An R package to fit Species Sensitivity Distributions"
+    authors:
+      - family-names: Thorley
+        given-names: Joe
+      - family-names: Fisher
+        given-names: Rebecca
+      - family-names: Fox
+        given-names: David R.
+      - family-names: Schwarz
+        given-names: Carl
+    journal: "Journal of Open Source Software"
+    volume: 10
+    start: 7492
+    year: 2025
+  - type: article
+    title: "bayesnec: An R Package for Concentration-Response Modeling and Estimation of Toxicity Metrics"
+    authors:
+      - family-names: Fisher
+        given-names: Rebecca
+      - family-names: Barneche
+        given-names: Diego R.
+      - family-names: Ricardo
+        given-names: Gerard F.
+      - family-names: Fox
+        given-names: David R.
+    journal: "Journal of Statistical Software"
+    volume: 110
+    year: 2024
+  - type: article
+    title: "Introducing the No-Significant-Effect Concentration (NSEC)"
+    authors:
+      - family-names: Fisher
+        given-names: Rebecca
+      - family-names: Fox
+        given-names: David R.
+    journal: "Environmental Toxicology and Chemistry"
+    volume: 42
+    issue: 9
+    start: 2019
+    end: 2028
+    year: 2023
+  - type: article
+    title: "epower: An R package for power analysis of before-after-control-impact (BACI) designs"
+    authors:
+      - family-names: Fisher
+        given-names: Rebecca
+      - family-names: Shiell
+        given-names: Glenn R.
+      - family-names: Sadler
+        given-names: Rohan J.
+      - family-names: Inostroza
+        given-names: Karina
+      - family-names: Shedrawi
+        given-names: George
+      - family-names: Holmes
+        given-names: Thomas H.
+      - family-names: McGree
+        given-names: James M.
+    journal: "Methods in Ecology and Evolution"
+    volume: 10
+    start: 1843
+    end: 1853
+    year: 2019
+  - type: article
+    title: "A software tool for elicitation of expert knowledge about species richness or similar counts"
+    authors:
+      - family-names: Fisher
+        given-names: Rebecca
+      - family-names: O'Leary
+        given-names: Rebecca A.
+      - family-names: Low-Choy
+        given-names: Samantha
+      - family-names: Mengersen
+        given-names: Kerrie
+      - family-names: Caley
+        given-names: M. Julian
+    journal: "Environmental Modelling & Software"
+    volume: 30
+    start: 1
+    end: 14
+    year: 2012

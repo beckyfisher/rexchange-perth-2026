@@ -1,0 +1,21 @@
+I need to write an abstract to give a 15 minute talk at this: https://epi.group/events/r-exchange-perth-2026
+
+The talk will be on my journey doing analyses with industry data and developing open source software products that facilitate uptake of improved fit-for purpose methods in environmental management and regulation. A part of that journey involves the transformation from my struggling attempts to build R packages from scratch as a "quantitative" ecologist, with little to no training in programming, only a sound applied understanding of statistics, through to being a reasonably competenent programmer, building R packages and using GitHub for open source collaboration, to now most recently my journey into AI (claude code) which means I am now 5 x more productive and havn;t written a line of code since subscribing.
+
+My GitHub handle is https://github.com/beckyfisher, but with many packages on https://github.com/open-AIMS, and contributions on https://github.com/poissonconsulting (ssdtools). Note that my earlier work (the first version of elcitic N, wasn't even on GitHub).
+There is a full archive of pdfs of relevant publications in Relevant_publication_history_pdfs, which should some extent track my journey, as well as some previous talks in old_talks_and_background.
+
+I've added other possible relevant content in old_talks_and_background, which includes
+some existing talks that potentially have valuable content (ANZG_WQ.pptx (most recent) and Fisher_11_Integrating_data_on_processes_and_change.pptx and SETAC-Darwin_Fisher_Mon8th_July_11am_shorter.pptx) and cv/bio.
+
+Read all materials in the two folders. Extract recurring themes, preferred terminology, visual style, and key technical concepts. Draft a 20-minute conference talk for an audience of R/python users interested in open science. 
+
+Create speaker notes, slide outline, and suggested visuals. 
+Use quarto for generating files, so everything is reproducible, and make a private GitHub repo with an appropriate structure, using the most recent standards for open source science for this content at beckfisher.
+
+Reuse concepts from previous presentations without duplicating content.
+Log this prompt and generate a project specific claude.md with information that is relevant. There is a higher level claude.md in the parent folder that should be considered.
+
+
+
+

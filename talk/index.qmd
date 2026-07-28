@@ -1,0 +1,720 @@
+---
+title: "Setting the legal limit with an R package"
+subtitle: "From lone scripter, to open-source regulatory infrastructure, to whatever this year is"
+author: "Rebecca Fisher · Australian Institute of Marine Science"
+date: 2026-10-15
+date-format: "D MMMM YYYY"
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: c/t
+    show-slide-number: speaker
+    width: 1400
+    height: 800
+    incremental: false
+    embed-resources: true
+    footer: "R Exchange Perth 2026 · github.com/beckyfisher"
+    preview-links: false
+    fig-align: center
+---
+
+## When a dredge works off the Pilbara coast {.smaller}
+
+::: {.columns}
+
+::: {.column width="52%"}
+It is running against a **number**.
+
+If turbidity at the monitoring site crosses it, the vessel stops.
+
+Someone has to defend that number in front of a regulator, a proponent, and a lawyer.
+:::
+
+::: {.column width="48%"}
+![](../assets/stopsign.png){width="42%" fig-alt="A stop sign."}
+
+::: {.punch}
+That number comes out of<br>**an R package**.
+:::
+
+:::
+
+:::
+
+::: {.notes}
+Open cold. Don't introduce yourself yet — earn the next 19 minutes first.
+
+When a dredge works off the Pilbara coast in WA, it runs against a number. If turbidity at
+the compliance monitoring site crosses that number, the vessel stops. That costs a proponent
+a very large amount of money per day. Get the number wrong the other way and you lose a
+coral reef.
+
+Somebody has to be able to defend that number — to the regulator, to the proponent, and
+eventually possibly to a court.
+
+That number comes out of an R package. Some of you in this room maintain packages. I want
+you to sit with that for a second.
+
+[~45 s]
+:::
+
+---
+
+## Where the number comes from {.smaller}
+
+![](figures/ssd-model-average.png){.fig-full fig-alt="A species sensitivity distribution fitted to CCME boron data on a log concentration axis, showing six thin candidate distribution curves, a bold model-average curve, and the PC95 guideline value marked at 1.26 mg/L."}
+
+::: {.notes}
+Thirty seconds of ecotoxicology, then I'll leave it alone.
+
+This is a species sensitivity distribution — an SSD. It's the workhorse of water quality
+guideline derivation in Australia, New Zealand, Canada, the EU, the US.
+
+Each black dot is a single species. Someone ran a toxicity experiment on it. You fit a
+distribution through those points, and you read off the concentration that protects, say,
+95% of the community. That's the guideline value. In Australia we call the default ones
+DGVs, and they are the environmental equivalent of the 0.05 blood alcohol limit — below it
+you're assumed fine, above it things stop.
+
+Which is a lot of weight to hang on twenty-odd dots and a curve.
+
+[~60 s]
+:::
+
+---
+
+## Which curve, though?
+
+![](figures/ssd-model-spread.png){.fig-full fig-alt="Lollipop chart of the PC95 guideline value from six single-distribution fits to the same boron dataset, spanning roughly 1.07 to 1.77 mg/L, with the model average highlighted at 1.26."}
+
+::: {.notes}
+Here's the problem that made me a software developer.
+
+Same data. Six perfectly defensible distributions. Six different legal limits. There is no
+theoretical basis — none — for preferring one of these distributions over another. It's not
+like there's a mechanism that says toxicity is log-normal.
+
+So the choice of distribution is doing real regulatory work, and it's being made on
+essentially aesthetic grounds.
+
+The statistical answer is: don't choose. Model-average over all of them, weighted. That's
+the orange line.
+
+The *software* answer is that until recently, the tool mandated for this in Australia
+fitted exactly one distribution — and you couldn't see inside it.
+
+[~60 s]
+:::
+
+---
+
+::: {.divider}
+## [Part one]{.era-num} How I got here
+:::
+
+::: {.notes}
+So: how does a person with no programming training end up responsible for that?
+
+Badly, is the answer. Let me show you the shape of it.
+
+[~10 s]
+:::
+
+---
+
+## Fifteen years, three eras {.smaller}
+
+![](figures/journey-timeline.png){.fig-full fig-alt="Timeline from 2010 to 2026 plotting software artefacts against how far they could travel: hard drive, zip file on request, public repository, CRAN, named in regulation. Three shaded eras: lone scripter, packages and GitHub, AI."}
+
+::: {.notes}
+The y-axis here is the only thing I want you to take from this slide. It isn't
+"sophistication". It's **how far the thing could travel**.
+
+Same person. Same statistics, honestly — I understood mixture distributions in 2012 about
+as well as I do now. What changed was entirely about distribution, maintenance and trust.
+
+I'm a quantitative ecologist. I have a PhD in marine biology. I have had exactly zero
+formal training in programming. What I had was applied statistics and real problems.
+
+[~50 s]
+:::
+
+---
+
+## Era one: the lone scripter {.smaller}
+
+::: {.columns}
+
+::: {.column width="55%"}
+**ElicitN** — software for rigorous expert elicitation.<br>
+*Environmental Modelling & Software*, 2012.
+
+::: {.arrows}
+- 25 scripts of statistics
+- **plus 32 more** running a Tcl/Tk GUI
+- run by `source()`-ing a control script
+- distributed as a zip, on SourceForge
+- no tests, no version control, no package
+:::
+
+:::
+
+::: {.column width="45%"}
+
+::: {.punch}
+It worked.<br>
+[And then it didn't.]{.e3}
+:::
+
+:::
+
+:::
+
+::: {.notes}
+This is the paper I'm least embarrassed by and the software I'm most embarrassed by.
+
+ElicitN was a tool for eliciting expert judgement — we used it to produce the first
+expert-based estimate of global coral reef diversity. The statistics were genuinely novel.
+
+The software was 57 R scripts. Twenty-five doing statistics, thirty-two driving a Tcl/Tk
+graphical interface, because I'd decided the experts needed a GUI. You ran it by sourcing a
+control script called `wElicitN.r`. You got it by emailing me, or off SourceForge.
+
+Not a package. No tests. No version control. Nothing that would tell me — or anyone — if it
+broke.
+
+And it worked. It genuinely worked. And then R changed, and Tcl/Tk changed, and the hard
+drive it was developed on went away, and within about five years that software was
+effectively dead. The paper is still cited. The tool is a fossil.
+
+[~75 s]
+:::
+
+---
+
+::: {.punch}
+The science outlived the software<br>
+by about *fifteen years*.
+:::
+
+::: {.aside .center}
+That is a reproducibility failure, and it was entirely mine.
+:::
+
+::: {.notes}
+Pause here. Let it land.
+
+This is the lesson I'd hand to anyone starting out: your paper will outlive your code by
+a decade, and nobody warns you about that. The peer review process interrogated my
+statistics extremely thoroughly. It asked precisely zero questions about whether the
+software would still run in 2017.
+
+[~30 s]
+:::
+
+---
+
+## Era two: packages, and the discipline they impose {.smaller}
+
+::: {.columns}
+
+::: {.column width="50%"}
+**FSSgam** (2018) — full-subsets model selection.<br>
+
+::: {.aside}
+Started as "a simple function". Became a package because people kept asking for it.
+:::
+
+**epower** (2019) — power analysis for BACI designs.<br>
+
+::: {.aside}
+Industry-funded. *Methods in Ecology and Evolution*. Later used for the North West Shelf
+seismic study.
+:::
+
+:::
+
+::: {.column width="50%"}
+
+::: {.arrows}
+- I did not adopt GitHub to collaborate
+- I adopted it so I could **send someone a working thing**
+- collaboration was a side effect
+- `R CMD check` turned out to be the most patient reviewer I have ever had
+:::
+
+:::
+
+:::
+
+::: {.notes}
+Era two starts, honestly, with a filing problem.
+
+FSSgam began life as a function I'd written for one paper. Then people emailed asking for
+it. Then they emailed asking why it didn't work on their data. Making it a package was
+self-defence.
+
+Here's the part I think is under-said at open-science meetings: I did not go to GitHub for
+collaboration. I went because I needed a way to send someone a thing that worked, that I
+could then fix without re-emailing a zip file. The collaboration came later, and it came
+as a surprise.
+
+And `R CMD check` — I want to be sincere about this — is the most patient and least
+political reviewer I have ever worked with. It never once told me my approach was
+interesting but perhaps better suited to a specialist journal. It just told me,
+consistently, exactly what was wrong.
+
+[~85 s]
+:::
+
+---
+
+## The data most of you will never see {.smaller}
+
+::: {.columns}
+
+::: {.column width="58%"}
+Scientific literature is **white**.<br>
+Reports and theses are **grey**.
+
+::: {.punch style="text-align:left; margin-top:0.6em;"}
+Industry monitoring data is [black]{.e3}.
+:::
+
+::: {.aside style="margin-top:0.8em;"}
+One dredging campaign at Barrow Island: over **1,500 individual coral heads** scored every
+two weeks for **530 days**, alongside water quality logged every **10 minutes**.
+
+I have never seen a research grant that could fund data collection at that scale.
+:::
+
+:::
+
+::: {.column width="42%"}
+![](../assets/confidential.jpg){width="72%" fig-alt="A red CONFIDENTIAL stamp."}
+:::
+
+:::
+
+::: {.notes}
+A detour that matters for the argument.
+
+We talk about white literature — peer-reviewed papers — and grey literature — reports,
+theses, things public but not indexed. I've started calling the third tier black. It's
+industry monitoring data. Compliance data. It's real, it's enormous, it's high quality
+because a regulator is watching, and it is confidential.
+
+One example. A single capital dredging campaign at Barrow Island: over fifteen hundred
+individual coral colonies, tagged and scored every fortnight, for five hundred and thirty
+days. Water quality logged every ten minutes across three pressure pathways. No research
+funding programme I have ever seen comes close.
+
+Here's the tension, and it's the centre of my whole career: I cannot give you that data.
+I genuinely cannot.
+
+But I can give you the method. Open code is how black data becomes public good. The
+dataset stays confidential; the thing we learned to do with it doesn't.
+
+[~90 s]
+:::
+
+---
+
+## Era two, part two: the ecotoxicology pivot
+
+![](figures/no-effect-estimates.png){.fig-full fig-alt="Schematic concentration-response curve with four endpoints marked and labelled with leader lines: NEC, NSEC, EC10 and NOEC, with the pre-threshold region shaded and labelled no effect."}
+
+::: {.notes}
+Around 2020 I moved properly into statistical ecotoxicology, and hit the same shape of
+problem one level down.
+
+Remember each dot on that SSD is one species' "no effect" estimate. It turns out there are
+at least four things the field calls "no effect", and only one of them actually means it.
+
+The NEC is a genuine threshold — a parameter in a model that says below here, nothing
+happens. The NOEC is the highest concentration somebody happened to test that wasn't
+statistically distinguishable from the control — which makes it a fact about your
+experimental design, not about the organism. And the EC10 is, by definition, a 10% effect.
+We are calling a 10% effect "no effect".
+
+Whichever one your software computes becomes the input to the SSD, and therefore becomes
+the guideline value.
+
+So we built `bayesnec` — Bayesian concentration-response modelling, model averaging again,
+this time over curve shapes rather than distributions. And along the way David Fox and I
+defined a new statistic, the NSEC, because having the software made it testable. That's
+the direction of causation I want to flag: the software didn't implement the method. The
+software made the method possible.
+
+[~95 s]
+:::
+
+---
+
+## `ssdtools`: the part I did not expect {.smaller}
+
+::: {.columns}
+
+::: {.column width="55%"}
+Joint AU–CA investigation, funded by DCCEEW:
+
+::: {.arrows}
+- David Fox — Environmetrics Australia
+- Joe Thorley & Carl Schwarz — Poisson Consulting, BC
+- evaluate `ssdtools` against **Burrlioz 2.0**, the incumbent
+:::
+
+::: {.aside style="margin-top:0.7em;"}
+Benchmark datasets, plus **simulated** data with a known true value → bias and coverage.
+183-page final report.
+:::
+
+:::
+
+::: {.column width="45%"}
+
+::: {.punch style="font-size:1.15em;"}
+Recommendation:<br>adopt `ssdtools` as the [default software]{.e3}.
+:::
+
+::: {.aside style="text-align:center; margin-top:0.6em;"}
+Australia · New Zealand · Canada
+:::
+
+:::
+
+:::
+
+::: {.notes}
+And then this happened, which I still find slightly absurd.
+
+I was brought into a joint Australian–Canadian project to evaluate whether `ssdtools` — an
+open-source R package originally written by Joe Thorley and Carl Schwarz in British
+Columbia — could replace Burrlioz 2.0, which was the mandated tool in Australia. Burrlioz
+fits one distribution family. It's closed.
+
+We didn't argue about it. We benchmarked it. Real datasets, and then simulated datasets
+where we knew the true answer, so we could measure bias and coverage. `ssdtools` won. And
+notably: including *more* candidate distributions beat including fewer.
+
+That report ran to 183 pages. The recommendation was adopted. An open-source R package is
+now the default tool for deriving water quality guideline values across three
+jurisdictions, and I'm a contributor to it.
+
+[~85 s]
+:::
+
+---
+
+::: {.punch}
+You cannot get three regulators<br>to agree on a *black box*.
+:::
+
+::: {.aside .center style="margin-top:1.2em;"}
+Open source wasn't a nice-to-have here.<br>
+It was the **precondition for the agreement**.
+:::
+
+::: {.notes}
+This is the slide I'd keep if I could only keep one.
+
+The reason the Australian and Canadian experts could reach collective agreement is that
+every one of us could read the source, run the benchmarks, and disagree in public about
+specific lines of code. Try running that process on a compiled desktop application whose
+internals nobody outside the vendor can inspect. You can't. You end up arguing from
+authority.
+
+Open source in a regulatory setting isn't primarily about cost, or even reproducibility.
+It's a governance mechanism. It's what makes multi-party agreement structurally possible.
+
+And I'd add: the Shiny front end matters as much as the package. A regulator in a state
+agency is not going to write R. `shinyssdtools` is how the open method actually reaches
+the person making the decision.
+
+[~70 s]
+:::
+
+---
+
+## Thresholds have error rates {.smaller}
+
+![](figures/roc-thresholds.png){.fig-full fig-alt="Two panels. Left: overlapping control and impact distributions with two vertical thresholds marked high power and low alarm rate. Right: the corresponding ROC curve with those two operating points marked."}
+
+::: {.notes}
+[CUT THIS SLIDE FOR THE 15-MINUTE VERSION.]
+
+One more idea, briefly, because it's the thing I'd most like this audience to steal.
+
+A threshold is a decision rule, and decision rules have error rates. A false positive costs
+a proponent money. A false negative costs you a reef. Those are not symmetric and they are
+not commensurable, and almost nobody sets thresholds with that in mind.
+
+You can pick your operating point deliberately. A high-power threshold — cheap to trigger,
+tells you mortality is *possible*. A low-alarm-rate threshold — hard to trigger, tells you
+mortality is *probable*. Different management actions hang off each.
+
+The point for you: this is completely generic. Any time your software emits a threshold,
+someone downstream is making a decision with asymmetric costs, and you probably have more
+influence over that than you think.
+
+[~65 s]
+:::
+
+---
+
+::: {.divider}
+## [Part two]{.era-num} And then the AI arrived
+:::
+
+::: {.notes}
+Right. The bit you're actually here for.
+
+[~5 s]
+:::
+
+---
+
+::: {.punch}
+I have not written a line of code<br>in [about a year]{.e3}.
+:::
+
+::: {.aside .center style="margin-top:1.4em;"}
+I am roughly **five times more productive**.<br>
+Those two facts are related, but not in the way I expected.
+:::
+
+::: {.notes}
+Since subscribing to Claude Code I have essentially not written code by hand. And I'd
+estimate I'm about five times more productive.
+
+I want to be careful here, because "5×" is the kind of claim that makes a room of
+experienced developers fold their arms, and they're right to. So let me be specific about
+where it actually comes from — because it is *not* where I assumed it would be.
+
+[~40 s]
+:::
+
+---
+
+## The speed-up is not in the typing {.smaller}
+
+![](figures/where-work-goes.png){.fig-full fig-alt="Stacked bar chart comparing where effort goes before and with an AI assistant. Time spent writing code and fighting the tooling shrinks; time spent thinking about the problem, tests, documentation and packaging grows."}
+
+::: {.notes}
+Be explicit that this bar chart is my own estimate, not a measurement. Say it out loud.
+
+Typing was never the bottleneck. I could always type. Badly, but I could type.
+
+The bottleneck was that a whole category of work was, in practice, *not worth doing*. Test
+coverage on a package with one user — me. Vignettes. Refactoring something that works.
+Setting up CI. Responding properly to a CRAN note. Every one of those had a real cost and
+a diffuse benefit, and so every one of them lost, every time, to the next paper.
+
+What's actually changed is that the tax on doing it properly collapsed. The unglamorous
+work — which is precisely the work that determines whether software is still alive in five
+years — got cheap.
+
+Look at the left of that bottom bar: nearly half my time is now spent on the problem
+itself. That's the trade I made, and it is a much better one than "I type faster".
+
+[~85 s]
+:::
+
+---
+
+## What actually changed {.smaller}
+
+::: {.columns}
+
+::: {.column width="50%"}
+### Now routine
+
+::: {.arrows}
+- test suites that actually cover things
+- vignettes that stay current
+- refactoring code that works
+- CI, and fixing it when it breaks
+- responding to CRAN properly
+- reading *other people's* source
+:::
+
+:::
+
+::: {.column width="50%"}
+### Still mine
+
+::: {.arrows}
+- is this the right model?
+- is this answer plausible?
+- what would falsify it?
+- does this defend in front of a regulator?
+- what am I not being told?
+:::
+
+:::
+
+:::
+
+::: {.notes}
+Left column: things that used to lose to the next deadline, every time. They don't now.
+
+Right column: unchanged. Completely unchanged.
+
+And I'd argue the right column got *more* important, not less, because I'm now producing
+more code per unit of my own attention. The ratio of code-to-scrutiny moved in a dangerous
+direction, and the only thing holding it is domain judgement.
+
+If you take one practical thing from this talk: the statistical judgement is the moat. Not
+the syntax.
+
+[~60 s]
+:::
+
+---
+
+## The awkward symmetry {.smaller}
+
+::: {.lede}
+In 2022 I would not accept a guideline-derivation tool that I could not
+inspect, benchmark against simulated data with a known answer, and reason about.
+:::
+
+::: {.punch style="margin-top:1.0em;"}
+I do not get to lower that bar<br>because the author is now [a model]{.e3}.
+:::
+
+::: {.notes}
+Here's the thing that keeps me honest.
+
+The entire ssdtools-versus-Burrlioz exercise was me insisting on a standard of evidence:
+show me the source, show me the benchmarks, show me the bias and the coverage on data where
+we know the truth.
+
+I do not get to relax that standard just because the code was written by a model instead of
+a vendor. If anything it's more pressing, because the failure modes are less familiar and
+the output is more fluent. Fluent and wrong is a genuinely new hazard.
+
+So: same standard. Simulate. Benchmark. Check coverage. Verify against the published
+implementation. The methods I already had for interrogating someone else's software turn
+out to be exactly the methods I need for this.
+
+[~70 s]
+:::
+
+---
+
+## Provenance, out loud {.smaller}
+
+::: {.arrows}
+- every AI-assisted session in this project is **logged to `prompts/`**
+- this talk included — repo, figure code, and prompt log all versioned together
+- reproducibility now has to cover *how the code came to exist*, not just how to run it
+:::
+
+::: {.aside style="margin-top:1.0em;"}
+If we expect this of an instrument or a reagent, it is not obvious why we would not expect
+it of the thing that wrote the analysis.
+:::
+
+::: {.notes}
+Briefly, because I think this is under-discussed and this is the right room for it.
+
+I keep a prompt log. Every AI-assisted session on a project gets written to a `prompts/`
+folder in the repo — what I asked, what came back, what I then did about it. This talk
+included; it's in the repository, alongside the code that made every figure you've seen.
+
+Partly that's a publication-disclosure question. But mostly it's the same instinct as
+recording which instrument you used. Reproducibility has quietly expanded: it used to mean
+"can someone re-run this". It now also has to mean "can someone reconstruct how this came
+to exist".
+
+I don't think we've collectively worked out the right standard here. I'd rather over-record
+while we figure it out.
+
+[~55 s]
+:::
+
+---
+
+## Three things I'd tell 2012 me {.smaller}
+
+::: {.arrows}
+1. **Regulation runs on software.** Someone's package is setting a legal limit. It may as
+   well be one that can be read.
+2. **Open code is a multiplier on data you can't share.** The dataset stays confidential.
+   The method doesn't have to.
+3. **You do not need to be a programmer to start.** You need a real problem and a
+   willingness to publish the thing.
+:::
+
+::: {.punch style="margin-top:0.7em; font-size:1.15em;"}
+And: the boring work is the work.<br>
+[It just got a lot cheaper.]{.e3}
+:::
+
+::: {.notes}
+Land these deliberately. Slow down.
+
+One. Regulation runs on software, and most people writing that software have no idea of the
+blast radius. If you work in a regulated domain — health, finance, environment — go and
+find out what your code is load-bearing for. It's usually more than you think.
+
+Two. Open code is how you get public value out of data you are contractually forbidden from
+sharing. That's not a compromise position, it's the whole game in industry-partnered
+science.
+
+Three. I had no programming training. I had applied statistics and problems that mattered.
+That was enough to start, and starting badly in public beats not starting.
+
+And the last one — the unglamorous maintenance work was always the work. It just got cheap
+enough that there's no longer an excuse.
+
+[~70 s]
+:::
+
+---
+
+## Thank you {.smaller}
+
+::: {.columns}
+
+::: {.column width="55%"}
+**Rebecca Fisher**<br>
+Australian Institute of Marine Science<br>
+[r.fisher@aims.gov.au](mailto:r.fisher@aims.gov.au)
+
+::: {.aside style="margin-top:1.0em;"}
+`ssdtools` · `bayesnec` · `epower` · `FSSgam` · `ElicitN`
+:::
+
+:::
+
+::: {.column width="45%"}
+
+::: {.arrows}
+- [github.com/beckyfisher](https://github.com/beckyfisher)
+- [github.com/open-AIMS](https://github.com/open-AIMS)
+- [github.com/bcgov/ssdtools](https://github.com/bcgov/ssdtools)
+- [github.com/poissonconsulting](https://github.com/poissonconsulting)
+:::
+
+:::
+
+:::
+
+::: {.aside style="margin-top:1.2em;"}
+With: David Fox, Joe Thorley, Carl Schwarz, Diego Barneche, Gerard Ricardo, Ross Jones,
+Andrew Negri, and the AIMS Tropical Ecotoxicology & Risk Assessment team.<br>
+Barrow Island data via WAMSI Dredging Science Node (Chevron, Woodside, BHP).
+:::
+
+::: {.notes}
+Thank you. Everything's open — packages, the code behind every figure in this deck, and the
+prompt log for how the deck got made.
+
+Happy to take questions, and I'm especially interested if anyone here works on software
+that's load-bearing for a regulation and has thought about what verification should look
+like now.
+
+[~25 s]
+:::
