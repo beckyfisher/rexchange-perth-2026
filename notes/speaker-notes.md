@@ -297,14 +297,19 @@ Right. The bit you're actually here for.
 
 ---
 
-## 15 · I have not written a line of code — 40 s
+## 15 · I stopped writing code by hand — 40 s
 
-Since subscribing to Claude Code I have essentially not written code by hand. And I'd
-estimate I'm about five times more productive.
+> Check the elapsed figure before you present. First AI co-authored commit: **20 June 2026**.
+> As written this slide assumes an October delivery — say "four months".
 
-I want to be careful here, because "5×" is the kind of claim that makes a room of
-experienced developers fold their arms, and they're right to. So let me be specific about
-where it actually comes from — because it is *not* where I assumed it would be.
+I stopped writing code by hand in June. Four months ago. Since then I have essentially not
+typed a line, and I'd estimate I'm about five times more productive.
+
+Now — "5×" is the kind of claim that makes a room of experienced developers fold their arms,
+and they are right to. It's my subjective impression and I'm not going to defend the number.
+
+So instead of asking you to take it, let me show you what I *can* measure — because it turns
+out the interesting part isn't the multiplier at all.
 
 ---
 
@@ -366,6 +371,10 @@ Every person who used those features for seven years got the wrong behaviour, qu
 
 That is what the untested years actually cost. It wasn't hypothetical, and I didn't find it
 by being cleverer — I found it because writing the tests finally became cheap enough to do.
+
+And note the arithmetic. Seven years and nine months of maintenance debt, cleared in four
+days — and that was in my *first fortnight* of working this way. I hadn't got good at it. I
+had just stopped paying the tax.
 
 ---
 
@@ -453,6 +462,12 @@ like now.
 <!-- END GENERATED -->
 
 ## Anticipated questions
+
+**"How long have you been working this way?"**
+Since 20 June 2026 — about four months at the time of the talk. Which is worth saying out
+loud, because it makes the `FSSgam` slide sharper, not weaker: seven years and nine months of
+maintenance debt cleared in four days, and that was in the first fortnight. I hadn't got good
+at it. I'd just stopped paying the tax.
 
 **"Five times is a big claim — how did you measure it?"**
 The 5× is my subjective sense of overall productivity and I won't defend the number. What I

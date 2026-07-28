@@ -42,8 +42,9 @@ industry data I am not allowed to show you — `FSSgam`, `epower`, `bayesnec`, `
 where open code turned out to be the *precondition* for agreement, not a nice-to-have. You
 cannot get three regulators to sign off on a black box.
 
-Then the part I did not expect. I no longer write code by hand, and I think I am five times
-more productive. That is precisely the claim this audience should distrust, so I measured it.
+Then the part I did not expect. I stopped writing code by hand in June, and I think I am five
+times more productive. That is precisely the claim this audience should distrust, so I
+measured it.
 Across 1,340 of my own commits: tests tripled as a share of the work, packaging and CI rose
 fivefold, and source code went *down*. One package sat seven years without a single test,
 then got a suite in four days — which immediately surfaced two bugs it had shipped since
@@ -66,9 +67,9 @@ that happened: a 2012 tool that was a 57-script zip file and unreproducible with
 years; then `FSSgam`, `epower`, `bayesnec` and `ssdtools`, and the discovery that you cannot
 get three regulators to sign off on a black box.
 
-Then the part I did not expect. I no longer write code by hand and I think I am five times
-more productive — so I measured it, across 1,340 of my own commits. The speed-up is not in
-the typing, and I will show you exactly where it is.
+Then the part I did not expect. I stopped writing code by hand in June and I think I am five
+times more productive — so I measured it, across 1,340 of my own commits. The speed-up is not
+in the typing, and I will show you exactly where it is.
 
 *(147 words)*
 
@@ -117,12 +118,12 @@ GitHub: [beckyfisher](https://github.com/beckyfisher) ·
 
 ### Check before submitting
 
-- [ ] **How long have you actually been working this way?** Both abstracts now say "I no
-      longer write code by hand" without a duration, deliberately. Slide 15 of the deck
-      still says **"in about a year"** — that was my assumption, not something I verified.
-      The public commit record only shows AI co-authored commits from **20 June 2026**, and
-      the busiest pre-AI day in the same year is 1 May 2026. If the real answer is months
-      rather than a year, change slide 15; if the earlier work was private or predates the
-      co-author trailer, the slide is fine as it stands.
+- [x] ~~Duration of the AI period.~~ Confirmed by the author: **started 20 June 2026**, five
+      weeks at the time of writing. All "about a year" claims removed. Slide 15 says
+      *"in June"* and the aside says *"Four months"*, which is correct for an **October 2026**
+      delivery — **re-check that figure if the date moves**.
+- [ ] **Re-run `Rscript R/git-evidence.R` shortly before the talk.** The measured numbers on
+      slides 16–17 currently cover 20 June – 22 July 2026. By October there will be three more
+      months of evidence, and the figure and its caption update themselves from the CSVs.
 - [ ] Confirm the timeline years on `journey-timeline.png` (see the `TODO` in `R/figures.R`).
 - [ ] Add your ORCID to `CITATION.cff`.

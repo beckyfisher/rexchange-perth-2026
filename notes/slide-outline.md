@@ -68,7 +68,7 @@ one site, one campaign. Slide 7 says this explicitly, and flags forward to Route
 | 12 | `ssdtools`: the part I did not expect | Two columns | AU–CA joint evaluation vs Burrlioz. Benchmarks + simulation. Adopted. | 1:25 |
 | 13 | You cannot get three regulators to agree on a black box | Full-bleed punch line | **The keystone slide**, closing act two. Open source as governance mechanism. Shiny as the last mile. | 1:10 |
 | 14 | **Divider — Part two: And then the AI arrived** | — | Transition. | 0:05 |
-| 15 | I have not written a line of code in about a year | Full-bleed punch line | The claim, stated plainly, plus a flag that "5×" needs unpacking. | 0:40 |
+| 15 | I stopped writing code by hand in June | Full-bleed punch line | The claim, stated plainly, plus a flag that "5×" needs unpacking. **Elapsed figure assumes an October delivery — check it.** | 0:40 |
 | 16 | The speed-up is not in the typing | `where-work-goes.png` | **Measured**, from 1,340 authored commits. Tests 3×, packaging/CI 5×, source code share *down*. Say that it's measured — it's the point. | 1:25 |
 | 17 | One package, in detail | Two columns | `FSSgam`: 7 yr 9 mo with no tests and no CI, then four days. Writing the tests found two silent bugs shipping since 2018. | 1:10 |
 | 18 | What actually changed | Two columns | Now routine / still mine. Statistical judgement is the moat. | 1:00 |
@@ -132,6 +132,16 @@ not possible here. This is the main cost of the chronological order.
 
 **Never cut:** 1 (the hook), 3 (the spine), 7 (the payoff), 13 (the keystone), 16 (the
 measured mechanism of the speed-up), 21 (the take-homes).
+
+---
+
+## Things that go stale
+
+| What | Where | Why |
+|---|---|---|
+| "Four months" since June | slide 15 aside + notes | Correct for 15 Oct 2026 only. First AI co-authored commit: **20 June 2026**. |
+| The measured percentages | slides 16–17, `data/*.csv` | Cover 20 Jun – 22 Jul 2026. Re-run `Rscript R/git-evidence.R` before the talk; the figure and caption update themselves. |
+| Timeline years | `journey-timeline.png` | Reconstructed from the CV, not from CRAN metadata — see the `TODO` in `R/figures.R`. |
 
 ---
 
