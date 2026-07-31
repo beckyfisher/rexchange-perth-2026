@@ -78,6 +78,46 @@ data that cannot be shared.
 
 ---
 
+## Abstract — 300-word version {#sec-abstract-300}
+
+::: {.callout-note}
+Written to the organisers' limit (**under 300 words**). This is the one to submit.
+:::
+
+Environmental regulation runs on numbers: the turbidity trigger that stops a dredge, the
+concentration limit in a discharge licence. They have to be defensible — to a regulator, to
+a proponent, occasionally in court — and increasingly they come out of open-source R
+packages.
+
+I am a quantitative ecologist at the Australian Institute of Marine Science, with a sound
+applied grasp of statistics and no formal training in programming. This talk traces fifteen
+years of accidental software development around one question: how far did the software
+travel?
+
+Era one produced scripts, not software. `ElicitN`, published in 2012 with four co-authors,
+was 57 R scripts in a zip file, and effectively unreproducible within five years. None of us
+thought to ask whether it would still run.
+
+Era two ran as two strands that never met. One was industry monitoring data — over 1,500
+coral colonies scored fortnightly for 530 days — producing thresholds still in regulatory
+use, and code entangled with data I cannot distribute. The other was GitHub and packaging,
+`FSSgam` and `epower`: installable, public, and depended on by no regulation at all. The
+pattern is backwards. The higher the stakes, the less shareable the tooling, and I do not
+think our field has solved this.
+
+Era three was CRAN, and then `ssdtools`: jointly evaluated by Australian and Canadian
+regulators and adopted as the default for deriving water quality guideline values in three
+countries. Open source was the precondition for that agreement, because three regulators
+cannot audit a black box.
+
+It closes on the last few months. I stopped writing code by hand in June. Rather than assert
+a productivity gain I measured it across 1,340 of my own commits, and will show where the
+change actually is — it is not in the typing.
+
+*(295 words, counting each standalone em dash as a word — as Word does)*
+
+---
+
 ## Abstract — short version
 
 Environmental regulation runs on numbers: the turbidity trigger that stops a dredge, the
@@ -110,7 +150,26 @@ show where the change actually is, and which parts of the job it does not touch.
 
 ---
 
-## Speaker biography
+## Speaker biography — 100-word version {#sec-bio-100}
+
+::: {.callout-note}
+Written to the organisers' limit (**under 100 words**). This is the one to submit.
+:::
+
+Rebecca Fisher is a quantitative ecologist at the Australian Institute of Marine Science,
+with over 25 years in marine ecology and more than 100 peer-reviewed papers and technical
+reports. Her work sits at the interface of ecology, numerical modelling and quantitative
+decision science, most recently in statistical ecotoxicology and the handling of uncertainty
+in environmental risk management. She is an author or contributor to the R packages
+`ssdtools`, `bayesnec`, `epower`, `FSSgam` and `ElicitN`, and co-led the joint
+Australian–Canadian investigation that led to `ssdtools` being adopted as the default
+software for deriving water quality guideline values.
+
+*(95 words)*
+
+---
+
+## Speaker biography — long version
 
 Rebecca Fisher is a quantitative ecologist at the Australian Institute of Marine Science,
 with over 25 years of experience in marine ecology and more than 100 peer-reviewed papers
@@ -127,7 +186,7 @@ as the default software for deriving water quality guideline values.
 GitHub: [beckyfisher](https://github.com/beckyfisher) ·
 [open-AIMS](https://github.com/open-AIMS)
 
-*(140 words)*
+*(125 words, excluding the GitHub links)*
 
 ---
 
@@ -140,10 +199,15 @@ GitHub: [beckyfisher](https://github.com/beckyfisher) ·
   asking the organisers for a 25–30 minute slot** — the two-strands material and the
   unsolved-tooling problem are what make this more than a personal-journey talk, and they are
   the first things a 20-minute cut has to compress.
-- **Contact for submission:** events@epi.group — no formal call for abstracts or word limit
-  was published at the time of writing, so a ~540-word version and a ~200-word version are
-  provided. Send the short one if a limit is imposed; the long one otherwise, since the
-  three-era structure needs the room to read as description rather than as a pitch.
+- **What to submit.** The organisers have specified **under 300 words** for the abstract and
+  **under 100 words** for the bio. Send:
+  - abstract → [300-word version](#sec-abstract-300) (295 words)
+  - bio → [100-word version](#sec-bio-100) (95 words)
+
+  The other versions are kept for other uses, not for this submission: the 537-word primary
+  is the reference text the deck is built against and is worth keeping in sync; the 200-word
+  short version suits a programme entry or a tighter limit elsewhere; the 125-word bio is for
+  contexts without a cap.
 - **AV:** standard laptop + HDMI. Slides are self-contained HTML (reveal.js); no internet
   required. A `.pptx` export with speaker notes is also built.
 

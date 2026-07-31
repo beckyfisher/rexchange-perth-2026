@@ -114,3 +114,28 @@ pre-rewrite objects remain locally under `refs/original/` until deleted.
 15-minute cut.
 
 ---
+
+**User:**
+
+> I've recieved information from the organisers. Can we make a version (add another) of the
+> abstract that is <300 words and a bio that is <100 words.
+
+**Claude:** Added two new sections to `talk/abstract.qmd`, leaving the existing versions in
+place:
+
+- **Abstract — 300-word version** (295 words). Condensed from the 537-word primary rather
+  than expanded from the 200-word short one, so it keeps all three eras, the two-strands gap
+  in era two, the multi-jurisdictional `ssdtools` adoption, and the measured AI evidence.
+  What it drops relative to the primary: the named packages in era two are compressed to a
+  clause, the "domain credibility got me in the room" point, and the explicit two closing
+  take-homes.
+- **Speaker biography — 100-word version** (95 words). The existing bio, tightened, with the
+  GitHub links dropped.
+
+Word counts were measured with a whitespace-token count that treats each standalone em dash
+as a word, matching Word's behaviour — so both figures are conservative against the limits.
+
+The submission notes now state which version goes where, and why the others are kept.
+Verified both HTML and docx render.
+
+---
