@@ -32,8 +32,9 @@ body <- qmd[(yaml_ends + 1):length(qmd)]
 blocks <- split(body, cumsum(grepl("^---\\s*$", body)))
 
 clean_inline <- function(x) {
+  # Spans first: stripping every {...} first left "[Part one]" in the title.
+  x <- gsub("\\[([^]]*)\\]\\{[^}]*\\}", "\\1 ·", x)   # [Part one]{.era-num}
   x <- gsub("\\{[^}]*\\}", "", x)                     # {.smaller}, {.divider}
-  x <- gsub("\\[([^]]*)\\]\\{[^}]*\\}", "\\1", x)     # [Part one]{.era-num}
   x <- gsub("\\\\$", "", x)                           # trailing hard line break
   x <- gsub("[*_]{1,2}", "", x)                       # bold / italic
   trimws(x)

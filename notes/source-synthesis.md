@@ -16,7 +16,9 @@ every claim in `talk/index.qmd` should be traceable to something here.
 | `Abstract.docx` | Short abstract for the AIMS 50th talk | Preferred framing sentence (see below) |
 | `Rebecca_Fisher_bio_WQ.docx` | Speaker bio | Bio for the abstract submission |
 | `Cirriculum Vitae_RFisher2025.docx` | Full CV | Software list, publication chronology, employment chronology |
-| `tripple_planetary_crisis.png`, `confidential.jpg`, `stopsign.png` | Third-party clip art | **Not reused** — redrawn in `R/figures.R` so the repo carries no borrowed images |
+| `tripple_planetary_crisis.png`, `confidential.jpg`, `stopsign.png` | Third-party clip art | Not committed. The stop sign and a CONFIDENTIAL stamp were once redrawn in `R/figures.R`; both drawings were removed on 2026-10-06, and the stamp shown now is the one on `slides.pptx` slide 8, used locally from `talk/local/` |
+| `slides.pptx` (8 slides + notes) | Added by the speaker on 2026-10-06: slides gathered from her ANZG, SETAC Darwin and AIMS 50th talks | Slide 1 (blood-alcohol limit) adapted as *The legal limit*; slides 2–7 (exposure, *in situ* mortality, concentration–response, error-rate thresholds, management zones) rebuilt as the five-slide dredging sequence; slide 8 (white, grey and black literature) for that slide. Pictures extracted locally by `R/local-images.R`, never committed |
+| `SETAC AP Produced water_WET.pptx` (3 slides + notes) | Title, AIMS and team slides from the speaker's SETAC Asia-Pacific produced-water talk, on the AIMS template | Slides 2 and 3 reused as the deck's AIMS introduction; the template's title and content masters give the deck its styling (see `notes/visuals-brief.md`). Extracted locally by `R/aims-assets.R`, never committed |
 
 ### `Relevant_publication_history_pdfs/` (19 PDFs)
 
@@ -37,6 +39,23 @@ Read via a custom text extractor (see `prompts/`). The set traces the arc:
 - **2024** `Fisher_etal2024` (J. Stat. Software) — **bayesnec**.
 - **2025** `Thorley_etal2025` (JOSS) — **ssdtools v2**; `warne-etal-2025`;
   `Thomas_etal2025` — site-specific guidelines for marine microbiomes.
+
+### `Relevant_publication_history_pdfs/dredging_reports/`
+
+Added 2026-10-06: four WAMSI Dredging Science Node reports, all released under CC BY 3.0 AU unless otherwise noted.
+Text was extracted with `pdftools`; candidate figures were found from their captions and
+inspected as rendered pages.
+
+| File | What it is | Used for |
+|---|---|---|
+| `Dredging-Science-Synthesis-Report-Theme-4-…-Jones-et-al-March-2019.pdf` | Jones, Fisher, Bessell-Browne, Negri & Duckworth (2019), Theme 4 synthesis report (36 pp.) | Figure 19, the turbidity events against the possible and probable thresholds, on the dredging-thresholds slide |
+| `Fisher_etal2019_WAMSI_DSN_Theme4.9_FINAL.pdf` | Fisher, Jones & Bessell-Browne (2019), Report of Theme 4, Project 4.9 (128 pp.), including Project 4.9.4 on deriving and operationalising thresholds | Figure 6 of 4.9.4, the *Porites* time sequence, on the industry-data slide and the title slide |
+| `Fisher_etal2019_WAMSI_4.9.pdf` | An earlier version of the same Project 4.9 report (123 pp.) | Not used; the final version was preferred |
+| `Dredging-Science-Final-Report-PROJ-4.2-…-Fisher-et-al-April-2017.pdf` | Fisher et al. (2017), Project 4.2, effects of dredging on water quality | Not used. Candidate figures considered and passed over for this deck: the turbidity and light record before and during dredging, and the distance-decay plots |
+
+Other candidates seen and not used: the aggregate distance-decay plot with the impact zones
+(too dense to read on a slide, and the source decks already advise against repeating the zone
+scheme), the Pilbara monitoring-site maps, and the sediment-smothering photographs.
 
 ## Recurring themes
 
@@ -128,24 +147,90 @@ not.** That is two separate bodies of work:
 - **Guideline values** (`ssdtools`, `bayesnec`): default guideline values derived from
   laboratory toxicity estimates across many species via an SSD. ~2020 onwards.
 
-The deck now opens on a **licensed discharge** instead — which genuinely is an SSD-derived
-number, and is the speaker's own framing (ANZG deck, slide 6: *"the sewerage outflow at your
-local beach, or waste streams associated with offshore oil and gas activities"*). The
-dredging/ROC material moved to sit immediately after the black-data slide, where it belongs,
-and says explicitly that no SSD is involved.
+The `discharge-first` branch responded by opening on a licensed discharge. On `main` the talk
+names both numbers on one slide (the dredge trigger and the discharge limit), shows the
+dredging thresholds in era two, and introduces the SSD separately in era three, so the two
+routes stay apart.
 
-See `notes/slide-outline.md` §"Two routes to a regulatory number".
+See `notes/slide-outline.md` §"Routes to a regulatory number".
 
 ## What NOT to duplicate
 
 The previous decks already exist and some of this audience may have seen the ecotox
-versions. For R Exchange the *science* is the setting, not the subject. Specifically:
+versions. For R Exchange the *science* is the setting, not the subject.
 
-- Do **not** re-teach the SSD in detail (2 slides max, as a device for "this is what the
-  software computes").
-- Do **not** walk through the Barrow Island analysis. Use it only as the "black data"
-  exhibit.
-- Do **not** repeat the ZoHI/ZoMI/ZoI trigger table.
+On 2026-10-06 the speaker revised two earlier limits here. The Barrow Island analysis is now
+walked through, in five slides rebuilt from her SETAC Darwin sequence, ending on the WA EPA
+impact zones; and the SSD is built up over two slides, as in her ANZG deck. Both are short
+steps with the point written on the slide, and both serve the software argument: the first
+ends on thresholds in regulatory use whose code was never packaged, the second on the
+model averaging that `ssdtools` does and Burrlioz did not.
+
+- Do **not** repeat the ZoHI/ZoMI/ZoI trigger table; the zones appear only as the picture the
+  thresholds are projected onto.
 - **Do** reuse: the blood-alcohol analogy, the white/grey/black framing, the
   model-averaging-over-model-selection argument, and the "thresholds have error rates"
   point — all recast as *software* arguments rather than *ecotoxicology* arguments.
+
+## Corrections and checks before delivery
+
+Made on 2026-10-06 while finalising the deck for the 15-minute slot.
+
+- **Length of the `ssdtools` report.** Earlier drafts said 183 pages, with no source. The
+  ANZG deck (slide 14) says "more than 166 pages". The page count has been dropped from the
+  slide and notes.
+- **ElicitN.** Earlier notes said it produced "the first expert-based estimate of global coral
+  reef diversity". The 2015 *Current Biology* paper does not claim "first". It says expert
+  elicitation of species richness "has been previously recognized and exploited", citing
+  Appeltans et al. (2012, all marine species, "a more informal approach") and Joppa et al.
+  (2011, flowering plants), and it compares its result with an earlier coral reef estimate
+  (Knowlton et al. 2010). What it does claim is narrower: "there are no estimates for other taxa
+  that estimate uncertainty in the way we have done here". So "first" may be true for coral reefs
+  specifically, but no source here states it, and the deck does not use it. The slide shows the
+  result instead: 830,000 species (95% credible interval 550,000–1,330,000), from 97 elicitations
+  with 62 taxonomists. The author contributions record that R.F. and R.A.O. developed the
+  software. The script counts (25 statistical, 32 Tcl/Tk) and SourceForge distribution are
+  confirmed by the 2012 paper.
+- **`ssdtools` evaluation results.** Now worded from the ANZG deck (slides 11–14): the stated
+  aim was "collective agreement between the Australian and Canadian experts"; on benchmark data
+  there was no systematic difference from Burrlioz but substantial differences for individual
+  data sets; on simulated data `ssdtools` performed better, and more distributions improved its
+  estimates. The quoted outcome "collective agreement on the recommendations between ANZG and
+  ECCC" is from the speaker's notes on slide 14.
+- **The two strands of era two.** The AIMS 50th notes (slide 27) record that the Barrow Island
+  dredging and thermal-stress analysis (*Nature Communications* 2019) used FSSgam. So a
+  general package did reach the industry data; what never came back out as a reusable tool was
+  the threshold analysis. The slide wording ("code written for one project") is accurate, and
+  the anticipated questions cover the point.
+- **Talk slot.** The programme lists the talk at 2:15–2:30pm on day two, 15 minutes, with
+  questions at a session Q&A at 3:00pm. Earlier notes assumed 20 minutes in session three.
+
+## The speaker's statements, 2026-10-06
+
+Made in her review of the deck, and used on the slides on her authority. Not yet traced to a
+document in this folder.
+
+- The dredging thresholds "made it into the WA regulatory guidance documents". The WAMSI
+  reports confirm that the thresholds were derived to delineate the impact zones of the WA EPA
+  (2016) Technical Guidance on marine dredging proposals; which edition of the guidance cites
+  them is to be confirmed.
+- The Barrow Island corals were monitored every two weeks "for nearly 2 years". The earlier
+  figure of 530 days is the water quality record on her SETAC Darwin slide, and the *Porites*
+  sequence runs to day 534.
+- "I have never seen a monitoring program like it replicated, and no research funding scheme
+  would ever cover anything even vaguely close."
+- Regulators do not directly care whether code is on CRAN.
+
+`ssdtools` v2 (Thorley et al. 2025, *JOSS* 10:7492) is by Joe Thorley, Rebecca Fisher, David Fox
+and Carl Schwarz. The original package is Thorley & Schwarz (2018).
+
+## The speaker's register
+
+The narration was rewritten on 2026-10-06 to match how the speaker writes her own speaker
+notes, taken from the notes pages of the ANZG, AIMS 50th, SETAC Darwin and SETAC Asia-Pacific
+decks. Those notes are first person and explanatory: "I've been working on…", "The second area
+I want to talk about is…", "So each point in this plot represents…". They state a result and
+continue, without staged pauses, rhetorical questions or slogans. Where the speaker has a
+phrasing of her own (the blood-alcohol analogy, white, grey and black literature, "financial
+loss to a developer" against "irreversible environmental harm", "I've never seen a research
+funding program that has gotten close"), the notes use it.

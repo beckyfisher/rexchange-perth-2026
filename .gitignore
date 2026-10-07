@@ -50,3 +50,10 @@ desktop.ini
 
 /.quarto/
 **/*.quarto_ipynb
+
+# AIMS template assets (logos, Coat of Arms, AIMS photographs, staff portraits).
+# Not ours to license; extracted locally by R/aims-assets.R. See CLAUDE.md §4.
+talk/aims/
+# Pictures from the speaker's earlier slides (stock photographs, journal covers,
+# published figures), extracted by R/local-images.R. Not ours to relicense.
+talk/local/

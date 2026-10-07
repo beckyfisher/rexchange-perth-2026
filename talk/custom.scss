@@ -1,83 +1,180 @@
 /*-- scss:defaults --*/
 
-// Colours picked to match R/figures.R (`pal`), so slides and plots read as one thing.
-$accent:      #2E4057;   // deep slate — body emphasis
-$era1:        #9E9E9E;   // era 1: lone scripter
-$era2:        #1B7F79;   // era 2: packages + GitHub (AIMS-ish teal)
-$era3:        #E4572E;   // era 3: AI
+// Styling follows the AIMS presentation template (the speaker's SETAC
+// Asia-Pacific deck): AIMS blue headings in Arial, dark grey body text, a blue
+// title panel, and contour linework on content slides. The template images
+// themselves are AIMS's and are extracted locally by R/aims-assets.R into the
+// git-ignored talk/aims/.
+//
+// The era colours still match `pal` in R/figures.R, so slides and plots read as
+// one thing.
+$aims-blue:   #005B9E;   // headings, emphasis; also `pal$accent` in R/figures.R
+$accent:      $aims-blue;
+$era1:        #9E9E9E;   // era 1: scripts, not software
+$era2:        #1B7F79;   // era 2: GitHub
+$era3:        #E4572E;   // highlight, and the AI section
 $muted:       #6B7B8C;
+$text:        #333333;   // the template's body grey
 
 $body-bg:     #FFFFFF;
-$body-color:  #22282F;
-$link-color:  $era2;
+$body-color:  $text;
+$link-color:  $aims-blue;
 
-$font-family-sans-serif: "Source Sans Pro", "Segoe UI", -apple-system, sans-serif;
-$presentation-font-size-root: 34px;
-$presentation-heading-color: $accent;
+$font-family-sans-serif: Arial, Helvetica, sans-serif;
+$presentation-heading-font: Arial, Helvetica, sans-serif;
+$presentation-font-size-root: 38px;
+$presentation-heading-color: $aims-blue;
 $presentation-heading-font-weight: 700;
 
-$code-block-font-size: 0.62em;
+$code-block-font-size: 0.6em;
 
 /*-- scss:rules --*/
 
-.reveal .slides section {
+// Content slides carry the template background, whose blue strip occupies the
+// left 6% of the slide; `margin: 0` in the YAML maps the slide box onto the
+// viewport, so this padding is what keeps text clear of the strip.
+// Selector specificity is deliberate: reveal.js's print stylesheet (?print-pdf)
+// sets `html.reveal-print .reveal .slides section { padding: 0 !important }`,
+// and anything less specific than this loses to it in the PDF export.
+html .reveal .slides section.slide.level2 {
   text-align: left;
+  padding: 34px 70px 0 128px !important;
+  box-sizing: border-box;
 }
 
 .reveal h1, .reveal h2, .reveal h3 {
   text-transform: none;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
 }
 
 .reveal h2 {
-  border-bottom: 3px solid #E8ECEF;
-  padding-bottom: 0.18em;
-  margin-bottom: 0.55em;
+  font-size: 1.45em;
+  margin-bottom: 0.6em;
 }
 
-// Title slide
-#title-slide .title    { color: $accent; font-size: 1.55em; line-height: 1.1; }
-#title-slide .subtitle { color: $era2; font-weight: 400; margin-top: 0.5em; }
-#title-slide .quarto-title-authors { color: $muted; }
-
-// Section dividers. The class is set on the heading (`{.divider}`), which Quarto
-// promotes onto the enclosing <section> — do not wrap these in a fenced div, or
-// you get an empty slide before each one and orphaned speaker notes.
-.reveal section.divider h1,
-.reveal section.divider h2 {
-  border: none;
-  font-size: 2.0em;
-  margin-top: 1.2em;
-}
-.reveal section.divider .era-num {
-  display: block;
-  font-size: 0.42em;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: $muted;
+.reveal h3 {
+  font-size: 0.9em;
+  color: $aims-blue;
   margin-bottom: 0.3em;
 }
 
-// The one-line punch slide
+// Era label set above a heading: `## [Era two]{.kicker} Industry data`.
+.reveal .kicker {
+  display: block;
+  font-size: 0.42em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $muted;
+  margin-bottom: 0.35em;
+  font-weight: 700;
+}
+
+// --- Title slide ------------------------------------------------------------
+// Built by hand rather than from the YAML title so the right-hand side can take
+// a collage, as on the template's front cover. Text sits inside the blue panel,
+// which spans the left 33.6% of the background image.
+html .reveal .slides section.slide.level2.aims-title {
+  padding: 0 !important;
+}
+.reveal section.aims-title h2 {
+  position: absolute;
+  left: 54px;
+  top: 232px;
+  width: 470px;
+  color: #FFFFFF;
+  font-size: 1.36em;
+  line-height: 1.12;
+  margin: 0;
+  text-wrap: balance;
+}
+.reveal section.aims-title .title-sub {
+  position: absolute;
+  left: 54px;
+  top: 470px;
+  width: 460px;
+  color: #FFFFFF;
+  font-size: 0.82em;
+  line-height: 1.25;
+}
+.reveal section.aims-title .title-author {
+  position: absolute;
+  left: 54px;
+  top: 718px;
+  width: 470px;
+  color: #FFFFFF;
+  font-size: 0.86em;
+  font-weight: 700;
+}
+.reveal section.aims-title .title-event {
+  font-weight: 400;
+  font-size: 0.78em;
+  display: block;
+  margin-top: 0.3em;
+}
+.reveal section.aims-title img.collage {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+  margin: 0;
+}
+
+// Slides that are a single full-slide image (the two AIMS introduction
+// slides). The heading is kept in the source so the notes builder can name the
+// slide, but it is not shown.
+.reveal section.bg-only h2 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+// --- Section dividers -----------------------------------------------------
+// The class is set on the heading (`{.divider}`), which Quarto promotes onto
+// the enclosing <section>; do not wrap these in a fenced div, or you get an
+// empty slide before each one and orphaned speaker notes.
+.reveal section.divider h2 {
+  font-size: 2.0em;
+  margin-top: 1.6em;
+}
+.reveal section.divider .era-num {
+  display: block;
+  font-size: 0.4em;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: $muted;
+  margin-bottom: 0.4em;
+}
+
+// --- Text styles ------------------------------------------------------------
 .reveal .punch {
-  font-size: 1.45em;
+  font-size: 1.3em;
   font-weight: 700;
   line-height: 1.25;
-  color: $accent;
+  color: $aims-blue;
   text-align: center;
-  margin-top: 1.4em;
+  margin-top: 1.2em;
 }
 .reveal .punch em { color: $era3; font-style: normal; }
 
 .reveal .lede {
-  font-size: 1.12em;
+  font-size: 1.0em;
   line-height: 1.35;
-  color: $accent;
+  color: $aims-blue;
 }
 
-.reveal .aside {
-  font-size: 0.66em;
+// Smaller supporting text. Not called `.aside`: Quarto reserves that class and
+// moves any block carrying it to the foot of the slide.
+.reveal .minor {
+  font-size: 0.62em;
   color: $muted;
+  line-height: 1.35;
+}
+
+// Source line under a reproduced figure: what it is, where from, and the licence.
+.reveal .credit {
+  font-size: 0.42em;
+  color: $muted;
+  line-height: 1.3;
+  margin-top: 0.4em;
 }
 
 // Colour utilities, used inline to carry the three-era thread
@@ -86,30 +183,117 @@ $code-block-font-size: 0.62em;
 .e3 { color: $era3; font-weight: 700; }
 .dim { color: $muted; }
 
-// Arrow-led bullets — matches the "→" habit in the speaker's existing decks
-.reveal .arrows ul { list-style: none; margin-left: 0; }
+// Arrow-led bullets, after the "→" habit in the speaker's existing decks
+// The list is indented by the arrow's own width, so the arrow sits inside the
+// padded content area rather than over the template's blue strip.
+.reveal .arrows ul { list-style: none; margin-left: 1.2em; }
+.reveal .arrows ul li { margin-bottom: 0.25em; }
 .reveal .arrows ul li::before {
   content: "→";
-  color: $era2;
+  color: $aims-blue;
   font-weight: 700;
   margin-right: 0.5em;
   margin-left: -1.2em;
 }
 
-// Full-bleed figure slides
-.reveal .fig-full img {
-  max-height: 78vh;
+// Full-width figure slides
+// Full-width figures: `![](x.png){.fig-full}` puts the class on the <img>
+// itself. Sizing is done here rather than by Quarto's auto-stretch (turned off
+// in the YAML), which fills the remaining height regardless of width and so
+// pushed wide figures off the right edge. 1400px is the content width: 1600
+// less the 128 + 70 of slide padding.
+.reveal img.fig-full {
+  max-height: 640px;
   width: auto;
+  max-width: 1400px;
+  object-fit: contain;
   display: block;
   margin: 0 auto;
 }
 
-.reveal figcaption { font-size: 0.55em; color: $muted; }
+.reveal figcaption { font-size: 0.5em; color: $muted; }
 
-// Two-column helper spacing
 .reveal .columns { gap: 1.4em; }
 
-// Speaker-note-only cut markers (never rendered on the slide itself)
-.cut15 { display: none; }
+.reveal pre code {
+  background: #F3F6F9;
+  color: $text;
+}
 
-.reveal .footer { color: $muted; font-size: 0.5em; }
+// In live mode a per-slide empty `::: {.footer}` hides the footer on the title
+// and AIMS slides. The PDF export ignores that and draws one footer over every
+// page, including the full-slide AIMS images, so it is dropped from the PDF.
+html.reveal-print .reveal .footer {
+  display: none;
+}
+
+.reveal .footer {
+  color: $muted;
+  font-size: 0.42em;
+  left: 128px;
+  text-align: left;
+}
+.reveal .slide-number { color: $muted; }
+
+// --- Slide text -----------------------------------------------------------
+// What the speaker would otherwise say is written on the slide, built up with
+// clicks, so text is smaller than the 38px root and set as short sentences.
+.reveal .say {
+  font-size: 0.9em;
+  line-height: 1.35;
+  margin-bottom: 0.45em;
+}
+.reveal .say.arrows ul { margin-top: 0; margin-bottom: 0.45em; }
+.reveal .hl { color: $era3; font-weight: 700; }
+.reveal .lede code, .reveal .say code, .reveal .punch code {
+  color: inherit;
+  background: none;
+  font-size: 0.95em;
+}
+
+// Photographs and plots placed over the contour background
+.reveal img.photo { box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22); margin: 0; }
+.reveal img.panel {
+  background: #FFFFFF;
+  padding: 6px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+  margin: 0;
+}
+.reveal img.strip { margin: 0; }
+
+// Figures that replace one another with each click, in a .r-stack
+.reveal img.stack-fig {
+  max-height: 570px;
+  max-width: 100%;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+// White, grey and black literature: three pictures of equal height
+.reveal .lit img.lit-img {
+  height: 300px;
+  width: 100%;
+  object-fit: contain;
+  margin: 0 0 0.3em 0;
+}
+.reveal .lit .lit-black { position: relative; }
+.reveal .lit img.lit-box {
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+  width: 110px;
+  margin: 0;
+}
+.reveal .lit-white { font-weight: 700; color: #8A8A8A; }
+.reveal .lit-grey { font-weight: 700; color: #6E6E6E; }
+.reveal .lit-black-word { font-weight: 700; color: #000000; }
+
+// The two dredging thresholds, coloured as on the source figures
+.reveal .thr-possible { color: #D9A100; font-weight: 700; }
+.reveal .thr-probable { color: #D7191C; font-weight: 700; }
+
+// Package list on the CRAN slide
+.reveal .cran p { font-size: 0.95em; line-height: 1.3; margin: 0 0 0.7em 0; }
+.reveal .cran .minor { font-size: 0.66em; }
+.reveal .cran code { font-size: 0.95em; }

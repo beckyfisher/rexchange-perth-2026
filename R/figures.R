@@ -39,7 +39,7 @@ pal <- c(
   era2   = "#1B7F79",  # era 2: GitHub (AIMS teal)
   era3   = "#0F5257",  # era 3: CRAN (deeper teal — further along the same road)
   hi     = "#E4572E",  # highlight / AI accent, used for "look here"
-  accent = "#2E4057",
+  accent = "#005B9E",  # AIMS blue, matching the slide headings in custom.scss
   light  = "#C9D6DF"
 )
 
@@ -64,105 +64,95 @@ save_fig <- function(plot, name, width = 10, height = 5.6, dpi = 200) {
 }
 
 # ===========================================================================
-# 1. The journey timeline — the spine of the talk
+# 1. Code and regulation, 2010–2026
 # ===========================================================================
-# y-axis is "how far the software could travel", which is the actual argument:
-# the same person, the same statistics, but a widening blast radius.
+# The y-axis is how the code was shared: who, other than the author, could run
+# it. Regulatory use is marked separately, because the two do not line up. An
+# earlier version stacked "named in regulation" above CRAN on one axis, as if
+# regulation were the next step after CRAN. It is not: regulators use results
+# and do not ask where the code lives, and the dredging thresholds, whose code
+# never left the author's computer, are used in WA dredging guidance.
 
-reach_levels <- c(
-  "On my hard drive",
-  "Zip file on request",
-  "Public repository",
-  "On CRAN",
-  "Named in regulation"
-)
+shared_levels <- c("My own computer", "Zip file", "GitHub", "CRAN")
 
-# `hj` staggers labels left/right so points one year apart never overplot.
-#
-# The 2021 CRAN date is now verified rather than guessed: ssddata 1.0.0 was
-# published to CRAN on 2021-11-05, and bayesnec's CRAN-review commits run from
-# June to October 2021. The earlier years are still reconstructed from the CV.
-journey <- tribble(
-  ~year, ~artefact,             ~reach,                ~era,   ~hj,  ~note,
-  2010,  "CReefs scripts",      "On my hard drive",    "era1", 0.5,  "25 stats scripts + 32 tcl/tk scripts",
-  2012,  "ElicitN",             "Zip file on request", "era1", 0.5,  "with O'Leary, Low-Choy, Mengersen & Caley",
-  2018,  "FSSgam",              "Public repository",   "era2", 1.0,  "the \"simple function\" people kept asking for",
-  2019,  "epower",              "Public repository",   "era2", 0.0,  "Methods Ecol. Evol.; industry-funded",
-  2021,  "bayesnec + ssddata",  "On CRAN",             "era3", 0.5,  "both on CRAN by Nov 2021 · bayesnec in JSS 2024",
-  2024,  "ssdtools",            "Named in regulation", "era3", 1.0,  "adopted as the default for GV derivation",
-  2025,  "ssdtools v2",         "Named in regulation", "era3", 0.0,  "JOSS · AU / NZ / CA"
+# `hj` staggers labels left or right so points one year apart never overplot.
+# The 2021 CRAN date is verified: ssddata 1.0.0 was published to CRAN on
+# 2021-11-05, and bayesnec's CRAN-review commits run from June to October 2021.
+# The other years are reconstructed from the CV.
+code <- tribble(
+  ~year, ~artefact,              ~shared,           ~era,   ~hj, ~vj,  ~note,
+  2010,  "CReefs scripts",       "My own computer", "era1", 0.5, -1.2, "57 R and Tcl/Tk scripts",
+  2012,  "ElicitN",              "Zip file",        "era1", 0.5, -1.2, "on SourceForge",
+  2018,  "Dredging thresholds",  "My own computer", "era2", 0.5, -1.2, "",
+  2018,  "FSSgam",               "GitHub",          "era2", 1.0, -1.2, "",
+  2019,  "epower",               "GitHub",          "era2", 0.0, -1.2, "",
+  2021,  "bayesnec, ssddata",    "CRAN",            "era3", 1.0, -1.2, "",
+  2024,  "ssdtools",             "CRAN",            "era3", 0.5, -1.2, "",
+  2025,  "ssdtools v2",          "CRAN",            "era3", 0.0, -1.2, ""
 ) |>
   mutate(
-    reach = factor(reach, levels = reach_levels),
-    nx    = case_when(hj == 1 ~ -0.18, hj == 0 ~ 0.18, TRUE ~ 0)
+    shared = factor(shared, levels = shared_levels),
+    nx     = case_when(hj == 1 ~ -0.2, hj == 0 ~ 0.2, TRUE ~ 0)
   )
 
-# The Barrow Island dredging analysis is plotted separately, as a triangle off the
-# step line. It is not packaged software, and its reach is deliberately *low* while
-# its stakes are the highest in the talk — that non-monotonicity is the point, and
-# folding it into the step line would hide it.
-oneoff <- tibble(
-  year  = 2018,
-  reach = factor("On my hard drive", levels = reach_levels),
-  label = "Barrow Island analysis",
-  note  = "bespoke JAGS + R, never packaged"
-)
+regulation <- tribble(
+  ~year, ~shared,           ~label,                                              ~hj,
+  2018,  "My own computer", "used in WA dredging guidance",                      0.5,
+  2024,  "CRAN",            "default software for guideline values:\nAustralia, New Zealand, Canada", 0.6
+) |>
+  mutate(shared = factor(shared, levels = shared_levels))
 
-p_journey <- ggplot(journey, aes(year, as.numeric(reach))) +
-  annotate("rect", xmin = 2009, xmax = 2015.5, ymin = 0.4, ymax = 5.6,
-           fill = pal[["era1"]], alpha = 0.07) +
-  annotate("rect", xmin = 2015.5, xmax = 2020.6, ymin = 0.4, ymax = 5.6,
-           fill = pal[["era2"]], alpha = 0.07) +
-  annotate("rect", xmin = 2020.6, xmax = 2027.9, ymin = 0.4, ymax = 5.6,
-           fill = pal[["era3"]], alpha = 0.07) +
-  # Era labels describe the *artefact and how far it could travel*, not the
-  # people. ElicitN was a five-author collaboration; what was solitary was the
-  # code, not the science. "lone scripter" invited exactly the wrong reading.
-  annotate("text", x = 2012.2, y = 5.45, label = "1. scripts, not software",
-           colour = pal[["era1"]], fontface = "bold", size = 4.2, hjust = 0.5) +
-  annotate("text", x = 2018.0, y = 5.45, label = "2. GitHub",
-           colour = pal[["era2"]], fontface = "bold", size = 4.2, hjust = 0.5) +
-  annotate("text", x = 2022.2, y = 5.45, label = "3. CRAN",
-           colour = pal[["era3"]], fontface = "bold", size = 4.2, hjust = 0.5) +
-  # AI is Part two of the talk, not a fourth era — a marker, not a band. Label
-  # sits low and right, the only clear space once the 2025 labels are placed.
-  annotate("segment", x = 2026.47, xend = 2026.47, y = 0.4, yend = 5.6,
-           colour = pal[["hi"]], linetype = "22", linewidth = 0.6) +
-  annotate("text", x = 2026.62, y = 0.85, label = "AI\nJun 2026", hjust = 0,
-           colour = pal[["hi"]], fontface = "bold", size = 3.6, lineheight = 0.9) +
-  geom_step(data = journey |> arrange(year),
-            aes(year, as.numeric(reach)), colour = "grey70",
-            linewidth = 0.6, direction = "hv") +
-  geom_point(aes(colour = era), size = 4.6) +
-  geom_text(aes(x = year + nx, label = artefact, hjust = hj),
-            vjust = -1.15, size = 4.3, fontface = "bold",
-            colour = pal[["accent"]]) +
-  geom_text(aes(x = year + nx, label = note, hjust = hj),
-            vjust = 2.4, size = 3.05, colour = "grey45") +
-  # the one-off analysis behind the talk's cold open
-  geom_point(data = oneoff, aes(year, as.numeric(reach)),
-             inherit.aes = FALSE, shape = 17, size = 5, colour = pal[["hi"]]) +
-  geom_text(data = oneoff, aes(year - 0.18, as.numeric(reach), label = label),
-            inherit.aes = FALSE, hjust = 1, size = 4.1, fontface = "bold",
-            colour = pal[["hi"]]) +
-  geom_text(data = oneoff, aes(year, as.numeric(reach), label = note),
-            inherit.aes = FALSE, vjust = 2.5, size = 3.05, colour = "grey45") +
-  annotate("curve", x = 2021.4, xend = 2018.3, y = 1.42, yend = 1.09,
-           curvature = 0.3, linewidth = 0.4, colour = pal[["hi"]],
-           arrow = arrow(length = unit(0.16, "cm"), type = "closed")) +
-  annotate("text", x = 2021.6, y = 1.46, hjust = 0, size = 3.5,
-           fontface = "italic", colour = pal[["hi"]],
-           label = "the number that stops a dredge") +
-  scale_colour_manual(values = pal) +
-  scale_y_continuous(breaks = seq_along(reach_levels), labels = reach_levels,
-                     limits = c(0.4, 5.7)) +
-  scale_x_continuous(breaks = seq(2010, 2026, 2), limits = c(2009, 2027.9)) +
-  labs(x = NULL, y = NULL,
-       title = "Same statistician. Same statistics. Very different blast radius.") +
-  theme_talk() +
-  theme(panel.grid.major.x = element_blank())
+timeline_base <- function() {
+  ggplot(code, aes(year, as.numeric(shared))) +
+    annotate("rect", xmin = 2009, xmax = 2015.5, ymin = 0.4, ymax = 4.75,
+             fill = pal[["era1"]], alpha = 0.07) +
+    annotate("rect", xmin = 2015.5, xmax = 2020.6, ymin = 0.4, ymax = 4.75,
+             fill = pal[["era2"]], alpha = 0.07) +
+    annotate("rect", xmin = 2020.6, xmax = 2027.9, ymin = 0.4, ymax = 4.75,
+             fill = pal[["era3"]], alpha = 0.07) +
+    annotate("text", x = 2012.25, y = 4.62, label = "1. scripts",
+             colour = pal[["era1"]], fontface = "bold", size = 4.4) +
+    annotate("text", x = 2018.05, y = 4.62, label = "2. GitHub",
+             colour = pal[["era2"]], fontface = "bold", size = 4.4) +
+    annotate("text", x = 2022.6, y = 4.62, label = "3. CRAN",
+             colour = pal[["era3"]], fontface = "bold", size = 4.4) +
+    # AI is the second part of the talk, not a fourth era: a marker, not a band
+    annotate("segment", x = 2026.47, xend = 2026.47, y = 0.4, yend = 4.75,
+             colour = pal[["hi"]], linetype = "22", linewidth = 0.6) +
+    annotate("text", x = 2026.62, y = 2.0, label = "AI\nJune\n2026", hjust = 0,
+             colour = pal[["hi"]], fontface = "bold", size = 3.7,
+             lineheight = 0.9) +
+    geom_point(aes(colour = era), size = 5) +
+    geom_text(aes(x = year + nx, label = artefact, hjust = hj, vjust = vj),
+              size = 4.6, fontface = "bold", colour = pal[["accent"]]) +
+    geom_text(aes(x = year + nx, label = note, hjust = hj),
+              vjust = 2.5, size = 3.4, colour = "grey45") +
+    scale_colour_manual(values = pal) +
+    scale_y_continuous(breaks = seq_along(shared_levels),
+                       labels = shared_levels, limits = c(0.4, 4.75)) +
+    scale_x_continuous(breaks = seq(2010, 2026, 2), limits = c(2009, 2027.9)) +
+    labs(x = NULL, y = NULL, title = "How the code was shared") +
+    theme_talk(base_size = 16) +
+    theme(panel.grid.major.x = element_blank(),
+          plot.title = element_text(colour = "grey35", face = "plain",
+                                    size = rel(0.9)),
+          axis.text.y = element_text(size = rel(1.05)))
+}
 
-save_fig(p_journey, "journey-timeline.png", width = 12, height = 6.2)
+# Two versions on the same canvas, so the slide can add the regulatory marks
+# with a click and nothing else on the plot shifts.
+p_timeline <- timeline_base()
+p_timeline_reg <- timeline_base() +
+  geom_point(data = regulation, aes(year, as.numeric(shared)),
+             inherit.aes = FALSE, shape = 21, size = 11, stroke = 1.6,
+             colour = pal[["hi"]], fill = NA) +
+  geom_text(data = regulation,
+            aes(year, as.numeric(shared), label = label, hjust = hj),
+            inherit.aes = FALSE, vjust = 1.9, nudge_y = -0.18, size = 3.9,
+            fontface = "bold", colour = pal[["hi"]], lineheight = 0.95)
+
+save_fig(p_timeline, "code-timeline.png", width = 10.5, height = 4.9)
+save_fig(p_timeline_reg, "code-timeline-regulation.png", width = 10.5, height = 4.9)
 
 # ===========================================================================
 # 2. The SSD: what the software actually computes
@@ -186,39 +176,8 @@ pred_each <- lapply(dists, function(d) {
 # order, so do not sort first.
 pts <- boron |> mutate(prop = ssd_ecd_data(boron))
 
-p_ssd <- ggplot() +
-  geom_line(data = pred_each, aes(est, proportion, group = dist),
-            colour = pal[["light"]], linewidth = 0.7) +
-  geom_line(data = pred_ma, aes(est, proportion),
-            colour = pal[["accent"]], linewidth = 1.5) +
-  geom_point(data = pts, aes(Conc, prop), size = 2.6, colour = "grey25") +
-  # -Inf would be log(-Inf) = NaN on a log10 axis and the segment would be dropped,
-  # so anchor the guide lines to finite values just outside the data range.
-  geom_segment(aes(x = min(pred_each$est) * 0.8, xend = hc5$est,
-                   y = 0.05, yend = 0.05),
-               colour = pal[["hi"]], linetype = "22", linewidth = 0.7) +
-  geom_segment(aes(x = hc5$est, xend = hc5$est, y = 0, yend = 0.05),
-               colour = pal[["hi"]], linetype = "22", linewidth = 0.7) +
-  annotate("point", x = hc5$est, y = 0.05, size = 4, colour = pal[["hi"]]) +
-  annotate("text", x = hc5$est * 0.75, y = 0.30,
-           label = paste0("PC95 = ", signif(hc5$est, 3), " mg/L"),
-           colour = pal[["hi"]], size = 4.6, fontface = "bold", hjust = 0.5) +
-  annotate("text", x = 400, y = 0.35,
-           label = paste0(n_dist, " candidate\ndistributions"),
-           colour = "grey55", size = 3.8, hjust = 0.5, lineheight = 0.95) +
-  scale_x_log10(labels = comma_signif) +
-  scale_y_continuous(labels = percent, limits = c(0, 1)) +
-  labs(x = "Concentration (mg/L)", y = "Proportion of species affected",
-       title = "The species sensitivity distribution",
-       subtitle = "Each point is one species. The number you read off the curve becomes the guideline value.",
-       caption = "CCME boron data, shipped with {ssddata}. Thin lines are single-distribution fits over the BCANZ set; the bold line is the model average.") +
-  theme_talk()
-
-save_fig(p_ssd, "ssd-model-average.png", width = 10.5, height = 6)
-
-# --- 2b. why model averaging: the same data, several answers ----------------
-# This is the "which model do you fit?" slide, made concrete.
-
+# PC95 from each single-distribution fit, for the build-up below and for the
+# backup slide in 2b.
 hc_each <- lapply(dists, function(d) {
   f <- ssd_fit_dists(boron, dists = d)
   tibble(dist = d, hc5 = ssd_hc(f, proportion = 0.05, ci = FALSE)$est)
@@ -230,6 +189,81 @@ hc_each <- lapply(dists, function(d) {
     dist  = forcats::fct_reorder(dist, hc5)
   )
 
+# --- 2a. the SSD, built up in five steps ------------------------------------
+# One figure per click, on identical axes and canvas, so that stepping through
+# them on the slide reads as one plot gaining layers. That is how the speaker's
+# ANZG deck teaches the SSD. The first single fit shown is the log-normal.
+
+one_dist <- "lnorm"
+pred_one <- pred_each |> filter(dist == one_dist)
+hc_one   <- hc_each$hc5[hc_each$dist == one_dist]
+hc_range <- range(hc_each$hc5[!hc_each$is_ma])
+x_lim    <- c(min(pred_each$est) * 0.8, max(pred_each$est))
+
+pc95_mark <- function(x, label, colour = pal[["hi"]]) {
+  list(
+    # -Inf would be log(-Inf) = NaN on a log10 axis and the segment would be
+    # dropped, so the guide lines start at the left limit instead.
+    annotate("segment", x = x_lim[1], xend = x, y = 0.05, yend = 0.05,
+             colour = colour, linetype = "22", linewidth = 0.8),
+    annotate("segment", x = x, xend = x, y = 0, yend = 0.05,
+             colour = colour, linetype = "22", linewidth = 0.8),
+    annotate("point", x = x, y = 0.05, size = 4.4, colour = colour),
+    annotate("text", x = x_lim[1] * 1.1, y = 0.14, label = label,
+             colour = colour, size = 5.4, fontface = "bold", hjust = 0,
+             vjust = 0, lineheight = 0.95)
+  )
+}
+
+ssd_canvas <- function(...) {
+  ggplot() +
+    list(...) +
+    geom_point(data = pts, aes(Conc, prop), size = 3, colour = "grey25") +
+    scale_x_log10(labels = comma_signif, limits = x_lim) +
+    scale_y_continuous(labels = percent, limits = c(0, 1)) +
+    labs(x = "Concentration (mg/L)", y = "Proportion of species affected",
+         caption = "CCME boron data, shipped with {ssddata}.") +
+    theme_talk(base_size = 17)
+}
+
+ssd_steps <- list(
+  ssd_canvas(),
+  ssd_canvas(
+    geom_line(data = pred_one, aes(est, proportion), colour = pal[["accent"]],
+              linewidth = 1.5)
+  ),
+  ssd_canvas(
+    geom_line(data = pred_one, aes(est, proportion), colour = pal[["accent"]],
+              linewidth = 1.5),
+    pc95_mark(hc_one, paste0("PC95 = ", signif(hc_one, 3), " mg/L"))
+  ),
+  ssd_canvas(
+    geom_line(data = pred_each, aes(est, proportion, group = dist),
+              colour = pal[["accent"]], linewidth = 0.8, alpha = 0.6),
+    annotate("segment", x = hc_range[1], xend = hc_range[2], y = 0.05,
+             yend = 0.05, colour = pal[["hi"]], linewidth = 2.2),
+    annotate("text", x = x_lim[1] * 1.1, y = 0.14,
+             label = paste0("PC95 from ", signif(hc_range[1], 3), "\nto ",
+                            signif(hc_range[2], 3), " mg/L"),
+             colour = pal[["hi"]], size = 5.4, fontface = "bold", hjust = 0,
+             vjust = 0, lineheight = 0.95)
+  ),
+  ssd_canvas(
+    geom_line(data = pred_each, aes(est, proportion, group = dist),
+              colour = pal[["light"]], linewidth = 0.8),
+    geom_line(data = pred_ma, aes(est, proportion), colour = pal[["accent"]],
+              linewidth = 1.7),
+    pc95_mark(hc5$est, paste0("PC95 = ", signif(hc5$est, 3), " mg/L\n(model average)"))
+  )
+)
+
+for (i in seq_along(ssd_steps)) {
+  save_fig(ssd_steps[[i]], sprintf("ssd-step-%d.png", i), width = 9, height = 5.6)
+}
+
+# --- 2b. why model averaging: the same data, several answers ----------------
+# This is the "which model do you fit?" backup slide, made concrete.
+
 spread_x <- max(hc_each$hc5) / min(hc_each$hc5)
 
 p_spread <- ggplot(hc_each, aes(hc5, dist, colour = is_ma)) +
@@ -240,11 +274,10 @@ p_spread <- ggplot(hc_each, aes(hc5, dist, colour = is_ma)) +
   scale_colour_manual(values = c(`FALSE` = pal[["light"]], `TRUE` = pal[["hi"]])) +
   scale_x_continuous(expand = expansion(mult = c(0, 0.18))) +
   labs(x = "PC95 guideline value (mg/L)", y = NULL,
-       title = paste0("Same data. ", n_dist,
-                      " defensible distributions. ", n_dist,
-                      " different answers."),
+       title = paste0("PC95 from each of ", n_dist,
+                      " distributions fitted to the same data"),
        subtitle = paste0("A ", round(spread_x, 1),
-                         "\u00d7 spread, and no theoretical basis for choosing one \u2192 so don't. Average over them, weighted."),
+                         "-fold spread, with no theoretical basis for choosing one distribution \u2192 average over them, weighted by AICc."),
        caption = "CCME boron data. Each row is a single-distribution fit; the highlighted row is the AICc-weighted model average.") +
   theme_talk() +
   theme(panel.grid.major.y = element_blank())
@@ -299,8 +332,8 @@ p_cr <- ggplot(cr, aes(conc, resp)) +
   scale_y_continuous(limits = c(0, 126), breaks = c(0, 50, 100)) +
   scale_x_continuous(expand = expansion(mult = c(0.01, 0.04))) +
   labs(x = "Concentration", y = "Response (% of control)",
-       title = "Four ways to say \"no effect\". Only one of them means it.",
-       subtitle = "Whichever your software computes becomes the input to the SSD \u2014 and so becomes the guideline value.",
+       title = "Estimates of \"no effect\"",
+       subtitle = "Only the NEC estimates a concentration below which no effect is predicted.\nWhichever estimate is used becomes an input to the SSD.",
        caption = "Schematic. Definitions after Warne et al. 2015; NSEC after Fisher & Fox (2023) Environ. Toxicol. Chem. 42:2019.") +
   theme_talk()
 
@@ -357,8 +390,8 @@ p_roc <- ggplot(roc, aes(fp, tp)) +
              size = 4.4, colour = pal[["hi"]]) +
   scale_x_continuous(labels = percent) +
   scale_y_continuous(labels = percent) +
-  labs(x = "False positive rate  (type I \u2192 cost to the developer)",
-       y = "True positive rate  (1 \u2212 type II \u2192 cost to the environment)",
+  labs(x = "False positive rate  (type I error \u2192 financial loss to the developer)",
+       y = "True positive rate  (1 \u2212 type II error)",
        title = "Pick the point that matches the decision",
        caption = "Schematic, after Fisher et al. (2018) J. Appl. Ecol. 55:415.") +
   theme_talk()
@@ -395,7 +428,7 @@ p_work <- ggplot(work, aes(share, era, fill = category)) +
   geom_col(width = 0.5, colour = "white", linewidth = 0.8) +
   geom_text(aes(label = ifelse(share >= 7, paste0(round(share), "%"), "")),
             position = position_stack(vjust = 0.5),
-            size = 3.4, colour = "white", fontface = "bold") +
+            size = 4.2, colour = "white", fontface = "bold") +
   scale_fill_manual(values = c(
     "Source code"               = pal[["accent"]],
     "Documentation (generated)" = pal[["era2"]],
@@ -407,8 +440,8 @@ p_work <- ggplot(work, aes(share, era, fill = category)) +
   scale_x_continuous(labels = percent_format(scale = 1),
                      expand = expansion(mult = c(0, 0.02))) +
   labs(x = NULL, y = NULL,
-       title = "The speed-up is not in the typing",
-       subtitle = "Share of files touched, by what the file is for. Tests 3\u00d7. Packaging and CI 5\u00d7. Source code, proportionally, down.",
+       title = "Share of files changed, by what each file is for",
+       subtitle = "Commits before 20 June 2026, and commits made with an AI assistant since.",
        caption = paste0(
          "Measured, not estimated: every commit I authored across ",
          length(strsplit(fact("repos_analysed"), ";")[[1]]),
@@ -425,45 +458,68 @@ p_work <- ggplot(work, aes(share, era, fill = category)) +
                                    size = rel(1.05)),
         legend.position = "bottom",
         legend.title = element_blank(),
-        legend.text = element_text(size = rel(0.78)),
+        legend.text = element_text(size = rel(0.85)),
         legend.key.size = unit(0.9, "lines"),
-        plot.caption = element_text(size = rel(0.62)))
+        plot.caption = element_text(size = rel(0.66)))
 
-save_fig(p_work, "where-work-goes.png", width = 11.5, height = 5.4)
+# Sized smaller than the other full-slide figures so that, scaled up to the
+# slide, the bar labels and legend are legible from the back of a room.
+save_fig(p_work, "where-work-goes.png", width = 9.6, height = 4.9)
 
 # ===========================================================================
-# 6. Two small graphics, drawn rather than borrowed
+# 6. Title-slide panel
 # ===========================================================================
-# The deck originally used clip-art for these. Third-party images of unknown
-# provenance are fine on a slide you present once and awkward in a public
-# repository, so they are generated here instead. Nothing to attribute, nothing
-# to license, and they match the deck's palette.
+# The template's front cover has a collage of photographs and plots beside the
+# title. At collage size a plot's title and caption are unreadable, so this is
+# the boron SSD from section 2 with the text removed.
 
-octagon <- function(r = 1) {
-  a <- seq(pi / 8, 2 * pi + pi / 8, length.out = 9)
-  data.frame(x = r * cos(a), y = r * sin(a))
-}
+p_title_ssd <- ggplot() +
+  geom_line(data = pred_each, aes(est, proportion, group = dist),
+            colour = pal[["light"]], linewidth = 0.8) +
+  geom_line(data = pred_ma, aes(est, proportion),
+            colour = pal[["accent"]], linewidth = 1.6) +
+  geom_point(data = pts, aes(Conc, prop), size = 2.4, colour = "grey25") +
+  annotate("point", x = hc5$est, y = 0.05, size = 3.6, colour = pal[["hi"]]) +
+  scale_x_log10(labels = comma_signif) +
+  scale_y_continuous(labels = percent, limits = c(0, 1)) +
+  labs(x = "Concentration (mg/L)", y = "Species affected") +
+  theme_talk(base_size = 14)
 
-# ggplot text `size` is millimetres of font height, so it does not scale with the
-# figure — these values are tuned to the width/height passed to save_fig() below
-# and need re-tuning if those change.
-p_stop <- ggplot(octagon(), aes(x, y)) +
-  geom_polygon(fill = "#C1272D", colour = "white", linewidth = 3) +
-  annotate("text", x = 0, y = 0, label = "STOP", colour = "white",
-           fontface = "bold", size = 13, family = "sans") +
-  coord_equal(xlim = c(-1.08, 1.08), ylim = c(-1.08, 1.08)) +
-  theme_void()
+save_fig(p_title_ssd, "title-ssd.png", width = 6, height = 4)
 
-save_fig(p_stop, "stop-sign.png", width = 3, height = 3, dpi = 220)
+# ===========================================================================
+# 7. Coral reef species richness, the result ElicitN was built for
+# ===========================================================================
+# Redrawn from the numbers published in Fisher et al. (2015) Current Biology
+# 25:500, rather than reproduced: the published figure is Elsevier copyright.
+# The paper shows each estimate as an elicited density; here each is its point
+# estimate and 95% credible interval, which are the values the text reports.
 
-p_conf <- ggplot() +
-  annotate("rect", xmin = -1, xmax = 1, ymin = -0.30, ymax = 0.30,
-           fill = NA, colour = "#C1272D", linewidth = 1.8) +
-  annotate("text", x = 0, y = 0, label = "CONFIDENTIAL", colour = "#C1272D",
-           fontface = "bold", size = 8.5, family = "sans") +
-  coord_equal(xlim = c(-1.15, 1.15), ylim = c(-0.5, 0.5)) +
-  theme_void()
+reef <- tribble(
+  ~part,                     ~est,   ~lo,    ~hi,
+  "Named",                    70000,  60000,  90000,
+  "Discovered but unnamed",  110000,  80000, 170000,
+  "Undiscovered",            620000, 370000, 1140000,
+  "Total",                   830000, 550000, 1330000
+) |>
+  mutate(part = factor(part, levels = rev(part)),
+         total = part == "Total")
 
-save_fig(p_conf, "confidential-stamp.png", width = 4.2, height = 1.9, dpi = 220)
+p_reef <- ggplot(reef, aes(est, part, colour = total)) +
+  geom_segment(aes(x = lo, xend = hi, yend = part), linewidth = 2.2,
+               alpha = 0.45) +
+  geom_point(size = 5) +
+  geom_text(aes(label = comma(est)), vjust = -1.1, size = 5,
+            fontface = "bold", show.legend = FALSE) +
+  scale_colour_manual(values = c(`FALSE` = pal[["era2"]], `TRUE` = pal[["accent"]])) +
+  scale_x_continuous(labels = comma, limits = c(0, 1.4e6),
+                     breaks = c(0, 5e5, 1e6)) +
+  labs(x = "Species on coral reefs worldwide", y = NULL,
+       caption = "Fisher et al. (2015) Curr. Biol. 25:500. Estimates and\n95% credible intervals from 62 taxonomists.") +
+  theme_talk(base_size = 17) +
+  theme(panel.grid.major.y = element_blank(),
+        axis.text.y = element_text(colour = "grey25", size = rel(0.95)))
+
+save_fig(p_reef, "reef-richness.png", width = 6.2, height = 4.1)
 
 message("\nAll figures written to ", normalizePath(fig_dir))

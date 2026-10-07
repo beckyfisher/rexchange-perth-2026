@@ -55,17 +55,32 @@ jobs:
       # repositories and its output changes as those repos gain commits, which
       # would make the staleness check below fail for reasons unrelated to this
       # repo. Regenerate data/*.csv by hand when you want fresher numbers.
+
+      # Proves the figure script runs. Its PNGs are not compared with the
+      # committed ones: the same code renders different bytes on Ubuntu and on
+      # the author's Windows machine (fonts, anti-aliasing), so a byte check on
+      # talk/figures failed on every push regardless of whether anything changed.
       - name: Build figures
         run: Rscript R/figures.R
+
+      # The AIMS template assets are not in the repository (CLAUDE.md §4). With
+      # no source deck present, this writes labelled placeholders so the deck
+      # still renders; it needs base R only.
+      - name: Write placeholder AIMS assets
+        run: Rscript R/aims-assets.R
+
+      # Likewise the pictures from the speaker's earlier slides (talk/local/).
+      - name: Write placeholder local pictures
+        run: Rscript R/local-images.R
 
       - name: Rebuild speaker notes from the deck
         run: Rscript R/build-speaker-notes.R
 
-      - name: Fail if generated files are stale
+      - name: Fail if the speaker notes are stale
         run: |
-          if [ -n "$(git status --porcelain talk/figures notes/speaker-notes.md)" ]; then
-            echo "::error::Generated files are out of date. Run 'Rscript R/figures.R' and 'Rscript R/build-speaker-notes.R', then commit the result."
-            git --no-pager diff --stat talk/figures notes/speaker-notes.md
+          if [ -n "$(git status --porcelain notes/speaker-notes.md)" ]; then
+            echo "::error::notes/speaker-notes.md is out of date. Run 'Rscript R/build-speaker-notes.R' and commit the result."
+            git --no-pager diff --stat notes/speaker-notes.md
             exit 1
           fi
 
