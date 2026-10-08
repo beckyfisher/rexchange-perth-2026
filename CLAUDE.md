@@ -25,16 +25,20 @@ Assume they are technically strong and know nothing about ecotoxicology.
 **Speaker:** Dr Rebecca Fisher, quantitative ecologist / ecological risk assessment
 modeller, Australian Institute of Marine Science (AIMS).
 
-**Talk length: 15 minutes.** The programme fixes it; earlier drafts were built for 20. The
-timing markers in the notes on `main` add to about 14 minutes at 140 words a minute, and the
-speaker talks faster than that. Keep it there: a slide added means time taken elsewhere.
+**Talk length: 15 minutes.** The programme fixes it; earlier drafts were built for 20. On
+`main` the timing markers in the notes add to about 12.5 minutes, and the words on the slides
+and in the notes to about 14.8 minutes at 140 words a minute (13.0 at 160). The speaker talks
+faster than 140, and the rest of the slot goes on explaining the figures. Keep it there: a slide added means time
+taken elsewhere.
 
 **The abstract, title and bio are fixed.** They are published in the programme. Do not edit
 the submitted text in `talk/abstract.qmd`; the deck has to deliver what it promises.
 
-**Two versions.** `main` is the version to be presented: AIMS template, 15 minutes,
+**Versions.** `main` is the version to be presented: AIMS template, 15 minutes,
 chronological. The `discharge-first` branch is an earlier 20-minute cut that has not been
-updated. Do not delete either without asking.
+updated. The `pre-review-2026-10-06` branch is the AIMS-template deck as the speaker first
+reviewed it; it was never committed at the time and was recovered on 2026-10-07 from Claude
+Code's saved file copies. Do not delete any of them without asking.
 
 **Do not conflate the two routes to a regulatory number.** The dredging thresholds
 (Fisher et al. 2018, *J. Appl. Ecol.* 55:415) come from *in situ* dose–response plus ROC
@@ -106,8 +110,17 @@ Ask before adding to it. The two local-only scripts also use `pdftools` and `mag
 - **The slides hold what is said.** The speaker does not want to read from notes (2026-10-06).
   Put what she would say on the slide as short text, built up with clicks, with the final point
   on its own click; the notes hold only the sentences that join the slides. More slides are
-  acceptable, because she speaks quickly. Where a picture changes with a click, stack versions
-  drawn on identical canvases in a `.r-stack`.
+  acceptable, because she speaks quickly, but not for the science: on 2026-10-07 she judged a
+  five-slide dredging build and a two-slide SSD build too long, and each was cut to one slide
+  with its steps as clicks. Later that day she judged the animation overdone: keep builds to a
+  few clicks, and where she prefers an earlier slide shown complete (the SSD and the `ssdtools`
+  evaluation), its narration stays in the notes. Where a picture changes with a click, stack
+  versions drawn on identical canvases in a `.r-stack`.
+- **She reviews in the PowerPoint handout** and edits the speaker notes there. Before
+  re-running `R/export-deck.R`, which overwrites it, copy her file to `superceded/`, read each
+  page's notes, and carry her edits into the `::: {.notes}` blocks. Each page's notes repeat
+  the slide's earlier clicks and include the slide text in bold, so an edit can sit on any page
+  of a build. The comments she sends number pages of the handout, one per click, not slides.
 - **The narration is in the speaker's own register,** taken from her speaker notes in the
   earlier decks and described in `notes/source-synthesis.md` §"The speaker's register": first
   person, explanatory, no staged pauses, rhetorical questions or slogans. The parent

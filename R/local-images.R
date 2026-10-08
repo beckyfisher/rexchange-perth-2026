@@ -30,6 +30,11 @@ dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 # B of group A, and "A+B" exports A and B grouped, so a white mask or label
 # drawn over a plot stays in place. `w` and `h` are the size on the source slide
 # in points, used only to give a placeholder the right shape.
+# Since 2026-10-07 the deck uses neither the slide 1 pictures, nor the slide 2
+# and 3 pictures, nor cr-triangle and epa-guidance. They are still exported,
+# because they belong to the blood-alcohol slide and the five-slide dredging
+# build in commit 1336127, and those can then be restored from the commit
+# without changing this script.
 manifest <- read.csv(text = "
 slide,shapes,file,w,h
 1,Group 25/Picture 8,breath-test.jpg,187,124

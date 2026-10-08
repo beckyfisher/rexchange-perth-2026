@@ -98,7 +98,9 @@ code <- tribble(
 regulation <- tribble(
   ~year, ~shared,           ~label,                                              ~hj,
   2018,  "My own computer", "used in WA dredging guidance",                      0.5,
-  2024,  "CRAN",            "default software for guideline values:\nAustralia, New Zealand, Canada", 0.6
+  # Three lines, so the label is narrow enough to clear "epower" on its left
+  # and the AI marker on its right.
+  2024,  "CRAN",            "default software for\nguideline values: Australia,\nNew Zealand, Canada", 0.57
 ) |>
   mutate(shared = factor(shared, levels = shared_levels))
 
@@ -192,7 +194,8 @@ hc_each <- lapply(dists, function(d) {
 # --- 2a. the SSD, built up in five steps ------------------------------------
 # One figure per click, on identical axes and canvas, so that stepping through
 # them on the slide reads as one plot gaining layers. That is how the speaker's
-# ANZG deck teaches the SSD. The first single fit shown is the log-normal.
+# ANZG deck teaches the SSD. The first single fit shown is the log-normal. Not
+# used by the deck since 2026-10-07; see 2c.
 
 one_dist <- "lnorm"
 pred_one <- pred_each |> filter(dist == one_dist)
@@ -260,6 +263,43 @@ ssd_steps <- list(
 for (i in seq_along(ssd_steps)) {
   save_fig(ssd_steps[[i]], sprintf("ssd-step-%d.png", i), width = 9, height = 5.6)
 }
+
+# --- 2c. the SSD on one slide ------------------------------------------------
+# Points, every candidate distribution and the model average in one figure. The
+# deck uses this one: on 2026-10-07 the speaker judged the step-by-step build in
+# 2a too much animation and went back to this single slide. The steps are still
+# written so that the build in commit 1336127 can be restored without changing
+# this script.
+
+p_ssd <- ggplot() +
+  geom_line(data = pred_each, aes(est, proportion, group = dist),
+            colour = pal[["light"]], linewidth = 0.7) +
+  geom_line(data = pred_ma, aes(est, proportion),
+            colour = pal[["accent"]], linewidth = 1.5) +
+  geom_point(data = pts, aes(Conc, prop), size = 2.6, colour = "grey25") +
+  # -Inf would be log(-Inf) = NaN on a log10 axis and the segment would be dropped,
+  # so anchor the guide lines to finite values just outside the data range.
+  geom_segment(aes(x = min(pred_each$est) * 0.8, xend = hc5$est,
+                   y = 0.05, yend = 0.05),
+               colour = pal[["hi"]], linetype = "22", linewidth = 0.7) +
+  geom_segment(aes(x = hc5$est, xend = hc5$est, y = 0, yend = 0.05),
+               colour = pal[["hi"]], linetype = "22", linewidth = 0.7) +
+  annotate("point", x = hc5$est, y = 0.05, size = 4, colour = pal[["hi"]]) +
+  annotate("text", x = hc5$est * 0.75, y = 0.30,
+           label = paste0("PC95 = ", signif(hc5$est, 3), " mg/L"),
+           colour = pal[["hi"]], size = 4.6, fontface = "bold", hjust = 0.5) +
+  annotate("text", x = 400, y = 0.35,
+           label = paste0(n_dist, " candidate\ndistributions"),
+           colour = "grey55", size = 3.8, hjust = 0.5, lineheight = 0.95) +
+  scale_x_log10(labels = comma_signif) +
+  scale_y_continuous(labels = percent, limits = c(0, 1)) +
+  labs(x = "Concentration (mg/L)", y = "Proportion of species affected",
+       title = "The species sensitivity distribution",
+       subtitle = "Each point is the toxicity estimate for one species. The concentration read off the curve becomes the guideline value.",
+       caption = "CCME boron data, shipped with {ssddata}. Thin lines are single-distribution fits over the BCANZ set; the bold line is the model average.") +
+  theme_talk()
+
+save_fig(p_ssd, "ssd-model-average.png", width = 10.5, height = 6)
 
 # --- 2b. why model averaging: the same data, several answers ----------------
 # This is the "which model do you fit?" backup slide, made concrete.
@@ -521,5 +561,29 @@ p_reef <- ggplot(reef, aes(est, part, colour = total)) +
         axis.text.y = element_text(colour = "grey25", size = rel(0.95)))
 
 save_fig(p_reef, "reef-richness.png", width = 6.2, height = 4.1)
+
+# ===========================================================================
+# 8. Stop sign, drawn rather than borrowed
+# ===========================================================================
+# For the slide "Numbers in environmental regulation". The earlier decks used
+# clip art here. A third-party image of unknown provenance is fine on a slide
+# presented once and awkward in a public repository, so it is generated instead.
+
+octagon <- function(r = 1) {
+  a <- seq(pi / 8, 2 * pi + pi / 8, length.out = 9)
+  data.frame(x = r * cos(a), y = r * sin(a))
+}
+
+# ggplot text `size` is millimetres of font height, so it does not scale with the
+# figure: these values are tuned to the width/height passed to save_fig() below
+# and need re-tuning if those change.
+p_stop <- ggplot(octagon(), aes(x, y)) +
+  geom_polygon(fill = "#C1272D", colour = "white", linewidth = 3) +
+  annotate("text", x = 0, y = 0, label = "STOP", colour = "white",
+           fontface = "bold", size = 13, family = "sans") +
+  coord_equal(xlim = c(-1.08, 1.08), ylim = c(-1.08, 1.08)) +
+  theme_void()
+
+save_fig(p_stop, "stop-sign.png", width = 3, height = 3, dpi = 220)
 
 message("\nAll figures written to ", normalizePath(fig_dir))

@@ -10,7 +10,9 @@
 #   fisher-rexchange-perth-2026.html  the deck itself, self-contained
 #   fisher-rexchange-perth-2026.pdf   one page per click
 #   fisher-rexchange-perth-2026.pptx  one full-slide picture per click, with the
-#                                     speaker notes in PowerPoint's notes pane
+#                                     speaker notes in PowerPoint's notes pane:
+#                                     the text on the slide in bold, and the
+#                                     narration, up to and including that click
 #
 # Why pictures in the PowerPoint: Quarto's own pptx writer cannot use the
 # reveal.js theme, so its output had none of the AIMS styling on content slides
@@ -126,52 +128,116 @@ note_paragraphs <- function(lines) {
   paras[nzchar(paras)]
 }
 
-# Notes for each printed page of a slide. Each "> Click" direction starts the
-# next page, so a page shows only what is said at that click; the timing goes on
-# the slide's first page.
-page_notes <- function(lines, n_pages) {
+# Notes for each printed page of a slide. `text` holds the slide's own text, one
+# element per page, as it appears with each click. Each "> Click" direction in the
+# narration starts the next page.
+#
+# Every page repeats the notes of the pages before it and adds its own click, so
+# the last page of a build holds everything said on the slide. The speaker asked
+# for this on 2026-10-07, and for the text on the slide to be included, because
+# she reads it out; it is bold so that it can be told from the narration. On a
+# slide's first page the narration comes first, because it usually introduces
+# the slide; after a click the text that has just appeared comes first, and the
+# narration expands on it.
+#
+# Each paragraph is a list(text, bold).
+page_notes <- function(lines, text) {
+  n_pages <- length(text)
   click <- grepl("^>\\s*Click", lines)
   if (sum(click) != n_pages - 1L) return(NULL)
-  segs <- split(lines[!click], cumsum(click)[!click])
-  segs <- lapply(as.character(seq_len(n_pages) - 1L),
-                 function(k) if (is.null(segs[[k]])) character() else segs[[k]])
   timing <- grepl("^\\[~\\d+ s\\]$", lines)
-  segs <- lapply(segs, function(x) x[!grepl("^\\[~\\d+ s\\]$", x)])
-  segs[[1]] <- c(lines[timing], "", segs[[1]])
-  lapply(segs, note_paragraphs)
+  keep <- !click & !timing
+  segs <- split(lines[keep], factor(cumsum(click)[keep], levels = seq_len(n_pages) - 1L))
+  segs <- lapply(segs, note_paragraphs)
+  labels <- vapply(lines[click], note_paragraphs, "", USE.NAMES = FALSE)
+  para <- function(x, bold = FALSE) lapply(x, function(t) list(text = t, bold = bold))
+  steps <- lapply(seq_len(n_pages), function(k) {
+    shown <- para(text[[k]], bold = TRUE)
+    said <- para(segs[[k]])
+    if (k == 1L) c(said, shown) else c(para(labels[k - 1L]), shown, said)
+  })
+  head <- para(note_paragraphs(lines[timing]))
+  lapply(seq_len(n_pages), function(k) {
+    c(head, unlist(steps[seq_len(k)], recursive = FALSE))
+  })
 }
 
-# Clicks per slide, counted in the rendered HTML the way reveal.js groups them:
-# fragments that share a data-fragment-index appear together, and every other
-# fragment is a click of its own. A slide prints as one page plus one per click.
-count_clicks <- function(html) {
+has_class <- function(cls) {
+  sprintf("contains(concat(' ', normalize-space(@class), ' '), ' %s ')", cls)
+}
+
+# The click at which each fragment of a slide appears, numbered from 1 in the way
+# reveal.js orders them: fragments with a data-fragment-index come first, in order
+# of that index, and those sharing an index appear together; every other fragment
+# follows in document order, each a click of its own.
+fragment_steps <- function(sec) {
+  frag <- xml2::xml_find_all(sec, sprintf(".//*[%s]", has_class("fragment")))
+  idx <- as.integer(xml2::xml_attr(frag, "data-fragment-index"))
+  levels <- sort(unique(idx[!is.na(idx)]))
+  step <- integer(length(frag))
+  step[!is.na(idx)] <- match(idx[!is.na(idx)], levels)
+  step[is.na(idx)] <- length(levels) + seq_len(sum(is.na(idx)))
+  list(nodes = frag, step = step)
+}
+
+# The text on each slide, as it stands at each click: a list with one element per
+# slide, each a list of character vectors, one per printed page. A paragraph,
+# list item or column heading belongs to the click at which its last-appearing
+# fragment ancestor appears. Not included: the slide title, the speaker notes,
+# credit lines and the footer, which are not read out, and the title slide,
+# where the speaker waits to be introduced.
+slide_text <- function(html) {
   doc <- xml2::read_html(html)
-  has_class <- function(cls) {
-    sprintf("contains(concat(' ', normalize-space(@class), ' '), ' %s ')", cls)
+  # A line break inside a paragraph would otherwise join the words either side.
+  for (br in xml2::xml_find_all(doc, "//section//br")) {
+    xml2::xml_add_sibling(br, "span", " ")
   }
   secs <- xml2::xml_find_all(doc, sprintf("//section[%s]", has_class("slide")))
-  vapply(secs, function(sec) {
-    idx <- xml2::xml_attr(
-      xml2::xml_find_all(sec, sprintf(".//*[%s]", has_class("fragment"))),
-      "data-fragment-index")
-    length(unique(idx[!is.na(idx)])) + sum(is.na(idx))
-  }, integer(1))
+  skip <- paste0("ancestor-or-self::*[self::aside or self::h2 or ",
+                 has_class("credit"), " or ", has_class("footer"), "]")
+  lapply(secs, function(sec) {
+    fs <- fragment_steps(sec)
+    n_pages <- length(unique(fs$step)) + 1L
+    pages <- rep(list(character()), n_pages)
+    if (grepl("\\baims-title\\b", xml2::xml_attr(sec, "class"))) return(pages)
+    if (length(fs$step)) xml2::xml_set_attr(fs$nodes, "data-export-step", fs$step)
+    # The innermost text blocks only, so a paragraph inside a list item is not
+    # read twice.
+    blocks <- xml2::xml_find_all(sec, paste0(
+      ".//*[(self::p or self::li or self::h3) and not(.//p or .//li or .//h3)]"))
+    for (b in blocks) {
+      if (length(xml2::xml_find_all(b, skip))) next
+      txt <- trimws(gsub("\\s+", " ", xml2::xml_text(b)))
+      if (!nzchar(txt)) next
+      if (xml2::xml_name(b) == "li") {
+        arrows <- length(xml2::xml_find_all(b, sprintf("ancestor::*[%s]", has_class("arrows"))))
+        txt <- paste(if (arrows) "\u2192" else "\u2013", txt)
+      }
+      anc <- xml2::xml_attr(
+        xml2::xml_find_all(b, "ancestor-or-self::*[@data-export-step]"),
+        "data-export-step")
+      k <- max(0L, as.integer(anc)) + 1L
+      pages[[k]] <- c(pages[[k]], txt)
+    }
+    pages
+  })
 }
 
 slides <- read_slides(qmd)
-clicks <- count_clicks(html)
-if (length(clicks) != length(slides)) {
-  stop("The HTML has ", length(clicks), " slides but talk/index.qmd has ",
+text <- slide_text(html)
+if (length(text) != length(slides)) {
+  stop("The HTML has ", length(text), " slides but talk/index.qmd has ",
        length(slides), ".")
 }
-pages_per_slide <- clicks + 1L
+pages_per_slide <- lengths(text)
+clicks <- pages_per_slide - 1L
 n_pages <- pdftools::pdf_info(out("pdf"))$pages
 if (n_pages != sum(pages_per_slide)) {
   stop("The PDF has ", n_pages, " pages but the deck has ",
        sum(pages_per_slide), " slides and clicks.")
 }
 notes_by_page <- unlist(lapply(seq_along(slides), function(i) {
-  pn <- page_notes(slides[[i]]$notes, pages_per_slide[i])
+  pn <- page_notes(slides[[i]]$notes, text[[i]])
   if (is.null(pn)) {
     stop("Slide '", slides[[i]]$title, "' has ", clicks[i],
          " clicks but its notes have a different number of '> Click' lines.")
@@ -221,8 +287,17 @@ for (i in seq_len(n_pages)) {
   )
   paras <- notes_by_page[[i]]
   if (length(paras)) {
-    notes <- do.call(officer::block_list,
-                     lapply(paras, function(p) officer::fpar(officer::ftext(p))))
+    # A run with no properties takes the notes master's style: 12 pt in the
+    # theme's body font. A bold run has to restate it, because officer 0.6.7
+    # writes nothing for fp_text_lite(bold = TRUE); "+mn-lt" and its siblings
+    # name the theme's body font rather than a fixed one.
+    notes <- do.call(officer::block_list, lapply(paras, function(p) {
+      prop <- if (p$bold) {
+        officer::fp_text(bold = TRUE, font.size = 12, font.family = "+mn-lt",
+                         cs.family = "+mn-cs", eastasia.family = "+mn-ea")
+      }
+      officer::fpar(officer::ftext(p$text, prop))
+    }))
     deck <- officer::set_notes(deck, notes,
                                location = officer::notes_location_type("body"))
   }

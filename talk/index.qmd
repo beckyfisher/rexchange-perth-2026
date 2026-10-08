@@ -97,62 +97,45 @@ out of work with this team.
 ---
 
 
-## The legal limit
+## Numbers in environmental regulation
 
 ::: {.columns}
 
 ::: {.column width="62%"}
 
-::: {.say}
-Water quality guideline values set the safe concentration of a contaminant, for example
-from a sewage outfall or from offshore oil and gas.
+::: {.arrows}
+- the turbidity trigger that stops a dredge
+- the concentration limit in a discharge licence
 :::
 
-::: {.say .fragment fragment-index="1"}
-Default guideline values are the environmental equivalent of the
-[0.05 blood alcohol driving limit]{.hl}.
+::: {.fragment}
+Both have to be defensible to a regulator, to a proponent, and occasionally in court.
 :::
 
-::: {.arrows .say .fragment fragment-index="2"}
-- above the limit, activities can be stopped or modified
-- below it, the environment is assumed to be "safe"
-:::
-
-::: {.say .fragment fragment-index="3"}
-Dredging is managed the same way, against limits on turbidity and light.
-:::
-
-::: {.lede .fragment fragment-index="4" style="margin-top:0.6em;"}
-Increasingly, these limits come out of open-source R code.
+::: {.lede .fragment style="margin-top:0.8em;"}
+Increasingly, they come out of open-source R packages.
 :::
 
 :::
 
 ::: {.column width="38%"}
+![](figures/stop-sign.png){width="62%" fig-alt="A stop sign."}
 :::
 
 :::
-
-![](local/outfall.jpg){.absolute .photo top="150" left="1080" width="430" fig-alt="Discharge pipes pouring brown effluent into water."}
-
-![](local/no-sign.png){.absolute top="172" left="1200" width="190" fig-alt="A red prohibition sign."}
-
-![](local/breath-test.jpg){.absolute .photo .fragment data-fragment-index="1" top="470" left="1080" width="430" fig-alt="A police officer holding a breath-testing device to a driver."}
-
-![](local/police-hat.png){.absolute .fragment data-fragment-index="1" top="640" left="990" width="170" fig-alt="A police cap."}
 
 ::: {.notes}
-Environmental regulation runs on numbers like these.
+Water quality guidelines are one of the main legal limits used in environmental regulation.
+A dredging campaign operates under turbidity triggers, and if they are exceeded the dredge has
+to change how it operates, or stop. A discharge licence sets a concentration limit for each
+contaminant.
 
-> Click: the blood-alcohol limit.
-
-> Click: above and below the limit.
-
-> Click: dredging.
+> Click: defensible.
 
 > Click: the last line.
 
-This talk is about how that happened in my own work, over about fifteen years.
+For myself, I've spent the last 15 years developing R code and tools in an attempt to improve
+the statistical methods we use in environmental regulation.
 
 [~40 s]
 :::
@@ -160,7 +143,7 @@ This talk is about how that happened in my own work, over about fifteen years.
 ---
 
 
-## Code and regulation, 2010–2026
+## Improving statistical methods in regulation
 
 ::: {.say style="margin-bottom:0.2em;"}
 The R code I've written or contributed to, by how it was shared.
@@ -169,25 +152,30 @@ The R code I've written or contributed to, by how it was shared.
 ::: {.r-stack}
 ![](figures/code-timeline.png){.stack-fig fig-alt="Timeline from 2010 to 2026 of the speaker's R code, by how it was shared: own computer, zip file, GitHub or CRAN. CReefs scripts in 2010 and the dredging thresholds in 2018 stayed on her own computer; ElicitN in 2012 was a zip file on SourceForge; FSSgam and epower are on GitHub; bayesnec, ssddata and ssdtools are on CRAN. Three shaded eras, scripts, GitHub and CRAN, and a marker for AI in June 2026."}
 
-![](figures/code-timeline-regulation.png){.stack-fig .fragment fig-alt="The same timeline, with two points circled as used in regulation: the dredging thresholds, used in WA dredging guidance, and ssdtools, the default software for guideline values in Australia, New Zealand and Canada."}
+![](figures/code-timeline-regulation.png){.stack-fig .fragment data-fragment-index="1" fig-alt="The same timeline, with two points circled as used in regulation: the dredging thresholds, used in WA dredging guidance, and ssdtools, the default software for guideline values in Australia, New Zealand and Canada."}
 :::
 
-::: {.lede .fragment style="text-align:center; margin-top:0.2em;"}
+::: {.lede .fragment fragment-index="1" style="text-align:center; margin-top:0.2em;"}
 Regulators use the results of both. Only `ssdtools` can be run by anyone else.
 :::
 
 ::: {.notes}
-I have a good applied understanding of statistics, but no formal training in programming.
-This is the code I've written or contributed to since about 2010, plotted by how it was
-shared: on my own computer, as a zip file, on GitHub, or on CRAN.
+This graphic shows you that journey, at least for the things I worked on that made it into
+formal publications.
 
-> Click: the two used in regulation.
+It is plotted by how it was shared: on my own computer, as a zip file, on GitHub, or on CRAN.
 
-> Click: the last line.
+I started with a good applied understanding of statistics, but no formal training in
+programming, and you can see the changes that occurred for me over that time.
+
+> Click: the two used in regulation, and the last line.
+
+These highlighted ones are the work that has actually made it directly into regulatory
+guidance.
 
 I'll go through this from left to right, in three eras.
 
-[~45 s]
+[~50 s]
 :::
 
 ---
@@ -351,172 +339,64 @@ turbidity record above it. You can see sediment settling, bleaching, and recover
 ---
 
 
-## [Era two · 2015–2020]{.kicker} Dredging exposure
+## [Era two · 2015–2020]{.kicker} Dredging thresholds
 
-::: {.absolute top="185" left="150" width="800"}
+::: {.columns}
 
-::: {.say}
-Water quality every 10 minutes, at each monitoring site
-:::
+::: {.column width="42%"}
 
 ::: {.say}
-Three pressure pathways for corals:
+Coral mortality at each site against water quality → a concentration–response curve from
+field data
 :::
 
-::: {.arrows .say}
-- suspended sediment
-- light
-- sediment settling on the coral
+::: {.say .fragment fragment-index="1"}
+Thresholds from ROC curves, as for any classifier: false alarms against missed coral
+mortality
 :::
 
-::: {.say}
-→ metrics of exposure to dredging for each site
+::: {.say .fragment fragment-index="2"}
+The two thresholds mark the edges of the impact zones in WA EPA dredging guidance
 :::
 
-:::
-
-![](local/pressure-triangle.png){.absolute top="150" left="1010" width="510" fig-alt="A triangle of three dredging pressures, suspended sediment, light availability and sediment covering, with photographs of each and the positions of sponge, coral, barnacle and seagrass inside it."}
-
-![](local/wq-strip.png){.absolute .strip top="712" left="150" width="1380" fig-alt="A long time series of water quality, with three overlaid traces."}
-
-::: {.notes}
-From the water quality data we derived metrics of exposure to dredging, across the three
-ways dredging affects corals.
-
-[~20 s]
-:::
-
----
-
-
-## [Era two · 2015–2020]{.kicker} Coral mortality
-
-::: {.absolute top="185" left="150" width="1380"}
-
-::: {.say}
-Each colony photographed every two weeks, at impact and control sites
-:::
-
-::: {.say}
-Relative mortality = impact − control\
-→ the probability of non-zero mortality at each site
-:::
-
-:::
-
-![](local/mortality-densities.png){.absolute top="385" left="260" width="1160" fig-alt="Posterior densities of relative coral mortality for each monitoring site, from no mortality on the left to some mortality on the right. One site's density is shaded red where mortality is above zero, labelled probability of non-zero mortality."}
-
-![](local/coral-strip.jpg){.absolute .strip top="712" left="150" width="1380" fig-alt="A row of photographs of coral colonies."}
-
-::: {.notes}
-From the coral photographs we estimated, for each site, the probability that mortality was
-above that at the control sites.
-
-[~25 s]
-:::
-
----
-
-
-## [Era two · 2015–2020]{.kicker} Concentration–response in the field
-
-![](local/cr-curve.png){.absolute .panel top="150" left="590" width="420" fig-alt="Probability of coral mortality against light stress, a 14-day running mean, with a fitted S-shaped curve. Sites with low stress have near-zero mortality; sites with high stress have high mortality."}
-
-::: {.absolute top="200" left="1060" width="470"}
-::: {.say}
-Exposure metrics from the water quality data
-:::
-
-::: {.say}
-\+ probability of mortality from the coral photographs
-:::
-
-::: {.say}
-→ a concentration–response relationship, from field data
-:::
-:::
-
-![](local/cr-triangle.png){.absolute top="560" left="150" width="1380" fig-alt=""}
-
-![](local/coral-strip.jpg){.absolute .strip top="712" left="150" width="1380" fig-alt="A row of photographs of coral colonies."}
-
-![](local/wq-strip.png){.absolute .strip top="712" left="150" width="1380" fig-alt="Water quality traces drawn over the coral photographs."}
-
-::: {.notes}
-Putting the two together gives a concentration–response relationship from field data rather
-than from a laboratory.
-
-[~20 s]
-:::
-
----
-
-
-## [Era two · 2015–2020]{.kicker} Thresholds from error rates
-
-![](local/cr-curve.png){.absolute .panel top="150" left="590" width="420" fig-alt="The same concentration–response curve."}
-
-![](local/roc.png){.absolute .panel top="150" left="1050" width="470" fig-alt="An ROC curve of true positive rate, or statistical power, against false positive rate, or false alarm rate, with a high-power threshold and a low-alarm-rate threshold marked."}
-
-::: {.absolute top="185" left="150" width="420"}
-::: {.say}
-A threshold has error rates.
-:::
-
-::: {.arrows .say}
-- false alarm: financial loss to the developer
-- missed impact: coral mortality
-:::
-:::
-
-::: {.absolute top="600" left="150" width="1380"}
-::: {.arrows .say}
-- [high power]{.thr-possible} threshold (lower value) → coral mortality possible
-- [low alarm rate]{.thr-probable} threshold (higher value) → coral mortality probable
-:::
-
-::: {.credit}
-Fisher, Walshe, Bessell-Browne & Jones (2018) *J. Appl. Ecol.* 55:415.
-:::
-:::
-
-::: {.notes}
-We set the thresholds from ROC curves, because a threshold has error rates on both sides.
-The two thresholds suit different decisions.
-
-[~35 s]
-:::
-
----
-
-
-## [Era two · 2015–2020]{.kicker} Thresholds in dredging management
-
-![](local/management-zones.png){.absolute top="150" left="554" width="735" fig-alt="The concentration–response curve with the probable and possible mortality thresholds marked as vertical lines, projected down onto a plot of impact against distance from the dredge, where they mark the edges of the zones of high impact, moderate impact and influence."}
-
-![](local/epa-guidance.png){.absolute top="250" left="150" width="380" fig-alt="The cover of the WA EPA Technical Guidance on environmental impact assessment of marine dredging proposals, December 2016, beside a map of zones around a dredging site."}
-
-::: {.absolute top="640" left="150" width="380"}
-::: {.credit}
-WA EPA (2016) Technical Guidance: Environmental Impact Assessment of Marine Dredging
-Proposals.
-:::
-:::
-
-::: {.lede .fragment .absolute top="760" left="150" width="1380" style="text-align:center;"}
+::: {.lede .fragment fragment-index="3"}
 Still in regulatory use. The code was written for one project and never packaged.
 :::
 
+::: {.credit}
+Fisher, Walshe, Bessell-Browne & Jones (2018) *J. Appl. Ecol.* 55:415. WA EPA (2016) Technical
+Guidance: Environmental Impact Assessment of Marine Dredging Proposals.
+:::
+
+:::
+
+::: {.column width="58%"}
+
+::: {.r-stack}
+![](local/cr-curve.png){.panel .stack-panel fig-alt="Probability of coral mortality against light stress, a 14-day running mean, with a fitted S-shaped curve. Sites with low stress have near-zero mortality; sites with high stress have high mortality."}
+
+![](local/roc.png){.panel .stack-panel .fragment data-fragment-index="1" fig-alt="An ROC curve of true positive rate, or statistical power, against false positive rate, or false alarm rate, with a high-power threshold and a low-alarm-rate threshold marked."}
+
+![](local/management-zones.png){.panel .stack-panel .fragment data-fragment-index="2" fig-alt="The concentration–response curve with the probable and possible mortality thresholds marked as vertical lines, projected down onto a plot of impact against distance from the dredge, where they mark the edges of the zones of high impact, moderate impact and influence."}
+:::
+
+:::
+
+:::
+
 ::: {.notes}
-The probable-mortality threshold marks the edge of the zone of high impact, and the
-possible-mortality threshold marks the edge of the zone of moderate impact.
+From those data we could fit concentration–response curves in the field rather than in a
+laboratory.
+
+> Click: ROC curves.
+
+> Click: the impact zones.
 
 > Click: the last line.
 
-The code behind them was written for this one project, and it cannot be separated from data
-I'm not able to share.
+The code behind them cannot be separated from data I'm not able to share.
 
-[~30 s]
+[~45 s]
 :::
 
 ---
@@ -602,20 +482,15 @@ deliverable, and I didn't do it. I don't think our field has solved this.
 The first time anything outside my own judgement checked my code against a standard.
 :::
 
-::: {.minor .fragment style="text-align:center;"}
-`R CMD check` reports the same problems every time, and CRAN will not accept a package until
-they are fixed.
-:::
 
 ::: {.notes}
-In 2021 Diego Barneche and I released bayesnec on CRAN, with ssddata. Like ssdtools,
-bayesnec averages over several models rather than choosing one.
+In era three I finally started being involved with packages on CRAN. For me this started
+with bayesnec, built by Diego Barneche and I in 2021. This was followed by my building an
+ssddata package, and becoming a co-collaborator on ssdtools.
 
 > Click: the first time.
 
-> Click: R CMD check.
-
-[~35 s]
+[~30 s]
 :::
 
 ---
@@ -623,100 +498,24 @@ bayesnec averages over several models rather than choosing one.
 
 ## [Era three · 2021 onwards]{.kicker} Species sensitivity distributions
 
-::: {.columns}
-
-::: {.column width="38%"}
-
-::: {.say}
-Each point is the toxicity estimate for one species, from a concentration–response
-experiment.
-:::
-
-::: {.say .fragment fragment-index="1"}
-Fit a distribution.
-:::
-
-::: {.say .fragment fragment-index="2"}
-Read off the concentration that protects 95% of species: the PC95.
-:::
-
-::: {.lede .fragment fragment-index="3"}
-That becomes the default guideline value, the equivalent of the 0.05.
-:::
-
-:::
-
-::: {.column width="62%"}
-
-::: {.r-stack}
-![](figures/ssd-step-1.png){.stack-fig fig-alt="Toxicity estimates for individual species from the CCME boron data, plotted as the proportion of species affected against concentration on a log scale."}
-
-![](figures/ssd-step-2.png){.stack-fig .fragment data-fragment-index="1" fig-alt="The same points with a fitted log-normal distribution."}
-
-![](figures/ssd-step-3.png){.stack-fig .fragment data-fragment-index="2" fig-alt="The log-normal fit with the concentration affecting 5% of species marked: PC95 = 1.68 mg/L."}
-:::
-
-:::
-
-:::
+![](figures/ssd-model-average.png){.fig-full fig-alt="A species sensitivity distribution fitted to CCME boron data on a log concentration axis, showing six thin candidate distribution curves, a bold model-average curve, and the PC95 guideline value marked at 1.26 mg/L."}
 
 ::: {.notes}
-The default guideline values are derived from a species sensitivity distribution, or SSD.
-bayesnec estimates the points; ssdtools fits the curve.
+By then I was also working on the statistical methods behind water quality guidelines.
+Guideline values set the safe concentration of a contaminant, for example for the sewage
+outflow at your local beach. The default values are the environmental equivalent of the 0.05
+blood alcohol driving limit: exceed them and activities can be stopped or modified.
 
-> Click: fit a distribution.
+They are derived from a species sensitivity distribution, or SSD. Each point is the toxicity
+estimate for one species, which is what bayesnec estimates. You fit a distribution and read
+off the concentration that protects, here, 95% of species.
 
-> Click: the PC95.
+There is no theoretical basis for choosing one distribution, and for these boron data the
+value ranges from 1.07 to 1.77 milligrams per litre depending on the choice. ssdtools averages
+over several distributions. Burrlioz, the software required in Australia at the time, fitted
+one.
 
-> Click: the guideline value.
-
-[~35 s]
-:::
-
----
-
-
-## [Era three · 2021 onwards]{.kicker} Choice of distribution
-
-::: {.columns}
-
-::: {.column width="38%"}
-
-::: {.say}
-Many distributions fit these data, with no theoretical basis for choosing one.
-:::
-
-::: {.say .fragment fragment-index="1"}
-Burrlioz 2.0, the software required in Australia at the time, fitted one.
-:::
-
-::: {.lede .fragment fragment-index="2"}
-`ssdtools` averages over several, weighted by AICc.
-:::
-
-:::
-
-::: {.column width="62%"}
-
-::: {.r-stack}
-![](figures/ssd-step-4.png){.stack-fig fig-alt="Six distributions fitted to the same boron data. Their PC95 values range from 1.07 to 1.77 mg/L."}
-
-![](figures/ssd-step-5.png){.stack-fig .fragment data-fragment-index="2" fig-alt="The six fits in light grey with the model average in bold, and its PC95 marked at 1.26 mg/L."}
-:::
-
-:::
-
-:::
-
-::: {.notes}
-For these boron data the guideline value ranges from 1.07 to 1.77 milligrams per litre,
-depending on which distribution you pick.
-
-> Click: Burrlioz.
-
-> Click: the model average.
-
-[~35 s]
+[~60 s]
 :::
 
 ---
@@ -727,67 +526,51 @@ depending on which distribution you pick.
 ::: {.columns}
 
 ::: {.column width="60%"}
-
-::: {.say}
 Joint Australian–Canadian project, funded by the Australian Government (DCCEEW)
-:::
 
-::: {.arrows .say}
+::: {.arrows}
 - David Fox, Environmetrics Australia
 - Joe Thorley & Carl Schwarz, British Columbia
+- `ssdtools` compared with **Burrlioz 2.0**
 :::
 
-::: {.say .fragment}
-`ssdtools` compared with Burrlioz 2.0, on benchmark data sets and on simulated data with a
-known true value
-:::
-
-::: {.arrows .say .fragment}
-- `ssdtools` performed better than Burrlioz
-- more distributions improved its estimates
+::: {.minor style="margin-top:0.6em;"}
+Benchmark data sets, plus simulated data with a known true value, so that bias and
+coverage could be measured.
 :::
 
 :::
 
 ::: {.column width="40%"}
 
-::: {.punch .fragment style="font-size:1.05em;"}
+::: {.punch style="font-size:1.05em;"}
 Recommendation:\
 adopt `ssdtools` as the\
 [default software]{.e3}
 :::
 
 ::: {.minor style="text-align:center; margin-top:0.6em;"}
-[Australia · New Zealand · Canada]{.fragment}
+Australia · New Zealand · Canada
 :::
 
 :::
 
-:::
-
-::: {.minor .fragment style="margin-top:0.6em;"}
-I was on the project because of years of work in the field and workshops with the people who
-set these guidelines, not because of my GitHub profile.
 :::
 
 ::: {.notes}
 ssdtools was originally written by Joe Thorley and Carl Schwarz. The project's job was to
-evaluate whether ssdtools could replace Burrlioz, and the stated aim was collective agreement
-between the Australian and Canadian experts.
+evaluate whether ssdtools could replace Burrlioz in the Australian guideline framework.
 
-> Click: the comparison.
+With a stated aim of collective agreement between the Australian and Canadian experts.
 
-> Click: the results.
+We compared the two on benchmark data sets, and on simulated data with a known true value, so
+we could measure bias and coverage. ssdtools performed better, and including more
+distributions improved its estimates. The recommendation has since been approved.
 
-> Click: the recommendation.
+I was on that project because of years of work in the field and convening workshops with the
+people who set these guidelines, not because of my GitHub profile.
 
-> Click: the three countries.
-
-The recommendation has since been approved.
-
-> Click: the last line.
-
-[~50 s]
+[~60 s]
 :::
 
 ---
@@ -802,22 +585,18 @@ a [black box]{.e3}.
 
 ![](local/black-box.png){.absolute top="150" left="1230" width="120" fig-alt="A black box."}
 
-::: {.say .fragment style="text-align:center; margin-top:1.0em;"}
+::: {.say style="text-align:center; margin-top:1.0em;"}
 Every expert could read the source code, run the benchmarks, and disagree about specific
 lines.
 :::
 
-::: {.say .fragment style="text-align:center;"}
+::: {.say style="text-align:center;"}
 Most people deriving guideline values don't write R. The Shiny app, `shinyssdtools`, is how
 they use the method.
 :::
 
 ::: {.notes}
 With a closed desktop program, the discussion ends up relying on trust in whoever wrote it.
-
-> Click: reading the source.
-
-> Click: the Shiny app.
 
 [~30 s]
 :::

@@ -326,3 +326,144 @@ of the PDF was rendered and inspected.
 timing markers, which now add to 14:00 at 140 words a minute.
 
 ---
+
+## Session: shorten-dredging-and-ssd
+Date: 2026-10-07
+Model: Claude Opus 5.5 (claude-opus-5-5)
+
+### Prompts and Responses
+
+**User:** Looking through it - it is clear that it has become way to long now, largely because
+the dredging and ssdtools exlanations that become very long. We might need to remove some of
+that back close to what you had original. Can you make a new version with that now this is
+commited? ALso, did we loose the version before this now? I' not sure if we committed before
+the last major change. If possible I would like to make sure we can retrieve that
+
+**Claude:** *Recovery.* The version the speaker reviewed on 2026-10-06 had never been committed:
+`main` went from `a066e83` straight to `1336127`, which holds the review rework. It was rebuilt
+from two sources. Claude Code keeps a copy of each file it edits at the start of every user
+turn; the copies taken when the review arrived held ten of the files, including `index.qmd`
+and `custom.scss`. The other files (`figures.R`, the README, `CLAUDE.md` and three notes files)
+had been edited only through shell commands, so the session's edits were replayed in order onto
+a worktree at `a066e83`. The ten saved copies matched the replay byte for byte, which is the
+evidence that the replay is faithful. Figures and speaker notes were regenerated, the deck was
+rendered (22 slides, matching the slide numbers in the review) and committed as `6008266` on
+the branch `pre-review-2026-10-06`.
+
+*Length.* Counting the words on the slides and in the notes did not show the rework to be
+longer: 2,123 words against 2,388 before the review. The extra length is in the number of
+figure slides, each of which needs explaining beyond its words. The dredging part of era two
+had grown from two slides to seven, and era three from four slides with no clicks to five with fourteen.
+
+- The five-slide dredging build (exposure, coral mortality, field concentration–response,
+  thresholds from error rates, thresholds in management) is now one slide, *Dredging
+  thresholds*. Three of the speaker's pictures replace one another with the text: the field
+  concentration–response curve, the ROC curve ("as for any classifier", for this audience),
+  and the thresholds on the WA EPA impact zones. It ends on "Still in regulatory use. The code
+  was written for one project and never packaged." The pictures differ in shape, so each sits
+  on a white panel of one fixed size (`img.stack-panel`) and covers the one before.
+- *Species sensitivity distributions* and *Choice of distribution* are one slide with four
+  steps: points, the log-normal fit with its PC95 as the default guideline value, six
+  distributions from 1.07 to 1.77 mg/L with Burrlioz fitting one, and the `ssdtools` model
+  average. The step with the fit but no PC95 was dropped.
+- *Packages on CRAN* lost the `R CMD check` line, which this audience knows. *Evaluation of
+  `ssdtools`* shows the comparison and its results on one click and the countries with the
+  recommendation, so three clicks instead of five.
+- Kept: the literature slide, the Barrow Island slide, *Industry work and packages*, the
+  open-source slide, slides 1–6 and the AI section, which the speaker has yet to review.
+
+The deck is 20 slides and 26 clicks (46 steps, against 54). The words come to about 13.6
+minutes at 140 words a minute, and the timing markers to 11:55. The pictures from `slides.pptx`
+that are no longer used are still exported, so the longer build can be restored from
+`1336127` alone. `slide-outline.md`, `visuals-brief.md` and `CLAUDE.md` were updated, and
+`CLAUDE.md` now records the ruling: more slides are acceptable, but not for the science.
+
+---
+
+## Session: review-of-shortened-deck
+Date: 2026-10-07
+Model: Claude Opus 5.5 (claude-opus-5-5)
+
+### Prompts and Responses
+
+**User:** Can I have a copy of that original short one? I am reviewing the new one and want to
+see if the old one is better in places. As the ppt handout?
+
+**Claude:** The PowerPoint of the version first reviewed was already in
+`_output/pre-review-handover/`; a copy was added under a distinct name so that the two decks
+can be open side by side. It shows each slide complete, one page per slide, because the
+per-click export was added later.
+
+**User:** Where there is animation achieved by multiple slides, can you copy the same speaker
+notes onto every slide as they build up? Ie add the points to the notes across the series. In
+the notes, include the text that will be read verbatim from the slide, as well as any
+additional text.
+
+These slide numbers refer to the new one.
+slide 4 I changed my mind, I like the original slide 4 better. Can you do a little animation?
+
+Slide 8 - I added speaker notes, please keep them at the end of this section as a sedgway to
+the next.
+
+Slide 9 change the title - it makes no sense. Lets use "My journal in improving statistical
+methods in environmental regulation" (this is from my added speaker notes on slide 8). (or
+something shorter but in line with that if you can suggest something).
+
+Note I have edited the speaker notes
+
+Slide 10 - delete (11 is enough, this is now erring on the side of too much animation),
+consolidate with speaker notes slide 11.
+
+Slide 22
+
+Slide 28 - I modified the speaker notes.
+
+Slide 30 - 39, can we use the original (slide 10 and 12) and then go straight to 40 (we over
+did the animation)
+
+**Claude:** The speaker had edited the notes in the PowerPoint handout, which `export-deck.R`
+overwrites, so her file was copied to `superceded/` first, together with the uncommitted
+shortened version of the deck and its HTML and PDF. Her slide numbers are pages of the handout,
+one per click; pages 10, 28 and 30–40 matched her comments only on that reading. Each page's
+notes were extracted and compared with the notes the export had written. Six pages differed.
+
+- *Her notes.* Copied into `index.qmd`: the new opening of slide 4; the paragraph on page 9
+  that begins "For myself, I've spent the last 15 years", placed at the end of slide 4 as she
+  asked, where it replaces the deleted "This talk is about how that happened"; the rest of her
+  page 9 text and her new page 10 sentence on the timeline slide; her CRAN narration; and her
+  edit of the evaluation narration. Obvious typing slips were corrected ("used in", "Barneche
+  and I", "a stated aim of"). Page 22 had no comment and no edit, and was left unchanged.
+- *Slide 4.* The original *Numbers in environmental regulation*, with the stop sign, returned
+  with two clicks: "Both have to be defensible…", then "Increasingly, they come out of
+  open-source R packages." The stop sign and `ssd-model-average.png` were restored to
+  `R/figures.R` from the branch `pre-review-2026-10-06`; both render byte-identical to that
+  branch's files.
+- *Slide 5.* Retitled "Improving statistical methods in regulation". The speaker's wording
+  wraps onto two lines at the heading size and pushed the timeline down, and "in environmental
+  regulation" also wraps; the previous slide's title supplies "environmental". The regulation
+  version of the figure and the last line now appear on one click. Its `ssdtools` label
+  overlapped the `epower` label, and was set on three lines.
+- *Slides 12–14.* The original SSD slide (one figure, no text) and the original evaluation
+  slide, both without clicks, then the open-source slide shown complete. The SSD narration is
+  the original, with its first sentence ("Era three starts with…") dropped because the CRAN
+  slide now opens era three, and one clause added to connect it to `bayesnec`. The evaluation
+  narration is her edited text, the result of the comparison from the original notes, and the
+  sentence on how she came to be on the project, which was a slide line in the shortened
+  version.
+- *Notes in the PowerPoint.* `export-deck.R` now reads the text of each slide from the rendered
+  HTML, assigning each paragraph, list item and column heading to the click at which it
+  appears, using reveal.js's ordering of fragments. Each page's notes repeat the slide's earlier
+  pages and add the current click. The slide text is set in bold. On a slide's first page the
+  narration comes first, because it usually introduces the slide; after a click the
+  new slide text comes first. Titles, credit lines, the footer and the title slide are left
+  out. officer 0.6.7 writes nothing for `fp_text_lite(bold = TRUE)`, so the bold runs state
+  12 pt and the theme's body font explicitly.
+
+The deck is 20 slides and 15 clicks (35 steps). The words come to about 14.8 minutes at 140
+words a minute and 13.0 at 160, and the timing markers to 12:35; most of the increase on the
+shortened version is the narration of the restored SSD and evaluation slides. The outline,
+visuals brief, speaker-notes preamble, README and `CLAUDE.md` were updated. `CLAUDE.md` now
+records that she reviews in the PowerPoint, that her comments number its pages, and that
+builds are kept short.
+
+---

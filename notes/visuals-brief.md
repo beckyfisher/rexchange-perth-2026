@@ -19,11 +19,10 @@ differ.
 | AIMS template assets | `talk/aims/` | no | `R/aims-assets.R` |
 | Pictures from the speaker's earlier slides | `talk/local/` | no | `R/local-images.R` |
 
-Slides are built up one click at a time, so that the slide holds what the speaker says. Where
-the picture changes with a click, the versions are stacked in a `.r-stack` and drawn on
-identical canvases, so nothing else on the slide shifts. Where a picture stays in place across
-several slides, as the coral photographs and the concentration–response curve do through the
-dredging sequence, it is placed at the same absolute position on each.
+Most slides hold what the speaker says, and some are built up with clicks. Where the picture
+changes with a click, the versions are stacked in a `.r-stack` and drawn on identical canvases,
+so nothing else on the slide shifts. The speaker judged the animation overdone on 2026-10-07,
+so builds are kept short, and the SSD and evaluation slides are shown complete.
 
 ---
 
@@ -77,18 +76,25 @@ relicensed. Without the source deck the script writes grey placeholders of the s
 
 | File | Source slide | Used on |
 |---|---|---|
-| `outfall.jpg`, `no-sign.png`, `breath-test.jpg`, `police-hat.png` | 1, the blood-alcohol slide | *The legal limit* |
+| `outfall.jpg`, `no-sign.png`, `breath-test.jpg`, `police-hat.png` | 1, the blood-alcohol slide | Not used since 2026-10-07 |
 | `white-literature.jpg`, `grey-literature.png`, `confidential.png`, `black-box.png` | 8, white, grey and black literature | *White, grey and black literature*; the black box also on *Open source and regulatory agreement* |
-| `pressure-triangle.png`, `wq-strip.png` | 2, exposure metrics | *Dredging exposure*, and the strip on the next two slides |
-| `mortality-densities.png`, `coral-strip.jpg` | 3, *in situ* mortality | *Coral mortality*, and the strip on the next slide |
-| `cr-curve.png`, `cr-triangle.png` | 4, concentration–response | *Concentration–response in the field*, *Thresholds from error rates* |
-| `roc.png` | 6, probabilistic thresholds | *Thresholds from error rates* |
-| `management-zones.png`, `epa-guidance.png` | 7, link to management | *Thresholds in dredging management* |
+| `cr-curve.png` | 4, concentration–response | *Dredging thresholds*, first step |
+| `roc.png` | 6, probabilistic thresholds | *Dredging thresholds*, second step |
+| `management-zones.png` | 7, link to management | *Dredging thresholds*, third step |
+| `pressure-triangle.png`, `wq-strip.png`, `mortality-densities.png`, `coral-strip.jpg`, `cr-triangle.png`, `epa-guidance.png` | 2, 3, 4 and 7 | Not used since 2026-10-07 |
 
-The water quality strip is semi-transparent in the source, so laid over the coral photographs
-it gives the combined strip of the source deck's slide 4. In `mortality-densities.png` a white
-mask over a panel label is made transparent, because it showed as a white box on the contour
-background.
+On *Dredging thresholds* the three pictures replace one another in a `.r-stack`. They have
+different shapes, so each is drawn on a white panel of the same size (`img.stack-panel` in
+`custom.scss`), and the one shown covers the one before.
+
+The unused pictures belong to two things the deck held on 2026-10-06 (commit `1336127`): the
+slide *The legal limit*, with the blood-alcohol analogy, which the speaker replaced on
+2026-10-07 with the original *Numbers in environmental regulation*; and the five-slide build
+from exposure to management. The script still exports them, so either can be restored from
+that commit without changing `R/local-images.R`. The water quality strip is
+semi-transparent in the source, so laid over the coral photographs it gives the combined strip
+of the source deck's slide 4. In `mortality-densities.png` a white mask over a panel label is
+made transparent, because it showed as a white box on the contour background.
 
 ---
 
@@ -113,8 +119,8 @@ already in the public record.
 ### `turbidity-thresholds.png`
 
 Backup slide: *Thresholds against turbidity events.* It was the main dredging slide until
-2026-10-06, when the five-slide build from *Dredging exposure* to *Thresholds in dredging
-management* replaced it.
+2026-10-06, when the speaker's pictures from `slides.pptx` replaced it; they are now on the one
+slide *Dredging thresholds*.
 
 Jones et al. (2019), Theme 4 Synthesis Report, Figure 19. Panel A is suspended sediment at a
 site about 200 m from the dredge; panel B is the running-mean hazard profile of two turbidity
@@ -137,12 +143,14 @@ Produced by `R/figures.R`. Do not hand-edit them.
 
 ### `code-timeline.png` and `code-timeline-regulation.png`
 
-Slide: *Code and regulation, 2010–2026.*
+Slide: *Improving statistical methods in regulation.*
 
 The speaker's code from 2010 to 2026, by how it was shared: her own computer, a zip file,
-GitHub, or CRAN. The second version, shown on a click, circles the two pieces used in
-regulation: the dredging thresholds, used in WA dredging guidance, and `ssdtools`, the default
-software for guideline values in Australia, New Zealand and Canada.
+GitHub, or CRAN. The second version, shown on a click with the slide's last line, circles the
+two pieces used in regulation: the dredging thresholds, used in WA dredging guidance, and
+`ssdtools`, the default software for guideline values in Australia, New Zealand and Canada.
+The `ssdtools` label is set on three lines so that it clears the `epower` label and the AI
+marker.
 
 An earlier version put "named in regulation" as a fifth level above CRAN, with an axis titled
 "how far each piece of software could travel". The speaker rejected it on 2026-10-06. The axis
@@ -151,9 +159,19 @@ the code is on CRAN, and the dredging thresholds are in WA guidance although the
 never shared. Regulatory use is now marked separately from how the code was shared. Years
 before 2021 are reconstructed from the CV; the 2021 CRAN date is verified.
 
+### `ssd-model-average.png`
+
+Slide: *Species sensitivity distributions.*
+
+The CCME boron toxicity estimates from `ssddata`, the six single-distribution fits in light grey,
+the model average in bold, and its PC95 of 1.26 mg/L. It was the SSD slide in the version the
+speaker first reviewed, was replaced by the step-by-step build below on 2026-10-06, and was
+restored on 2026-10-07, when she judged that build too much animation.
+
 ### `ssd-step-1.png` to `ssd-step-5.png`
 
-Slides: *Species sensitivity distributions* (steps 1–3) and *Choice of distribution* (steps 4–5).
+Not used since 2026-10-07. They are still generated, so that the build in commit `1336127` can
+be restored without changing `R/figures.R`.
 
 A real SSD, built up in the way the speaker's ANZG deck teaches it: the CCME boron toxicity
 estimates from `ssddata`; a log-normal fit; its PC95 (1.68 mg/L); six single-distribution fits,
@@ -192,8 +210,10 @@ from each single distribution, 1.07 to 1.77 mg/L) and `no-effect-estimates.png` 
 NSEC, EC10 and NOEC) are on three of the four uncounted slides after the closing slide; the
 fourth holds `turbidity-thresholds.png`.
 
-The stop sign drawn for the earlier slide 4, and `ssd-model-average.png`, were removed on
-2026-10-06 with the slides that used them.
+### `stop-sign.png`
+
+Slide: *Numbers in environmental regulation.* Drawn in `R/figures.R` rather than taken from clip
+art. It was removed on 2026-10-06 with the slide and restored with it on 2026-10-07.
 
 ---
 

@@ -11,13 +11,18 @@
 > Everything outside the generated markers — this preamble and the anticipated questions at
 > the end — is hand-written and preserved across regeneration.
 
-The notes are short. Most of what is said is written on the slides, which build up one
-click at a time; the notes hold the sentences that join them. Lines set as blockquotes are
-stage directions, not things to say, and each "Click" direction marks one click.
+Most of what is said is written on the slides, some of them built up with clicks, and the
+notes hold the sentences that join them. The two slides on species sensitivity distributions
+and the evaluation of `ssdtools` are the exception: they are shown complete, and their
+narration is in the notes. Lines set as blockquotes are stage directions, not things to say,
+and each "Click" direction marks one click.
+
+The PowerPoint in `_output/handover/` has one page per click. Each page's notes repeat the
+notes of the slide's earlier clicks, and include the text on the slide in bold.
 
 For the running order, timings, and what to drop if running long, see
-[`slide-outline.md`](slide-outline.md). The timing markers add to about 14 minutes at 140
-words a minute, in a 15-minute slot.
+[`slide-outline.md`](slide-outline.md). The timing markers add to about 12.5 minutes, in a
+15-minute slot.
 
 ---
 
@@ -50,31 +55,36 @@ out of work with this team.
 
 ---
 
-## 4 · The legal limit — 40 s
+## 4 · Numbers in environmental regulation — 40 s
 
-Environmental regulation runs on numbers like these.
+Water quality guidelines are one of the main legal limits used in environmental regulation.
+A dredging campaign operates under turbidity triggers, and if they are exceeded the dredge has
+to change how it operates, or stop. A discharge licence sets a concentration limit for each
+contaminant.
 
-> Click: the blood-alcohol limit.
-
-> Click: above and below the limit.
-
-> Click: dredging.
+> Click: defensible.
 
 > Click: the last line.
 
-This talk is about how that happened in my own work, over about fifteen years.
+For myself, I've spent the last 15 years developing R code and tools in an attempt to improve
+the statistical methods we use in environmental regulation.
 
 ---
 
-## 5 · Code and regulation, 2010–2026 — 45 s
+## 5 · Improving statistical methods in regulation — 50 s
 
-I have a good applied understanding of statistics, but no formal training in programming.
-This is the code I've written or contributed to since about 2010, plotted by how it was
-shared: on my own computer, as a zip file, on GitHub, or on CRAN.
+This graphic shows you that journey, at least for the things I worked on that made it into
+formal publications.
 
-> Click: the two used in regulation.
+It is plotted by how it was shared: on my own computer, as a zip file, on GitHub, or on CRAN.
 
-> Click: the last line.
+I started with a good applied understanding of statistics, but no formal training in
+programming, and you can see the changes that occurred for me over that time.
+
+> Click: the two used in regulation, and the last line.
+
+These highlighted ones are the work that has actually made it directly into regulatory
+guidance.
 
 I'll go through this from left to right, in three eras.
 
@@ -114,47 +124,22 @@ turbidity record above it. You can see sediment settling, bleaching, and recover
 
 ---
 
-## 9 · Era two · 2015–2020 · Dredging exposure — 20 s
+## 9 · Era two · 2015–2020 · Dredging thresholds — 45 s
 
-From the water quality data we derived metrics of exposure to dredging, across the three
-ways dredging affects corals.
+From those data we could fit concentration–response curves in the field rather than in a
+laboratory.
 
----
+> Click: ROC curves.
 
-## 10 · Era two · 2015–2020 · Coral mortality — 25 s
-
-From the coral photographs we estimated, for each site, the probability that mortality was
-above that at the control sites.
-
----
-
-## 11 · Era two · 2015–2020 · Concentration–response in the field — 20 s
-
-Putting the two together gives a concentration–response relationship from field data rather
-than from a laboratory.
-
----
-
-## 12 · Era two · 2015–2020 · Thresholds from error rates — 35 s
-
-We set the thresholds from ROC curves, because a threshold has error rates on both sides.
-The two thresholds suit different decisions.
-
----
-
-## 13 · Era two · 2015–2020 · Thresholds in dredging management — 30 s
-
-The probable-mortality threshold marks the edge of the zone of high impact, and the
-possible-mortality threshold marks the edge of the zone of moderate impact.
+> Click: the impact zones.
 
 > Click: the last line.
 
-The code behind them was written for this one project, and it cannot be separated from data
-I'm not able to share.
+The code behind them cannot be separated from data I'm not able to share.
 
 ---
 
-## 14 · Era two · 2015–2020 · Industry work and packages — 65 s
+## 10 · Era two · 2015–2020 · Industry work and packages — 65 s
 
 Era two was really two strands. On the left is the industry work: the data and the
 regulatory stakes, with code that only works on data I can't distribute.
@@ -178,78 +163,63 @@ deliverable, and I didn't do it. I don't think our field has solved this.
 
 ---
 
-## 15 · Era three · 2021 onwards · Packages on CRAN — 35 s
+## 11 · Era three · 2021 onwards · Packages on CRAN — 30 s
 
-In 2021 Diego Barneche and I released bayesnec on CRAN, with ssddata. Like ssdtools,
-bayesnec averages over several models rather than choosing one.
+In era three I finally started being involved with packages on CRAN. For me this started
+with bayesnec, built by Diego Barneche and I in 2021. This was followed by my building an
+ssddata package, and becoming a co-collaborator on ssdtools.
 
 > Click: the first time.
 
-> Click: R CMD check.
+---
+
+## 12 · Era three · 2021 onwards · Species sensitivity distributions — 60 s
+
+By then I was also working on the statistical methods behind water quality guidelines.
+Guideline values set the safe concentration of a contaminant, for example for the sewage
+outflow at your local beach. The default values are the environmental equivalent of the 0.05
+blood alcohol driving limit: exceed them and activities can be stopped or modified.
+
+They are derived from a species sensitivity distribution, or SSD. Each point is the toxicity
+estimate for one species, which is what bayesnec estimates. You fit a distribution and read
+off the concentration that protects, here, 95% of species.
+
+There is no theoretical basis for choosing one distribution, and for these boron data the
+value ranges from 1.07 to 1.77 milligrams per litre depending on the choice. ssdtools averages
+over several distributions. Burrlioz, the software required in Australia at the time, fitted
+one.
 
 ---
 
-## 16 · Era three · 2021 onwards · Species sensitivity distributions — 35 s
-
-The default guideline values are derived from a species sensitivity distribution, or SSD.
-bayesnec estimates the points; ssdtools fits the curve.
-
-> Click: fit a distribution.
-
-> Click: the PC95.
-
-> Click: the guideline value.
-
----
-
-## 17 · Era three · 2021 onwards · Choice of distribution — 35 s
-
-For these boron data the guideline value ranges from 1.07 to 1.77 milligrams per litre,
-depending on which distribution you pick.
-
-> Click: Burrlioz.
-
-> Click: the model average.
-
----
-
-## 18 · Era three · 2021 onwards · Evaluation of `ssdtools` — 50 s
+## 13 · Era three · 2021 onwards · Evaluation of `ssdtools` — 60 s
 
 ssdtools was originally written by Joe Thorley and Carl Schwarz. The project's job was to
-evaluate whether ssdtools could replace Burrlioz, and the stated aim was collective agreement
-between the Australian and Canadian experts.
+evaluate whether ssdtools could replace Burrlioz in the Australian guideline framework.
 
-> Click: the comparison.
+With a stated aim of collective agreement between the Australian and Canadian experts.
 
-> Click: the results.
+We compared the two on benchmark data sets, and on simulated data with a known true value, so
+we could measure bias and coverage. ssdtools performed better, and including more
+distributions improved its estimates. The recommendation has since been approved.
 
-> Click: the recommendation.
-
-> Click: the three countries.
-
-The recommendation has since been approved.
-
-> Click: the last line.
+I was on that project because of years of work in the field and convening workshops with the
+people who set these guidelines, not because of my GitHub profile.
 
 ---
 
-## 19 · Open source and regulatory agreement — 30 s
+## 14 · Open source and regulatory agreement — 30 s
 
 With a closed desktop program, the discussion ends up relying on trust in whoever wrote it.
 
-> Click: reading the source.
-
-> Click: the Shiny app.
-
 ---
 
-## 20 · Since June 2026 · AI-assisted coding — 5 s
+## 15 · Since June 2026 · AI-assisted coding — 5 s
 
 That brings me to the last few months.
 
 ---
 
-## 21 · The change since June — 60 s
+## 16 · The change since June — 60 s
 
 In June I stopped writing code by hand. I now work with Claude Code, and my impression is
 that I'm about five times more productive. That is an impression, so I measured what I
@@ -268,7 +238,7 @@ software still runs in five years.
 
 ---
 
-## 22 · `FSSgam`, 2018 to 2026 — 50 s
+## 17 · `FSSgam`, 2018 to 2026 — 50 s
 
 One package in detail. FSSgam's first commit was in September 2018, and it went seven years
 and nine months without a test file or continuous integration. There was always a more
@@ -286,7 +256,7 @@ with no warning.
 
 ---
 
-## 23 · Routine work and judgement — 40 s
+## 18 · Routine work and judgement — 40 s
 
 The left column is work that used to be put off for the next deadline, and now gets done.
 The right column has not changed. If anything it matters more, because I'm producing more
@@ -298,7 +268,7 @@ methods I used for checking someone else's software are the ones I now use for t
 
 ---
 
-## 24 · Points to take away — 40 s
+## 19 · Points to take away — 40 s
 
 Two things I'd like to leave you with.
 
@@ -313,7 +283,7 @@ you.
 
 ---
 
-## 25 · Contacts and acknowledgements — 15 s
+## 20 · Contacts and acknowledgements — 15 s
 
 Thank you. The packages, the code for every figure in this talk, and the log of how I used
 AI to prepare it are on GitHub. I'm happy to take questions in the session Q&A.
@@ -323,7 +293,7 @@ AI to prepare it are on GitHub. I'm happy to take questions in the session Q&A.
 
 ---
 
-## 26 · Thresholds against turbidity events
+## 21 · Thresholds against turbidity events
 
 > Backup for questions on how the thresholds are used during dredging.
 
@@ -334,7 +304,7 @@ operates, or stopping it.
 
 ---
 
-## 27 · Threshold setting with ROC curves
+## 22 · Threshold setting with ROC curves
 
 > Backup for questions on how the dredging thresholds were set.
 
@@ -346,7 +316,7 @@ probable.
 
 ---
 
-## 28 · PC95 by distribution
+## 23 · PC95 by distribution
 
 > Backup for questions on model averaging.
 
@@ -356,7 +326,7 @@ The model average weights each fit by its AICc.
 
 ---
 
-## 29 · Estimates of "no effect"
+## 24 · Estimates of "no effect"
 
 > Backup for questions on bayesnec and what goes into an SSD.
 
@@ -425,8 +395,8 @@ never came back out was a reusable tool for the threshold analysis itself.
 No. They come from concentration–response relationships measured in the field for one
 receptor, coral, at one site, with ROC curves used to set the thresholds (Fisher et al. 2018,
 *Journal of Applied Ecology*). That predates my SSD work. The SSD is for national default
-guideline values from laboratory toxicity data across many species. The slide *Thresholds
-from error rates* shows how the thresholds were set, and the backup slide on ROC curves explains
+guideline values from laboratory toxicity data across many species. The slide *Dredging
+thresholds* shows how the thresholds were set, and the backup slide on ROC curves explains
 the method further.
 
 **"Did open source get you onto the ssdtools project?"**

@@ -109,7 +109,7 @@ This writes three files from the same render, so they match slide for slide:
 | File | Use |
 |---|---|
 | `fisher-rexchange-perth-2026.html` | The deck itself. One file, about 12 MB, with every image inside it, including the AIMS ones. Opens in Chrome, Edge or Firefox with no network. Press `s` for speaker notes, which open in a second window. |
-| `fisher-rexchange-perth-2026.pptx` | One full-slide picture per click, with the notes for that click in PowerPoint's notes pane, so presenter view works and advancing a slide steps through a build as the HTML does. Slide text is not editable. |
+| `fisher-rexchange-perth-2026.pptx` | One full-slide picture per click, so presenter view works and advancing a slide steps through a build as the HTML does. Each page's notes hold the slide's notes up to that click, with the text on the slide in bold. Slide text is not editable. |
 | `fisher-rexchange-perth-2026.pdf` | One page per click, no notes. The format any venue can show. |
 
 The PDF and PowerPoint omit the footer line. Every file in `_output/handover/` embeds the AIMS
