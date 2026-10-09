@@ -97,7 +97,7 @@ for (i in seq_along(slides)) {
 out <- head(out, -2)
 
 # --- splice ----------------------------------------------------------------
-cur <- readLines(notes_path, warn = FALSE, encoding = "UTF-8")
+cur <- sub("\r$", "", readLines(notes_path, warn = FALSE, encoding = "UTF-8"))
 b_i <- which(trimws(cur) == BEGIN)
 e_i <- which(trimws(cur) == END)
 
@@ -106,6 +106,11 @@ if (!length(b_i) || !length(e_i)) {
        " — add ", BEGIN, " and ", END, " around the narration section.")
 }
 
-writeLines(c(cur[seq_len(b_i[1])], "", out, "", cur[e_i[1]:length(cur)]),
-           notes_path)
+# Written through a binary connection so the file has LF line endings on every
+# platform. A text connection on Windows writes CRLF, and CI, which rebuilds the
+# file on Linux and fails if git sees a change, then reported every line as
+# stale.
+con <- file(notes_path, open = "wb")
+writeLines(c(cur[seq_len(b_i[1])], "", out, "", cur[e_i[1]:length(cur)]), con)
+close(con)
 message("wrote ", notes_path, " (", length(slides), " slides)")
