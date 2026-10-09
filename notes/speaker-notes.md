@@ -12,13 +12,14 @@
 > the end — is hand-written and preserved across regeneration.
 
 Most of what is said is written on the slides, some of them built up with clicks, and the
-notes hold the sentences that join them. The two slides on species sensitivity distributions
-and the evaluation of `ssdtools` are the exception: they are shown complete, and their
-narration is in the notes. Lines set as blockquotes are stage directions, not things to say,
-and each "Click" direction marks one click.
+notes hold the sentences that join them. The slide on species sensitivity distributions is
+the exception: it is shown complete, and the explanation of the SSD is in the notes. Lines
+set as blockquotes are stage directions, not things to say, and each "Click" direction marks
+one click.
 
 The PowerPoint in `_output/handover/` has one page per click. Each page's notes repeat the
-notes of the slide's earlier clicks, and include the text on the slide in bold.
+notes of the slide's earlier clicks, and include the text on the slide in bold. A "Read the
+slide" direction marks where that text is placed among the narration.
 
 For the running order, timings, and what to drop if running long, see
 [`slide-outline.md`](slide-outline.md). The timing markers add to about 12.5 minutes, in a
@@ -88,6 +89,8 @@ guidance.
 
 I'll go through this from left to right, in three eras.
 
+> Read the slide.
+
 ---
 
 ## 6 · Era one · 2010–2015 · ElicitN — 45 s
@@ -105,7 +108,7 @@ Biology* in 2015.
 
 ## 7 · Era two · 2015–2020 · White, grey and black literature — 30 s
 
-At the same time I started working with industry data.
+During era two, I started working with industry data.
 
 > Click: grey literature.
 
@@ -116,6 +119,10 @@ At the same time I started working with industry data.
 ---
 
 ## 8 · Era two · 2015–2020 · Barrow Island monitoring data — 35 s
+
+One of the most valuable datasets was the Barrow Island monitoring data that was required for
+
+> Read the slide.
 
 This is one coral from that program, photographed through the dredging campaign, with the
 turbidity record above it. You can see sediment settling, bleaching, and recovery.
@@ -175,23 +182,21 @@ ssddata package, and becoming a co-collaborator on ssdtools.
 
 ## 12 · Era three · 2021 onwards · Species sensitivity distributions — 60 s
 
-By then I was also working on the statistical methods behind water quality guidelines.
-Guideline values set the safe concentration of a contaminant, for example for the sewage
-outflow at your local beach. The default values are the environmental equivalent of the 0.05
-blood alcohol driving limit: exceed them and activities can be stopped or modified.
+ssdtools is some of my more recent work that has had the biggest impact. For context, this
+project was related to the official Australian default guideline values.
+
+> Read the slide.
 
 They are derived from a species sensitivity distribution, or SSD. Each point is the toxicity
-estimate for one species, which is what bayesnec estimates. You fit a distribution and read
-off the concentration that protects, here, 95% of species.
+estimate for one species, which is what bayesnec (my other software) was built to estimate.
+You fit a distribution and read off the concentration that protects, here, 95% of species.
 
-There is no theoretical basis for choosing one distribution, and for these boron data the
-value ranges from 1.07 to 1.77 milligrams per litre depending on the choice. ssdtools averages
-over several distributions. Burrlioz, the software required in Australia at the time, fitted
-one.
+There is no theoretical basis for choosing one distribution, and ssdtools solves this by
+averaging over several distributions.
 
 ---
 
-## 13 · Era three · 2021 onwards · Evaluation of `ssdtools` — 60 s
+## 13 · Era three · 2021 onwards · Evaluation of `ssdtools` — 90 s
 
 ssdtools was originally written by Joe Thorley and Carl Schwarz. The project's job was to
 evaluate whether ssdtools could replace Burrlioz in the Australian guideline framework.
@@ -205,21 +210,21 @@ distributions improved its estimates. The recommendation has since been approved
 I was on that project because of years of work in the field and convening workshops with the
 people who set these guidelines, not because of my GitHub profile.
 
----
-
-## 14 · Open source and regulatory agreement — 30 s
+> Click: open source.
 
 With a closed desktop program, the discussion ends up relying on trust in whoever wrote it.
 
+> Read the slide.
+
 ---
 
-## 15 · Since June 2026 · AI-assisted coding — 5 s
+## 14 · Since June 2026 · AI-assisted coding — 5 s
 
 That brings me to the last few months.
 
 ---
 
-## 16 · The change since June — 60 s
+## 15 · The change since June — 60 s
 
 In June I stopped writing code by hand. I now work with Claude Code, and my impression is
 that I'm about five times more productive. That is an impression, so I measured what I
@@ -238,7 +243,7 @@ software still runs in five years.
 
 ---
 
-## 17 · `FSSgam`, 2018 to 2026 — 50 s
+## 16 · `FSSgam`, 2018 to 2026 — 50 s
 
 One package in detail. FSSgam's first commit was in September 2018, and it went seven years
 and nine months without a test file or continuous integration. There was always a more
@@ -256,7 +261,7 @@ with no warning.
 
 ---
 
-## 18 · Routine work and judgement — 40 s
+## 17 · Routine work and judgement — 40 s
 
 The left column is work that used to be put off for the next deadline, and now gets done.
 The right column has not changed. If anything it matters more, because I'm producing more
@@ -268,7 +273,7 @@ methods I used for checking someone else's software are the ones I now use for t
 
 ---
 
-## 19 · Points to take away — 40 s
+## 18 · Points to take away — 40 s
 
 Two things I'd like to leave you with.
 
@@ -283,7 +288,7 @@ you.
 
 ---
 
-## 20 · Contacts and acknowledgements — 15 s
+## 19 · Contacts and acknowledgements — 15 s
 
 Thank you. The packages, the code for every figure in this talk, and the log of how I used
 AI to prepare it are on GitHub. I'm happy to take questions in the session Q&A.
@@ -293,18 +298,7 @@ AI to prepare it are on GitHub. I'm happy to take questions in the session Q&A.
 
 ---
 
-## 21 · Thresholds against turbidity events
-
-> Backup for questions on how the thresholds are used during dredging.
-
-On the left is suspended sediment about 200 metres from the dredge. On the right, two
-turbidity events are plotted against the thresholds. Event A crosses the possible threshold
-only. Event B is above both. An exceedance like that can result in changing how the dredge
-operates, or stopping it.
-
----
-
-## 22 · Threshold setting with ROC curves
+## 20 · Threshold setting with ROC curves
 
 > Backup for questions on how the dredging thresholds were set.
 
@@ -316,7 +310,7 @@ probable.
 
 ---
 
-## 23 · PC95 by distribution
+## 21 · PC95 by distribution
 
 > Backup for questions on model averaging.
 
@@ -326,7 +320,7 @@ The model average weights each fit by its AICc.
 
 ---
 
-## 24 · Estimates of "no effect"
+## 22 · Estimates of "no effect"
 
 > Backup for questions on bayesnec and what goes into an SSD.
 

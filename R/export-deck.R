@@ -140,6 +140,11 @@ note_paragraphs <- function(lines) {
 # the slide; after a click the text that has just appeared comes first, and the
 # narration expands on it.
 #
+# A "> Read the slide." direction overrides that order: the slide text goes where
+# the direction stands. The speaker moved the slide text within the narration on
+# three pages of the handout on 2026-10-09, one of them in the middle of a
+# sentence, and neither default order could reproduce them.
+#
 # Each paragraph is a list(text, bold).
 page_notes <- function(lines, text) {
   n_pages <- length(text)
@@ -148,13 +153,21 @@ page_notes <- function(lines, text) {
   timing <- grepl("^\\[~\\d+ s\\]$", lines)
   keep <- !click & !timing
   segs <- split(lines[keep], factor(cumsum(click)[keep], levels = seq_len(n_pages) - 1L))
-  segs <- lapply(segs, note_paragraphs)
   labels <- vapply(lines[click], note_paragraphs, "", USE.NAMES = FALSE)
   para <- function(x, bold = FALSE) lapply(x, function(t) list(text = t, bold = bold))
   steps <- lapply(seq_len(n_pages), function(k) {
+    seg <- segs[[k]]
     shown <- para(text[[k]], bold = TRUE)
-    said <- para(segs[[k]])
-    if (k == 1L) c(said, shown) else c(para(labels[k - 1L]), shown, said)
+    at <- grep("^>\\s*Read the slide", seg)[1]
+    body <- if (!is.na(at)) {
+      c(para(note_paragraphs(seg[seq_len(at - 1L)])), shown,
+        para(note_paragraphs(seg[-seq_len(at)])))
+    } else if (k == 1L) {
+      c(para(note_paragraphs(seg)), shown)
+    } else {
+      c(shown, para(note_paragraphs(seg)))
+    }
+    if (k == 1L) body else c(para(labels[k - 1L]), body)
   })
   head <- para(note_paragraphs(lines[timing]))
   lapply(seq_len(n_pages), function(k) {

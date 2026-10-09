@@ -467,3 +467,73 @@ records that she reviews in the PowerPoint, that her comments number its pages, 
 builds are kept short.
 
 ---
+
+## Session: handout-edits-2026-10-09
+Date: 2026-10-09
+Model: Claude Opus 5.5 (claude-opus-5-5)
+
+### Prompts and Responses
+
+**User:** I have made some more edits to the speaker notes, can you update them?
+
+Slide 27 - can we add the 0.05 blood alchol graphic and dot points from the other version?
+
+SLide 28 and 29 - can this be combined into one slide?
+
+**Claude:** Her handout was copied to `superceded/review-2026-10-09/` before anything was
+re-exported. Its notes were extracted page by page and compared with the notes the export
+writes for the committed deck. Pages 27, 28 and 29 are the SSD, the evaluation of `ssdtools`
+and the open-source slide, which confirms again that her numbers are pages of the handout.
+
+- *Her notes.* Five pages differed. On the literature slide, "At the same time" became "During
+  era two" (she had edited two of its four pages; the change now appears on all four). On the Barrow Island
+  slide she added an opening sentence that runs into the slide text, and shortened the slide
+  text to "Approval conditions for dredging.", so the slide was changed to match. On the
+  timeline slide and the Barrow Island slide she placed the slide text after narration that the
+  export puts after it. On the SSD slide she rewrote the narration: `ssdtools` as the work with
+  the most impact, the default guideline values, the SSD, and averaging over distributions; the
+  boron range and the Burrlioz sentence were dropped. Typing slips were corrected
+  ("ssdtools", "the official Australian default guideline values", "by averaging"), and her
+  clause "exceed them and activities can be stopped or modified" was left out of the narration
+  because the slide now says it.
+- *Placing slide text.* Neither of the export's two orders (narration then slide text on a
+  slide's first page, slide text then narration after a click) could reproduce those three
+  pages, one of which breaks mid-sentence. `R/export-deck.R` now reads a `> Read the slide.`
+  direction as the place for the slide text. With it, every page she edited is reproduced
+  exactly apart from the corrections listed above.
+- *SSD slide.* The "other version" is *The legal limit* in commit `1336127`: the breath-test
+  photograph and police cap, with "Default guideline values are the environmental equivalent
+  of the 0.05 blood alcohol driving limit" and its two points, above and below the limit. They
+  take the left column, with the SSD figure on the right, and the slide is still shown
+  complete. `ssd-model-average.png` is now drawn 8 by 6.2 inches, not 10.5 by 6, with its
+  subtitle and caption on two lines, so its labels keep their size in a narrower column;
+  rebuilding with Windows R changed no other figure.
+- *Evaluation and open source.* One slide, *Evaluation of `ssdtools`*: the evaluation as
+  before, set at the size of the other slide text, and on one click the black box line, the
+  black box and the two sentences on reading the source and the Shiny app. A click was chosen
+  rather than showing all of it at once because it keeps her narration in its order (the
+  evaluation, then "With a closed desktop program…" before the black box). The first attempt
+  overflowed the page in the PDF, which reveal.js splits onto extra pages; the text was
+  reduced to slide-text size and the second half put in a 65/35 split so the Shiny line takes
+  two lines. A CSS `order` rule to show the black box on the right was tried and removed: the
+  print layout sets columns as inline blocks, so the PDF and the live deck would have differed.
+- *Not acted on.* Her handout has no page for the backup slide *Thresholds against turbidity
+  events*. It is still in the deck, pending her answer on whether the deletion was deliberate.
+
+The deck is 19 slides and 16 clicks (35 steps). The timing markers still add to 12:35, and the
+word count is ten words lower, so the 14.8 and 13.0 minute estimates stand. The outline,
+visuals brief, speaker-notes preamble, README and `CLAUDE.md` were updated, and the notes and
+handout regenerated. The 39 pages of the new handout were checked against a dry run of the
+export: the notes are identical.
+
+---
+
+**User:** sorry yes I donlt thiknk we need it
+
+**Claude:** The backup slide *Thresholds against turbidity events* was removed from
+`talk/index.qmd`. `talk/external/turbidity-thresholds.png`, its attribution and
+`R/external-figures.R` were kept, so the slide can be restored from the commit history. The
+outline, visuals brief and source synthesis now record it as removed. The notes and handout
+were regenerated: 38 pages, the same as her copy, with three backup slides.
+
+---

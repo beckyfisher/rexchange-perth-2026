@@ -68,7 +68,8 @@ needs PowerPoint on the same machine.
 The speaker notes live in `talk/index.qmd` inside `::: {.notes}` blocks and are the single
 source of truth; `notes/speaker-notes.md` is generated from them so the two can't drift. A
 line beginning `> ` inside a notes block is a **stage direction** — something to do, not
-something to say.
+something to say. A `> Read the slide.` direction marks where the slide text belongs among the
+narration in the PowerPoint handout's notes.
 
 On the author's Windows machine neither is on `PATH`:
 

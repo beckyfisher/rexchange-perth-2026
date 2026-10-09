@@ -22,7 +22,7 @@ differ.
 Most slides hold what the speaker says, and some are built up with clicks. Where the picture
 changes with a click, the versions are stacked in a `.r-stack` and drawn on identical canvases,
 so nothing else on the slide shifts. The speaker judged the animation overdone on 2026-10-07,
-so builds are kept short, and the SSD and evaluation slides are shown complete.
+so builds are kept short, and the SSD slide is shown complete.
 
 ---
 
@@ -76,8 +76,9 @@ relicensed. Without the source deck the script writes grey placeholders of the s
 
 | File | Source slide | Used on |
 |---|---|---|
-| `outfall.jpg`, `no-sign.png`, `breath-test.jpg`, `police-hat.png` | 1, the blood-alcohol slide | Not used since 2026-10-07 |
-| `white-literature.jpg`, `grey-literature.png`, `confidential.png`, `black-box.png` | 8, white, grey and black literature | *White, grey and black literature*; the black box also on *Open source and regulatory agreement* |
+| `breath-test.jpg`, `police-hat.png` | 1, the blood-alcohol slide | *Species sensitivity distributions*, since 2026-10-09 |
+| `outfall.jpg`, `no-sign.png` | 1, the blood-alcohol slide | Not used since 2026-10-07 |
+| `white-literature.jpg`, `grey-literature.png`, `confidential.png`, `black-box.png` | 8, white, grey and black literature | *White, grey and black literature*; the black box also on *Evaluation of `ssdtools`* |
 | `cr-curve.png` | 4, concentration–response | *Dredging thresholds*, first step |
 | `roc.png` | 6, probabilistic thresholds | *Dredging thresholds*, second step |
 | `management-zones.png` | 7, link to management | *Dredging thresholds*, third step |
@@ -90,7 +91,8 @@ different shapes, so each is drawn on a white panel of the same size (`img.stack
 The unused pictures belong to two things the deck held on 2026-10-06 (commit `1336127`): the
 slide *The legal limit*, with the blood-alcohol analogy, which the speaker replaced on
 2026-10-07 with the original *Numbers in environmental regulation*; and the five-slide build
-from exposure to management. The script still exports them, so either can be restored from
+from exposure to management. On 2026-10-09 she asked for the breath test and the police cap
+from *The legal limit*, with its two points, on the SSD slide. The script still exports them, so either can be restored from
 that commit without changing `R/local-images.R`. The water quality strip is
 semi-transparent in the source, so laid over the coral photographs it gives the combined strip
 of the source deck's slide 4. In `mortality-densities.png` a white mask over a panel label is
@@ -118,9 +120,10 @@ already in the public record.
 
 ### `turbidity-thresholds.png`
 
-Backup slide: *Thresholds against turbidity events.* It was the main dredging slide until
-2026-10-06, when the speaker's pictures from `slides.pptx` replaced it; they are now on the one
-slide *Dredging thresholds*.
+Not used since 2026-10-09. It was the main dredging slide until 2026-10-06, when the
+speaker's pictures from `slides.pptx` replaced it, and then the backup slide *Thresholds
+against turbidity events*, which the speaker removed on 2026-10-09. The file and
+`R/external-figures.R` are kept so that the slide can be restored from commit history.
 
 Jones et al. (2019), Theme 4 Synthesis Report, Figure 19. Panel A is suspended sediment at a
 site about 200 m from the dredge; panel B is the running-mean hazard profile of two turbidity
@@ -166,7 +169,9 @@ Slide: *Species sensitivity distributions.*
 The CCME boron toxicity estimates from `ssddata`, the six single-distribution fits in light grey,
 the model average in bold, and its PC95 of 1.26 mg/L. It was the SSD slide in the version the
 speaker first reviewed, was replaced by the step-by-step build below on 2026-10-06, and was
-restored on 2026-10-07, when she judged that build too much animation.
+restored on 2026-10-07, when she judged that build too much animation. Since 2026-10-09 it sits
+in the right-hand column beside the blood-alcohol text, and is drawn 8 by 6.2 inches rather
+than 10.5 by 6 so that its labels keep their size in a narrower space.
 
 ### `ssd-step-1.png` to `ssd-step-5.png`
 
@@ -207,8 +212,7 @@ The boron SSD without title or caption, for the title collage.
 
 `roc-thresholds.png` (schematic ROC, after Fisher et al. 2018), `ssd-model-spread.png` (PC95
 from each single distribution, 1.07 to 1.77 mg/L) and `no-effect-estimates.png` (schematic NEC,
-NSEC, EC10 and NOEC) are on three of the four uncounted slides after the closing slide; the
-fourth holds `turbidity-thresholds.png`.
+NSEC, EC10 and NOEC) are on the three uncounted slides after the closing slide.
 
 ### `stop-sign.png`
 

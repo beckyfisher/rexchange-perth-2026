@@ -260,6 +260,26 @@ html.reveal-print .reveal .footer {
   margin: 0;
 }
 
+// The SSD beside the blood-alcohol text: as wide as its column, and no taller
+// than the space under the title.
+.reveal img.ssd-side {
+  width: 100%;
+  max-height: 620px;
+  object-fit: contain;
+  margin: 0;
+}
+
+// The open-source half of the ssdtools evaluation slide, shown on a click below
+// the evaluation itself.
+.reveal .open-source {
+  margin-top: 0.8em;
+}
+.reveal img.black-box {
+  display: block;
+  width: 90px;
+  margin: 0.25em auto 0 auto;
+}
+
 // Figures that replace one another with each click, in a .r-stack
 .reveal img.stack-fig {
   max-height: 570px;

@@ -175,6 +175,8 @@ guidance.
 
 I'll go through this from left to right, in three eras.
 
+> Read the slide.
+
 [~50 s]
 :::
 
@@ -277,7 +279,7 @@ High quality, very large, and confidential.
 :::
 
 ::: {.notes}
-At the same time I started working with industry data.
+During era two, I started working with industry data.
 
 > Click: grey literature.
 
@@ -298,8 +300,7 @@ At the same time I started working with industry data.
 ::: {.column width="56%"}
 
 ::: {.say}
-Approval conditions for dredging off the Pilbara coast required a lot of environmental
-monitoring.
+Approval conditions for dredging.
 :::
 
 ::: {.arrows .say}
@@ -328,6 +329,10 @@ Report 4, Project 4.9, Fig. 6. CC BY 3.0 AU.
 :::
 
 ::: {.notes}
+One of the most valuable datasets was the Barrow Island monitoring data that was required for
+
+> Read the slide.
+
 This is one coral from that program, photographed through the dredging campaign, with the
 turbidity record above it. You can see sediment settling, bleaching, and recovery.
 
@@ -498,22 +503,44 @@ ssddata package, and becoming a co-collaborator on ssdtools.
 
 ## [Era three · 2021 onwards]{.kicker} Species sensitivity distributions
 
-![](figures/ssd-model-average.png){.fig-full fig-alt="A species sensitivity distribution fitted to CCME boron data on a log concentration axis, showing six thin candidate distribution curves, a bold model-average curve, and the PC95 guideline value marked at 1.26 mg/L."}
+::: {.columns}
+
+::: {.column width="38%"}
+
+::: {.say}
+Default guideline values are the environmental equivalent of the
+[0.05 blood alcohol driving limit]{.hl}.
+:::
+
+::: {.arrows .say}
+- above the limit, activities can be stopped or modified
+- below it, the environment is assumed to be "safe"
+:::
+
+:::
+
+::: {.column width="62%"}
+![](figures/ssd-model-average.png){.ssd-side fig-alt="A species sensitivity distribution fitted to CCME boron data on a log concentration axis, showing six thin candidate distribution curves, a bold model-average curve, and the PC95 guideline value marked at 1.26 mg/L."}
+:::
+
+:::
+
+![](local/breath-test.jpg){.absolute .photo top="560" left="215" width="370" fig-alt="A police officer holding a breath-testing device to a driver."}
+
+![](local/police-hat.png){.absolute top="705" left="128" width="150" fig-alt="A police cap."}
 
 ::: {.notes}
-By then I was also working on the statistical methods behind water quality guidelines.
-Guideline values set the safe concentration of a contaminant, for example for the sewage
-outflow at your local beach. The default values are the environmental equivalent of the 0.05
-blood alcohol driving limit: exceed them and activities can be stopped or modified.
+ssdtools is some of my more recent work that has had the biggest impact. For context, this
+project was related to the official Australian default guideline values.
+
+> Read the slide.
 
 They are derived from a species sensitivity distribution, or SSD. Each point is the toxicity
-estimate for one species, which is what bayesnec estimates. You fit a distribution and read
-off the concentration that protects, here, 95% of species.
+estimate for one species, which is what bayesnec (my other software) was built to estimate.
+You fit a distribution and read off the concentration that protects, here, 95% of species.
 
-There is no theoretical basis for choosing one distribution, and for these boron data the
-value ranges from 1.07 to 1.77 milligrams per litre depending on the choice. ssdtools averages
-over several distributions. Burrlioz, the software required in Australia at the time, fitted
-one.
+There is no theoretical basis for choosing one distribution, and ssdtools solves this by
+averaging over several distributions.
 
 [~60 s]
 :::
@@ -526,15 +553,18 @@ one.
 ::: {.columns}
 
 ::: {.column width="60%"}
-Joint Australian–Canadian project, funded by the Australian Government (DCCEEW)
 
-::: {.arrows}
+::: {.say}
+Joint Australian–Canadian project, funded by the Australian Government (DCCEEW)
+:::
+
+::: {.arrows .say}
 - David Fox, Environmetrics Australia
 - Joe Thorley & Carl Schwarz, British Columbia
 - `ssdtools` compared with **Burrlioz 2.0**
 :::
 
-::: {.minor style="margin-top:0.6em;"}
+::: {.minor}
 Benchmark data sets, plus simulated data with a known true value, so that bias and
 coverage could be measured.
 :::
@@ -543,7 +573,7 @@ coverage could be measured.
 
 ::: {.column width="40%"}
 
-::: {.punch style="font-size:1.05em;"}
+::: {.punch style="font-size:1.0em; margin-top:0.5em;"}
 Recommendation:\
 adopt `ssdtools` as the\
 [default software]{.e3}
@@ -551,6 +581,39 @@ adopt `ssdtools` as the\
 
 ::: {.minor style="text-align:center; margin-top:0.6em;"}
 Australia · New Zealand · Canada
+:::
+
+:::
+
+:::
+
+::: {.open-source .fragment}
+
+::: {.columns}
+
+::: {.column width="35%"}
+
+::: {.punch style="font-size:1.0em; margin-top:0;"}
+Three regulators cannot\
+audit a [black box]{.e3}.
+:::
+
+![](local/black-box.png){.black-box fig-alt="A black box."}
+
+:::
+
+::: {.column width="65%"}
+
+::: {.say}
+Every expert could read the source code, run the benchmarks, and disagree about specific
+lines.
+:::
+
+::: {.say}
+Most people deriving guideline values don't write R. The Shiny app, `shinyssdtools`, is how
+they use the method.
+:::
+
 :::
 
 :::
@@ -570,35 +633,13 @@ distributions improved its estimates. The recommendation has since been approved
 I was on that project because of years of work in the field and convening workshops with the
 people who set these guidelines, not because of my GitHub profile.
 
-[~60 s]
-:::
+> Click: open source.
 
----
-
-
-## Open source and regulatory agreement
-
-::: {.punch style="margin-top:0.6em;"}
-Three regulators cannot audit\
-a [black box]{.e3}.
-:::
-
-![](local/black-box.png){.absolute top="150" left="1230" width="120" fig-alt="A black box."}
-
-::: {.say style="text-align:center; margin-top:1.0em;"}
-Every expert could read the source code, run the benchmarks, and disagree about specific
-lines.
-:::
-
-::: {.say style="text-align:center;"}
-Most people deriving guideline values don't write R. The Shiny app, `shinyssdtools`, is how
-they use the method.
-:::
-
-::: {.notes}
 With a closed desktop program, the discussion ends up relying on trust in whoever wrote it.
 
-[~30 s]
+> Read the slide.
+
+[~90 s]
 :::
 
 ---
@@ -817,28 +858,6 @@ AI to prepare it are on GitHub. I'm happy to take questions in the session Q&A.
 > sentence.
 
 [~15 s]
-:::
-
----
-
-
-## Thresholds against turbidity events {visibility="uncounted"}
-
-![](external/turbidity-thresholds.png){.fig-full style="max-height:520px;" fig-alt="Left: suspended sediment concentration at a monitoring site about 200 m from the dredging over 400 days, with two 10-day turbidity events marked A and B. Right: running-mean suspended sediment for each event plotted against the possible-effects and probable-effects thresholds. Event A exceeds the possible threshold only; event B exceeds both."}
-
-::: {.credit style="text-align:center;"}
-Adapted from Jones, Fisher, Bessell-Browne, Negri & Duckworth (2019) WAMSI Dredging Science
-Node Theme 4 Synthesis Report, Fig. 19; panels placed side by side. CC BY 3.0 AU.
-Thresholds from Fisher et al. (2018) *J. Appl. Ecol.* 55:415.
-:::
-
-::: {.notes}
-> Backup for questions on how the thresholds are used during dredging.
-
-On the left is suspended sediment about 200 metres from the dredge. On the right, two
-turbidity events are plotted against the thresholds. Event A crosses the possible threshold
-only. Event B is above both. An exceedance like that can result in changing how the dredge
-operates, or stopping it.
 :::
 
 ---

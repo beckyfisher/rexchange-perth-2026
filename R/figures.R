@@ -295,11 +295,14 @@ p_ssd <- ggplot() +
   scale_y_continuous(labels = percent, limits = c(0, 1)) +
   labs(x = "Concentration (mg/L)", y = "Proportion of species affected",
        title = "The species sensitivity distribution",
-       subtitle = "Each point is the toxicity estimate for one species. The concentration read off the curve becomes the guideline value.",
-       caption = "CCME boron data, shipped with {ssddata}. Thin lines are single-distribution fits over the BCANZ set; the bold line is the model average.") +
+       subtitle = "Each point is the toxicity estimate for one species. The concentration\nread off the curve becomes the guideline value.",
+       caption = "CCME boron data, shipped with {ssddata}. Thin lines are single-distribution fits\nover the BCANZ set; the bold line is the model average.") +
   theme_talk()
 
-save_fig(p_ssd, "ssd-model-average.png", width = 10.5, height = 6)
+# Drawn for the right-hand column of its slide, beside the blood-alcohol text
+# that the speaker restored on 2026-10-09. Saved at this width rather than
+# shrinking the 10.5-inch version, so its labels keep their size on screen.
+save_fig(p_ssd, "ssd-model-average.png", width = 8, height = 6.2)
 
 # --- 2b. why model averaging: the same data, several answers ----------------
 # This is the "which model do you fit?" backup slide, made concrete.

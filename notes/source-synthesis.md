@@ -48,7 +48,7 @@ inspected as rendered pages.
 
 | File | What it is | Used for |
 |---|---|---|
-| `Dredging-Science-Synthesis-Report-Theme-4-…-Jones-et-al-March-2019.pdf` | Jones, Fisher, Bessell-Browne, Negri & Duckworth (2019), Theme 4 synthesis report (36 pp.) | Figure 19, the turbidity events against the possible and probable thresholds, on the dredging-thresholds slide |
+| `Dredging-Science-Synthesis-Report-Theme-4-…-Jones-et-al-March-2019.pdf` | Jones, Fisher, Bessell-Browne, Negri & Duckworth (2019), Theme 4 synthesis report (36 pp.) | Figure 19, the turbidity events against the possible and probable thresholds; a backup slide until the speaker removed it on 2026-10-09 |
 | `Fisher_etal2019_WAMSI_DSN_Theme4.9_FINAL.pdf` | Fisher, Jones & Bessell-Browne (2019), Report of Theme 4, Project 4.9 (128 pp.), including Project 4.9.4 on deriving and operationalising thresholds | Figure 6 of 4.9.4, the *Porites* time sequence, on the industry-data slide and the title slide |
 | `Fisher_etal2019_WAMSI_4.9.pdf` | An earlier version of the same Project 4.9 report (123 pp.) | Not used; the final version was preferred |
 | `Dredging-Science-Final-Report-PROJ-4.2-…-Fisher-et-al-April-2017.pdf` | Fisher et al. (2017), Project 4.2, effects of dredging on water quality | Not used. Candidate figures considered and passed over for this deck: the turbidity and light record before and during dredging, and the distance-decay plots |
