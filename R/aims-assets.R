@@ -49,6 +49,7 @@ if (!file.exists(src_pptx)) {
   placeholder("content-background.jpg", "", fill = "white")
   placeholder("aims-intro.jpg", "AIMS introduction slide (not in the public build)")
   placeholder("aims-team.jpg", "AIMS team slide (not in the public build)")
+  placeholder("aims-team-guidelines.jpg", "AIMS team slide (not in the public build)")
   placeholder("dredge-photo.jpg", "photograph", width = 1600, height = 1200)
   quit(save = "no")
 }
@@ -126,6 +127,24 @@ export_slide <- function(slide, out, width = 2400, height = 1350) {
 if (!export_slide(3, "aims-team.jpg")) {
   warning("PowerPoint export failed; writing a placeholder for the team slide")
   placeholder("aims-team.jpg", "AIMS team slide (PowerPoint export failed)")
+  placeholder("aims-team-guidelines.jpg", "AIMS team slide (PowerPoint export failed)")
+} else {
+  # The same slide with "Guidelines/thresholds" in red, shown on a click as the
+  # step into the next slide (speaker's request, 2026-10-13). The deck lays it
+  # over the background at full size. Recolouring the exported picture keeps the
+  # words exactly where they were; text typed over the slide in the browser
+  # would not match PowerPoint's rendering of them. The box encloses that one
+  # bullet's words at 2400 x 1350, and not its bullet point. A screen blend with
+  # red turns black into red, leaves the white background white, and keeps the
+  # anti-aliased edges in between. The red is that of a name on the same slide.
+  team <- magick::image_read(file.path(out_dir, "aims-team.jpg"))
+  box <- magick::geometry_area(640, 100, 495, 440)
+  words <- magick::image_crop(team, box)
+  red <- magick::image_blank(640, 100, "#D41414")
+  words <- magick::image_composite(words, red, operator = "Screen")
+  magick::image_composite(team, words, offset = "+495+440") |>
+    magick::image_write(file.path(out_dir, "aims-team-guidelines.jpg"),
+                        format = "jpeg", quality = 92)
 }
 
 unlink(unpacked, recursive = TRUE)

@@ -82,14 +82,19 @@ protection of tropical marine ecosystems.
 ::: {.footer}
 :::
 
+<!-- The same slide with "Guidelines/thresholds" in red, laid over the background
+at full size, as the step into the next slide. Written by R/aims-assets.R. -->
+![](aims/aims-team-guidelines.jpg){.absolute .fragment .full-overlay top="0" left="0" width="1600" height="900" fig-alt="The same slide, with the words Guidelines/thresholds in red."}
+
 ::: {.notes}
 I work in the tropical ecotoxicology and risk assessment team, which has people at all three
 AIMS sites. We work closely with industry on contamination and pollution: dredging,
-pesticides, produced water from oil and gas, oil spills and decommissioning. Much of that
-work ends in a guideline value or a threshold, and a lot of what I'll talk about today came
-out of work with this team.
+pesticides, produced water from oil and gas, oil spills and decommissioning.
 
-> Check before presenting that the people on this slide are current.
+> Click: guidelines and thresholds in red.
+
+In particular, we have a focus on developing guidelines and thresholds for environmental
+management and risk assessment.
 
 [~30 s]
 :::
@@ -101,41 +106,51 @@ out of work with this team.
 
 ::: {.columns}
 
-::: {.column width="62%"}
+::: {.column width="56%"}
 
 ::: {.arrows}
-- the turbidity trigger that stops a dredge
+- the turbidity triggers that are used to manage dredging
 - the concentration limit in a discharge licence
 :::
 
 ::: {.fragment}
-Both have to be defensible to a regulator, to a proponent, and occasionally in court.
+These have to be defensible to a regulator, to a proponent, and occasionally in court.
 :::
 
-::: {.lede .fragment style="margin-top:0.8em;"}
+::: {.lede .fragment style="margin-top:0.6em;"}
 Increasingly, they come out of open-source R packages.
 :::
 
+::: {.career .fragment style="margin-top:0.6em;"}
+~15 years improving the statistical methods used in environmental regulation
 :::
 
-::: {.column width="38%"}
-![](figures/stop-sign.png){width="62%" fig-alt="A stop sign."}
+:::
+
+::: {.column width="44%"}
 :::
 
 :::
+
+![](local/plume.jpg){.absolute .photo top="170" left="925" width="205" fig-alt="A satellite picture of a pale dredge plume spreading over dark blue water off a coastline."}
+
+![](local/outfall.jpg){.absolute .photo top="170" left="1145" width="375" fig-alt="Discharge pipes pouring brown effluent into water."}
+
+![](figures/stop-sign.png){.absolute top="450" left="1132" width="180" fig-alt="A stop sign."}
 
 ::: {.notes}
-Water quality guidelines are one of the main legal limits used in environmental regulation.
-A dredging campaign operates under turbidity triggers, and if they are exceeded the dredge has
-to change how it operates, or stop. A discharge licence sets a concentration limit for each
-contaminant.
+These numbers are important in environmental regulation.
+
+Examples include:
 
 > Click: defensible.
 
-> Click: the last line.
+> Click: open-source R packages.
 
-For myself, I've spent the last 15 years developing R code and tools in an attempt to improve
-the statistical methods we use in environmental regulation.
+> Click: fifteen years.
+
+I've spent the last 15 years developing R code and tools in an attempt to improve the
+statistical methods we use in environmental regulation.
 
 [~40 s]
 :::
@@ -146,36 +161,46 @@ the statistical methods we use in environmental regulation.
 ## Improving statistical methods in regulation
 
 ::: {.say style="margin-bottom:0.2em;"}
-The R code I've written or contributed to, by how it was shared.
+The R code I've written or contributed to
 :::
 
 ::: {.r-stack}
-![](figures/code-timeline.png){.stack-fig fig-alt="Timeline from 2010 to 2026 of the speaker's R code, by how it was shared: own computer, zip file, GitHub or CRAN. CReefs scripts in 2010 and the dredging thresholds in 2018 stayed on her own computer; ElicitN in 2012 was a zip file on SourceForge; FSSgam and epower are on GitHub; bayesnec, ssddata and ssdtools are on CRAN. Three shaded eras, scripts, GitHub and CRAN, and a marker for AI in June 2026."}
+![](figures/code-timeline.png){.stack-fig .timeline-fig fig-alt="Timeline from 2010 to 2026 of the speaker's R code, by how it was shared: own computer, zip file, GitHub or CRAN. CReefs scripts in 2010 and the dredging thresholds in 2018 stayed on her own computer; ElicitN in 2012 was a zip file on SourceForge; FSSgam and epower are on GitHub; bayesnec, ssddata and ssdtools are on CRAN. A marker for AI in June 2026."}
 
-![](figures/code-timeline-regulation.png){.stack-fig .fragment data-fragment-index="1" fig-alt="The same timeline, with two points circled as used in regulation: the dredging thresholds, used in WA dredging guidance, and ssdtools, the default software for guideline values in Australia, New Zealand and Canada."}
+![](figures/code-timeline-regulation.png){.stack-fig .timeline-fig .fragment data-fragment-index="1" fig-alt="The same timeline, with two points circled as used in regulation: the dredging thresholds, used in WA dredging guidance, and ssdtools, the default software for guideline values in Australia, New Zealand and Canada."}
+
+![](figures/code-timeline-eras.png){.stack-fig .timeline-fig .fragment data-fragment-index="2" fig-alt="The same timeline with three shaded eras: scripts from 2010 to 2015, GitHub from 2015 to 2020, and CRAN from 2021."}
 :::
 
 ::: {.lede .fragment fragment-index="1" style="text-align:center; margin-top:0.2em;"}
 Regulators use the results of both. Only `ssdtools` can be run by anyone else.
 :::
 
+::: {.say .fragment fragment-index="2" style="text-align:center; margin-top:0.2em;"}
+There were essentially three eras, and I'll touch on each briefly.
+:::
+
 ::: {.notes}
-This graphic shows you that journey, at least for the things I worked on that made it into
-formal publications.
+This graphic shows you
 
-It is plotted by how it was shared: on my own computer, as a zip file, on GitHub, or on CRAN.
+> Read the slide.
 
-I started with a good applied understanding of statistics, but no formal training in
-programming, and you can see the changes that occurred for me over that time.
+that has at least made it into publications.
+
+I started with an applied understanding of statistics, but no formal training in computer
+programming.
+
+You can see the changes over time, from R scripts on my personal computer, through to
+developing packages on CRAN.
 
 > Click: the two used in regulation, and the last line.
 
 These highlighted ones are the work that has actually made it directly into regulatory
 guidance.
 
-I'll go through this from left to right, in three eras.
-
 > Read the slide.
+
+> Click: the three eras.
 
 [~50 s]
 :::
@@ -183,7 +208,7 @@ I'll go through this from left to right, in three eras.
 ---
 
 
-## [Era one · 2010–2015]{.kicker} ElicitN
+## [Era one · 2010–2015 · R scripts]{.kicker} ElicitN
 
 ::: {.columns}
 
@@ -191,7 +216,7 @@ I'll go through this from left to right, in three eras.
 Software for structured expert elicitation.\
 *Environmental Modelling & Software*, 2012.
 
-::: {.minor}
+::: {.minor .unread}
 with R.A. O'Leary, S. Low-Choy, K. Mengersen & M.J. Caley
 :::
 
@@ -204,13 +229,13 @@ with R.A. O'Leary, S. Low-Choy, K. Mengersen & M.J. Caley
 
 :::
 
-::: {.column width="50%"}
+::: {.column width="50%" .fragment}
 
-::: {.minor style="margin-bottom:0.2em;"}
-What it was used for: the number of species on coral reefs worldwide
+::: {.say style="margin-bottom:0.3em;"}
+Used it to estimate the number of species on coral reefs worldwide
 :::
 
-![](figures/reef-richness.png){.panel width="100%" fig-alt="Estimates of species richness on coral reefs worldwide with 95% credible intervals: 70,000 named species, 110,000 discovered but unnamed, 620,000 undiscovered, and 830,000 in total, with an interval from 550,000 to 1,330,000."}
+![](figures/reef-richness.png){.panel width="90%" fig-alt="Estimates of species richness on coral reefs worldwide with 95% credible intervals: 70,000 named species, 110,000 discovered but unnamed, 620,000 undiscovered, and 830,000 in total, with an interval from 550,000 to 1,330,000."}
 
 :::
 
@@ -226,10 +251,13 @@ would still run.
 :::
 
 ::: {.notes}
-Era one produced scripts, not software. ElicitN was a real collaboration, and the
-elicitation methods were the statisticians' at least as much as mine. We used it with 62
-taxonomists to estimate the number of species on coral reefs, published in *Current
-Biology* in 2015.
+Era one produced scripts, not software.
+
+ElicitN was a real collaboration with three statisticians.
+
+> Click: coral reef species.
+
+Published in *Current Biology* in 2015.
 
 > Click: unreproducible.
 
@@ -241,7 +269,7 @@ Biology* in 2015.
 ---
 
 
-## [Era two · 2015–2020]{.kicker} White, grey and black literature
+## [Era two · 2015–2020 · Industry data and GitHub]{.kicker} White, grey and black literature
 
 ::: {.columns .lit}
 
@@ -293,7 +321,7 @@ During era two, I started working with industry data.
 ---
 
 
-## [Era two · 2015–2020]{.kicker} Barrow Island monitoring data
+## [Era two · 2015–2020 · Industry data and GitHub]{.kicker} Barrow Island monitoring data
 
 ::: {.columns}
 
@@ -344,24 +372,33 @@ turbidity record above it. You can see sediment settling, bleaching, and recover
 ---
 
 
-## [Era two · 2015–2020]{.kicker} Dredging thresholds
+## [Era two · 2015–2020 · Industry data and GitHub]{.kicker} Dredging thresholds
 
 ::: {.columns}
 
-::: {.column width="42%"}
+::: {.column width="50%"}
 
-::: {.say}
+::: {.say .unread style="font-size:0.72em;"}
 Coral mortality at each site against water quality → a concentration–response curve from
 field data
 :::
 
 ::: {.say .fragment fragment-index="1"}
-Thresholds from ROC curves, as for any classifier: false alarms against missed coral
-mortality
+We used ROC curves to derive thresholds, as for any classifier: false alarms against missed
+coral mortality
 :::
 
-::: {.say .fragment fragment-index="2"}
-The two thresholds mark the edges of the impact zones in WA EPA dredging guidance
+::: {.fragment fragment-index="2"}
+
+::: {.say}
+This allowed us to derive probabilistic thresholds linked to their purpose.
+:::
+
+::: {.say}
+In this case we used probable mortality versus possible mortality thresholds to distinguish
+management zones.
+:::
+
 :::
 
 ::: {.lede .fragment fragment-index="3"}
@@ -375,7 +412,7 @@ Guidance: Environmental Impact Assessment of Marine Dredging Proposals.
 
 :::
 
-::: {.column width="58%"}
+::: {.column width="50%"}
 
 ::: {.r-stack}
 ![](local/cr-curve.png){.panel .stack-panel fig-alt="Probability of coral mortality against light stress, a 14-day running mean, with a fitted S-shaped curve. Sites with low stress have near-zero mortality; sites with high stress have high mortality."}
@@ -407,14 +444,14 @@ The code behind them cannot be separated from data I'm not able to share.
 ---
 
 
-## [Era two · 2015–2020]{.kicker} Industry work and packages
+## [Era two · 2015–2020 · Industry data and GitHub]{.kicker} Industry work and packages
 
 ::: {.columns}
 
-::: {.column width="48%"}
+::: {.column width="48%" .unread}
 ### Industry work
 
-::: {.arrows}
+::: {.arrows .compact}
 - large, high-quality data
 - real regulatory stakes
 - thresholds still in use
@@ -424,10 +461,10 @@ The code behind them cannot be separated from data I'm not able to share.
 
 :::
 
-::: {.column width="52%" .fragment}
+::: {.column width="52%" .fragment .unread}
 ### Packages on GitHub
 
-::: {.arrows}
+::: {.arrows .compact}
 - `FSSgam` (2018), `epower` (2019)
 - public and installable
 - built on data I *could* share
@@ -439,8 +476,14 @@ The code behind them cannot be separated from data I'm not able to share.
 
 :::
 
-::: {.punch .fragment style="font-size:1.05em; margin-top:0.6em;"}
+::: {.fragment}
+
+::: {.punch style="font-size:1.0em; margin-top:0.3em;"}
 The higher the stakes, the less shareable the tooling.
+:::
+
+![](figures/method-data-separation.png){.separation fig-alt="Schematic. On the left, one project's code drawn as lines, with lines of method in teal interleaved with dark lines written around the client's data. An arrow labelled separating them, a lot of work, leads to two boxes: the method alone in teal, labelled an R package anyone can run, and the data as a dark table stamped CONFIDENTIAL, labelled stays confidential."}
+
 :::
 
 ::: {.notes}
@@ -449,20 +492,24 @@ regulatory stakes, with code that only works on data I can't distribute.
 
 > Click: the packages column.
 
-Alongside it I started putting packages on GitHub. FSSgam began as a function for one paper
-and became a package because people kept asking for it. epower is a toolbox for the power
-of before–after control–impact designs, from an industry-funded project with BMT. Both are
-public and installable, and no regulation depends on either. They could become packages
-because they were built on data I could share. There were still no tests, and neither was
-on CRAN.
+Alongside it I started putting packages on GitHub.
 
-> Click: the last line.
+FSSgam began as a function for one paper and became a package because people kept asking
+for it.
 
-The higher the stakes, the less shareable the tooling. Separating a method from
-confidential data well enough to release it is a lot of work, it is rarely anyone's funded
-deliverable, and I didn't do it. I don't think our field has solved this.
+epower is a toolbox for the power of before–after control–impact designs, from an
+industry-funded project with BMT.
 
-> If Adam Sparks's privacy-preserving pipelines talk (1:45pm) touched on this, say so here.
+Both are public and installable, and no regulation depends on either.
+
+They could become packages because they were built on data I could share.
+
+There were still no tests, and neither was on CRAN.
+
+> Click: the last line and the separation graphic.
+
+Separating a method from confidential data well enough to release it is a lot of work, and
+this I think does remain a problem in open source software.
 
 [~65 s]
 :::
@@ -513,7 +560,7 @@ Default guideline values are the environmental equivalent of the
 :::
 
 ::: {.arrows .say}
-- above the limit, activities can be stopped or modified
+- above the limit, activities must be stopped or modified
 - below it, the environment is assumed to be "safe"
 :::
 
@@ -530,8 +577,7 @@ Default guideline values are the environmental equivalent of the
 ![](local/police-hat.png){.absolute top="705" left="128" width="150" fig-alt="A police cap."}
 
 ::: {.notes}
-ssdtools is some of my more recent work that has had the biggest impact. For context, this
-project was related to the official Australian default guideline values.
+ssdtools is some of my more recent work that has had the biggest impact.
 
 > Read the slide.
 
@@ -552,7 +598,7 @@ averaging over several distributions.
 
 ::: {.columns}
 
-::: {.column width="60%"}
+::: {.column width="58%" .unread}
 
 ::: {.say}
 Joint Australian–Canadian project, funded by the Australian Government (DCCEEW)
@@ -571,45 +617,61 @@ coverage could be measured.
 
 :::
 
-::: {.column width="40%"}
+::: {.column width="42%"}
 
-::: {.punch style="font-size:1.0em; margin-top:0.5em;"}
+<!-- On the second click the screenshot of the Shiny app takes the place of the
+recommendation and the ANZG screenshot: the speaker asked for it to replace the
+recommendation (2026-10-13), and in the space above the open-source half it can
+only be read at the size of both. -->
+::: {.r-stack}
+
+::: {.fragment .fade-out fragment-index="2" .unread}
+
+::: {.punch style="font-size:0.9em; margin-top:0.2em;"}
 Recommendation:\
 adopt `ssdtools` as the\
 [default software]{.e3}
 :::
 
-::: {.minor style="text-align:center; margin-top:0.6em;"}
+::: {.minor style="text-align:center; margin-top:0.3em;"}
 Australia · New Zealand · Canada
 :::
 
+![](local/anzg.png){.anzg fig-alt="Screenshot of the website of the Australian and New Zealand Guidelines for Fresh and Marine Water Quality."}
+
+:::
+
+![](local/shiny.png){.shiny .fragment data-fragment-index="2" fig-alt="Screenshot of the shinyssdtools web app fitting six distributions to a dataset, with the fitted curves plotted."}
+
+:::
+
 :::
 
 :::
 
-::: {.open-source .fragment}
+::: {.open-source .fragment fragment-index="1"}
 
 ::: {.columns}
 
-::: {.column width="35%"}
+::: {.column width="38%"}
 
-::: {.punch style="font-size:1.0em; margin-top:0;"}
-Three regulators cannot\
-audit a [black box]{.e3}.
+::: {.punch style="font-size:0.85em; margin-top:0;"}
+Essentially, three regulators\
+cannot audit a [black box]{.e3}.
 :::
 
 ![](local/black-box.png){.black-box fig-alt="A black box."}
 
 :::
 
-::: {.column width="65%"}
+::: {.column width="62%"}
 
 ::: {.say}
 Every expert could read the source code, run the benchmarks, and disagree about specific
 lines.
 :::
 
-::: {.say}
+::: {.say .fragment fragment-index="2"}
 Most people deriving guideline values don't write R. The Shiny app, `shinyssdtools`, is how
 they use the method.
 :::
@@ -628,16 +690,18 @@ With a stated aim of collective agreement between the Australian and Canadian ex
 
 We compared the two on benchmark data sets, and on simulated data with a known true value, so
 we could measure bias and coverage. ssdtools performed better, and including more
-distributions improved its estimates. The recommendation has since been approved.
-
-I was on that project because of years of work in the field and convening workshops with the
-people who set these guidelines, not because of my GitHub profile.
+distributions improved its estimates. The recommendation to adopt it has since been
+approved, and this is now in the Australian and New Zealand guidance.
 
 > Click: open source.
+
+This project is a good example of where open source software shines.
 
 With a closed desktop program, the discussion ends up relying on trust in whoever wrote it.
 
 > Read the slide.
+
+> Click: the Shiny app.
 
 [~90 s]
 :::

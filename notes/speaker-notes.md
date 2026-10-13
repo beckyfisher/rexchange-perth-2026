@@ -18,8 +18,9 @@ set as blockquotes are stage directions, not things to say, and each "Click" dir
 one click.
 
 The PowerPoint in `_output/handover/` has one page per click. Each page's notes repeat the
-notes of the slide's earlier clicks, and include the text on the slide in bold. A "Read the
-slide" direction marks where that text is placed among the narration.
+notes of the slide's earlier clicks, and include the text on the slide in bold, apart from
+text marked as not read out. A "Read the slide" direction marks where that text is placed
+among the narration.
 
 For the running order, timings, and what to drop if running long, see
 [`slide-outline.md`](slide-outline.md). The timing markers add to about 12.5 minutes, in a
@@ -48,57 +49,66 @@ protection of tropical marine ecosystems.
 
 I work in the tropical ecotoxicology and risk assessment team, which has people at all three
 AIMS sites. We work closely with industry on contamination and pollution: dredging,
-pesticides, produced water from oil and gas, oil spills and decommissioning. Much of that
-work ends in a guideline value or a threshold, and a lot of what I'll talk about today came
-out of work with this team.
+pesticides, produced water from oil and gas, oil spills and decommissioning.
 
-> Check before presenting that the people on this slide are current.
+> Click: guidelines and thresholds in red.
+
+In particular, we have a focus on developing guidelines and thresholds for environmental
+management and risk assessment.
 
 ---
 
 ## 4 · Numbers in environmental regulation — 40 s
 
-Water quality guidelines are one of the main legal limits used in environmental regulation.
-A dredging campaign operates under turbidity triggers, and if they are exceeded the dredge has
-to change how it operates, or stop. A discharge licence sets a concentration limit for each
-contaminant.
+These numbers are important in environmental regulation.
+
+Examples include:
 
 > Click: defensible.
 
-> Click: the last line.
+> Click: open-source R packages.
 
-For myself, I've spent the last 15 years developing R code and tools in an attempt to improve
-the statistical methods we use in environmental regulation.
+> Click: fifteen years.
+
+I've spent the last 15 years developing R code and tools in an attempt to improve the
+statistical methods we use in environmental regulation.
 
 ---
 
 ## 5 · Improving statistical methods in regulation — 50 s
 
-This graphic shows you that journey, at least for the things I worked on that made it into
-formal publications.
+This graphic shows you
 
-It is plotted by how it was shared: on my own computer, as a zip file, on GitHub, or on CRAN.
+> Read the slide.
 
-I started with a good applied understanding of statistics, but no formal training in
-programming, and you can see the changes that occurred for me over that time.
+that has at least made it into publications.
+
+I started with an applied understanding of statistics, but no formal training in computer
+programming.
+
+You can see the changes over time, from R scripts on my personal computer, through to
+developing packages on CRAN.
 
 > Click: the two used in regulation, and the last line.
 
 These highlighted ones are the work that has actually made it directly into regulatory
 guidance.
 
-I'll go through this from left to right, in three eras.
-
 > Read the slide.
+
+> Click: the three eras.
 
 ---
 
-## 6 · Era one · 2010–2015 · ElicitN — 45 s
+## 6 · Era one · 2010–2015 · R scripts · ElicitN — 45 s
 
-Era one produced scripts, not software. ElicitN was a real collaboration, and the
-elicitation methods were the statisticians' at least as much as mine. We used it with 62
-taxonomists to estimate the number of species on coral reefs, published in *Current
-Biology* in 2015.
+Era one produced scripts, not software.
+
+ElicitN was a real collaboration with three statisticians.
+
+> Click: coral reef species.
+
+Published in *Current Biology* in 2015.
 
 > Click: unreproducible.
 
@@ -106,7 +116,7 @@ Biology* in 2015.
 
 ---
 
-## 7 · Era two · 2015–2020 · White, grey and black literature — 30 s
+## 7 · Era two · 2015–2020 · Industry data and GitHub · White, grey and black literature — 30 s
 
 During era two, I started working with industry data.
 
@@ -118,7 +128,7 @@ During era two, I started working with industry data.
 
 ---
 
-## 8 · Era two · 2015–2020 · Barrow Island monitoring data — 35 s
+## 8 · Era two · 2015–2020 · Industry data and GitHub · Barrow Island monitoring data — 35 s
 
 One of the most valuable datasets was the Barrow Island monitoring data that was required for
 
@@ -131,7 +141,7 @@ turbidity record above it. You can see sediment settling, bleaching, and recover
 
 ---
 
-## 9 · Era two · 2015–2020 · Dredging thresholds — 45 s
+## 9 · Era two · 2015–2020 · Industry data and GitHub · Dredging thresholds — 45 s
 
 From those data we could fit concentration–response curves in the field rather than in a
 laboratory.
@@ -146,27 +156,31 @@ The code behind them cannot be separated from data I'm not able to share.
 
 ---
 
-## 10 · Era two · 2015–2020 · Industry work and packages — 65 s
+## 10 · Era two · 2015–2020 · Industry data and GitHub · Industry work and packages — 65 s
 
 Era two was really two strands. On the left is the industry work: the data and the
 regulatory stakes, with code that only works on data I can't distribute.
 
 > Click: the packages column.
 
-Alongside it I started putting packages on GitHub. FSSgam began as a function for one paper
-and became a package because people kept asking for it. epower is a toolbox for the power
-of before–after control–impact designs, from an industry-funded project with BMT. Both are
-public and installable, and no regulation depends on either. They could become packages
-because they were built on data I could share. There were still no tests, and neither was
-on CRAN.
+Alongside it I started putting packages on GitHub.
 
-> Click: the last line.
+FSSgam began as a function for one paper and became a package because people kept asking
+for it.
 
-The higher the stakes, the less shareable the tooling. Separating a method from
-confidential data well enough to release it is a lot of work, it is rarely anyone's funded
-deliverable, and I didn't do it. I don't think our field has solved this.
+epower is a toolbox for the power of before–after control–impact designs, from an
+industry-funded project with BMT.
 
-> If Adam Sparks's privacy-preserving pipelines talk (1:45pm) touched on this, say so here.
+Both are public and installable, and no regulation depends on either.
+
+They could become packages because they were built on data I could share.
+
+There were still no tests, and neither was on CRAN.
+
+> Click: the last line and the separation graphic.
+
+Separating a method from confidential data well enough to release it is a lot of work, and
+this I think does remain a problem in open source software.
 
 ---
 
@@ -182,8 +196,7 @@ ssddata package, and becoming a co-collaborator on ssdtools.
 
 ## 12 · Era three · 2021 onwards · Species sensitivity distributions — 60 s
 
-ssdtools is some of my more recent work that has had the biggest impact. For context, this
-project was related to the official Australian default guideline values.
+ssdtools is some of my more recent work that has had the biggest impact.
 
 > Read the slide.
 
@@ -205,16 +218,18 @@ With a stated aim of collective agreement between the Australian and Canadian ex
 
 We compared the two on benchmark data sets, and on simulated data with a known true value, so
 we could measure bias and coverage. ssdtools performed better, and including more
-distributions improved its estimates. The recommendation has since been approved.
-
-I was on that project because of years of work in the field and convening workshops with the
-people who set these guidelines, not because of my GitHub profile.
+distributions improved its estimates. The recommendation to adopt it has since been
+approved, and this is now in the Australian and New Zealand guidance.
 
 > Click: open source.
+
+This project is a good example of where open source software shines.
 
 With a closed desktop program, the discussion ends up relying on trust in whoever wrote it.
 
 > Read the slide.
+
+> Click: the Shiny app.
 
 ---
 

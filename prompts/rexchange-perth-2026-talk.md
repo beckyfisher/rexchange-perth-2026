@@ -537,3 +537,120 @@ outline, visuals brief and source synthesis now record it as removed. The notes 
 were regenerated: 38 pages, the same as her copy, with three backup slides.
 
 ---
+
+## Session: handout-edits-2026-10-13
+Date: 2026-10-13
+Model: Claude Opus 5.5 (claude-opus-5-5)
+
+### Prompts and Responses
+
+**User:** I am reviewing the slides and have a few edits. I have made some amendments to the
+speaker notes on the most recent handover ppt.
+
+Can we create a better segway between slide 3 and slide 4 by colouring in the
+guidelines/thresholds in red as animation.
+
+Slides 4-6 Can we add a plume/dredging picture and the picture of the discharge overflow pipe?
+(they were on previous iterations).
+
+Slide 5 - change "Both" to "These"
+
+Between Slide and 6 and 7, Add an extra animation (black text, italics, bold) "~15 years
+improving the statistical methods used in environmental regulation"
+
+Slide 7, remove ", by how it was shared" from the slide.
+
+Slide 7 and 8 - can we remove the ERA labels on the plot for slide 7, and add it as animation
+after slide 8 (ie new slide 9, with the final speaker note dot point that was added on slide
+8).
+
+Slide 9-11 - can we add " . R scripts" to the title? Also, add an additional animation
+(between 9 and 10) "Used it to estimate the number of species on coral reefs worldwide"
+
+Slide 12-24 - Can we add ". Industry data and GitHub" to the title?
+
+Slide 24 - can we add a graphic that somehow captures "Separating a method from confidential
+data"? I don't have one yet, I wondered if you could create something.
+
+Slide 28 - can we have a screenshot of the ANZG.
+
+Slide 29 - can we add a slide following this as animation that add the screen shot ive just
+added to the background talks folder Shiny.png. Replace only the text block on the top right
+with the picture "Recommendation: adopt ssdtools as the default software
+Australia.Newzealand.canada", and add the text point "most people deriving guidelines values
+won't write R. The Shiny app...." as the same time as the picture.
+
+**Claude:** Her handout was copied to `superceded/review-2026-10-13/` before the export was
+re-run. Its notes were extracted page by page and compared with a dry run of the export for
+the committed deck; her page numbers are again pages of the handout (one per click).
+
+- *Team slide.* A click shows the same slide with "Guidelines/thresholds" in red.
+  `R/aims-assets.R` writes `aims-team-guidelines.jpg` by recolouring the exported slide inside
+  a box around that bullet's words (a screen blend with the red of a name on the slide), and
+  the deck lays it over the background at full size. Recolouring was chosen over red text set
+  over the picture so the words stay where PowerPoint drew them. Her new sentence on the team's
+  focus on guidelines and thresholds follows the click; she had removed the reminder to check
+  the people on the slide, and it was removed from the notes.
+- *Numbers in environmental regulation.* Her narration ("These numbers are important…
+  Examples include:") replaces the earlier opening; the first point reads "the turbidity
+  triggers that are used to manage dredging" ("trigger that are" in her text was taken as
+  plural); "Both" became "These". The outfall photograph returns from the earlier *The legal
+  limit* slide, with a satellite picture of a dredge plume from slide 8 of `slides.pptx`, both
+  added to `R/local-images.R`. A last click shows "~15 years improving the statistical methods
+  used in environmental regulation" in black bold italic (class `.career`), with her sentence
+  on fifteen years of R code.
+- *Timeline.* The slide line is "The R code I've written or contributed to"; her clause "that
+  has at least made it into publications" is narration around it, placed with a `> Read the
+  slide.` direction. `R/figures.R` now draws the era bands and labels as a separate layer, so
+  the first two versions have none and a third, `code-timeline-eras.png`, adds them on a new
+  click with her line "There were essentially three eras, and I'll touch on each briefly."
+- *Era labels.* Era one's slide is labelled "Era one · 2010–2015 · R scripts", and era two's
+  four slides "· Industry data and GitHub".
+- *ElicitN.* The reef estimate and the line "Used it to estimate the number of species on coral
+  reefs worldwide" appear on a new first click, followed in the notes by "Published in Current
+  Biology in 2015."; the figure's caption already cites the paper. Her narration replaced the
+  earlier sentences.
+- *Text she deleted from the notes.* She removed slide text (bold) from the notes on several
+  slides: the ElicitN co-authors, the first line of *Dredging thresholds*, both columns of
+  *Industry work and packages*, and the left column and recommendation of *Evaluation of
+  `ssdtools`*. These were taken as text she does not read out, not as deletions from the slides,
+  because she refers to the industry columns in her narration ("On the left…") and asked for the
+  recommendation to be replaced only on a later click. A class `.unread` keeps such text on the
+  slide and `R/export-deck.R` now leaves it out of the handout notes. Removing it from the
+  slides was rejected for that reason; it is recorded in `CLAUDE.md` so that she can correct it
+  slide by slide.
+- *Dredging thresholds.* Her rewording of the ROC line ("We used ROC curves to derive
+  thresholds…") and her two new sentences on probabilistic thresholds and the management zones
+  were taken as slide text, as her bold edits have been before. The two sentences replace the
+  line on the WA EPA impact zones, following her last page of the slide (page 21); her page 20
+  still had that line. "derived" was corrected to "derive". To fit, the columns are now 50/50,
+  the panels 680 × 530, and the unread first line is set smaller.
+- *Separating a method from confidential data.* A new schematic in `R/figures.R`,
+  `method-data-separation.png`, appears with the slide's last line: one project's code drawn
+  as lines, method in teal interleaved with dark lines written around the client's data, an
+  arrow marked "separating them, a lot of work", then the method alone as an R package and the
+  data as a table under a CONFIDENTIAL stamp. Nothing in it is measured. The first version
+  overflowed the PDF page (a fragment not yet shown still takes its space), so the arrow lists
+  on that slide are set smaller. Her narration replaces the old closing sentences and the Adam
+  Sparks reminder, which she removed.
+- *SSD.* "activities can be stopped" became "must be stopped", and the sentence on the official
+  default guideline values was dropped, as in her notes.
+- *Evaluation of `ssdtools`.* The ANZG website screenshot from her ANZG deck (slides 5 and 6)
+  sits under the recommendation. A second click replaces the recommendation and the screenshot
+  with the top of her `Shiny.png` (header, fitting panel and plot; the table of fits is cut to
+  fit), and shows the Shiny sentence at the same time. The ANZG screenshot is replaced with the
+  recommendation because, above the open-source half, the Shiny screenshot can only be read at
+  the size of both. The export now passes over fade-out fragments when placing slide text. Her
+  new narration ("…and this is now in the Australian and New Zealand guidance", "This project
+  is a good example of where open source software shines") is in; "Essentially," was added to
+  the slide's black-box line, as in her bold text; the paragraph on how she came to be on the
+  project was dropped, as she deleted it.
+
+The deck is 19 slides and 21 clicks (40 steps; 43 pages with the backup slides). The timing
+markers still add to 12:35. The words she reads come to about 13.1 minutes at 140 words a
+minute and 11.5 at 160; the earlier 14.8 counted all slide text, read or not. The PDF prints 43
+pages with no slide split, and the 43 pages of handout notes were compared with hers: the
+differences are the new clicks, the corrected typing and the slide wording above. The outline,
+visuals brief, README, speaker-notes preamble and `CLAUDE.md` were updated.
+
+---

@@ -196,9 +196,16 @@ fragment_steps <- function(sec) {
 # The text on each slide, as it stands at each click: a list with one element per
 # slide, each a list of character vectors, one per printed page. A paragraph,
 # list item or column heading belongs to the click at which its last-appearing
-# fragment ancestor appears. Not included: the slide title, the speaker notes,
-# credit lines and the footer, which are not read out, and the title slide,
-# where the speaker waits to be introduced.
+# fragment ancestor appears. A fragment that fades out on its click does not
+# make text appear, so it is passed over: its text belongs to the click at which
+# it first showed. Not included: the slide title, the speaker notes, credit
+# lines and the footer, which are not read out, the title slide, where the
+# speaker waits to be introduced, and text marked `.unread`.
+#
+# `.unread` marks slide text that stays on the slide but is not read out. On
+# 2026-10-13 the speaker deleted such text from the handout notes on several
+# slides, among them both columns of "Industry work and packages", while asking
+# for those slides to keep it; in the notes it would be text she does not say.
 slide_text <- function(html) {
   doc <- xml2::read_html(html)
   # A line break inside a paragraph would otherwise join the words either side.
@@ -207,13 +214,17 @@ slide_text <- function(html) {
   }
   secs <- xml2::xml_find_all(doc, sprintf("//section[%s]", has_class("slide")))
   skip <- paste0("ancestor-or-self::*[self::aside or self::h2 or ",
-                 has_class("credit"), " or ", has_class("footer"), "]")
+                 has_class("credit"), " or ", has_class("footer"), " or ",
+                 has_class("unread"), "]")
   lapply(secs, function(sec) {
     fs <- fragment_steps(sec)
     n_pages <- length(unique(fs$step)) + 1L
     pages <- rep(list(character()), n_pages)
     if (grepl("\\baims-title\\b", xml2::xml_attr(sec, "class"))) return(pages)
-    if (length(fs$step)) xml2::xml_set_attr(fs$nodes, "data-export-step", fs$step)
+    shows <- !grepl("\\bfade-out\\b", xml2::xml_attr(fs$nodes, "class"))
+    if (any(shows)) {
+      xml2::xml_set_attr(fs$nodes[shows], "data-export-step", fs$step[shows])
+    }
     # The innermost text blocks only, so a paragraph inside a list item is not
     # read twice.
     blocks <- xml2::xml_find_all(sec, paste0(

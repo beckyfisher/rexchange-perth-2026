@@ -104,20 +104,29 @@ regulation <- tribble(
 ) |>
   mutate(shared = factor(shared, levels = shared_levels))
 
-timeline_base <- function() {
-  ggplot(code, aes(year, as.numeric(shared))) +
+# The era bands and their labels are a layer of their own. The speaker asked on
+# 2026-10-13 for them to appear on a click after the regulatory marks, as the
+# step into the three eras, so the first two versions of the plot leave them out.
+era_bands <- function() {
+  list(
     annotate("rect", xmin = 2009, xmax = 2015.5, ymin = 0.4, ymax = 4.75,
-             fill = pal[["era1"]], alpha = 0.07) +
+             fill = pal[["era1"]], alpha = 0.07),
     annotate("rect", xmin = 2015.5, xmax = 2020.6, ymin = 0.4, ymax = 4.75,
-             fill = pal[["era2"]], alpha = 0.07) +
+             fill = pal[["era2"]], alpha = 0.07),
     annotate("rect", xmin = 2020.6, xmax = 2027.9, ymin = 0.4, ymax = 4.75,
-             fill = pal[["era3"]], alpha = 0.07) +
+             fill = pal[["era3"]], alpha = 0.07),
     annotate("text", x = 2012.25, y = 4.62, label = "1. scripts",
-             colour = pal[["era1"]], fontface = "bold", size = 4.4) +
+             colour = pal[["era1"]], fontface = "bold", size = 4.4),
     annotate("text", x = 2018.05, y = 4.62, label = "2. GitHub",
-             colour = pal[["era2"]], fontface = "bold", size = 4.4) +
+             colour = pal[["era2"]], fontface = "bold", size = 4.4),
     annotate("text", x = 2022.6, y = 4.62, label = "3. CRAN",
-             colour = pal[["era3"]], fontface = "bold", size = 4.4) +
+             colour = pal[["era3"]], fontface = "bold", size = 4.4)
+  )
+}
+
+timeline_base <- function(eras = FALSE) {
+  ggplot(code, aes(year, as.numeric(shared))) +
+    (if (eras) era_bands()) +
     # AI is the second part of the talk, not a fourth era: a marker, not a band
     annotate("segment", x = 2026.47, xend = 2026.47, y = 0.4, yend = 4.75,
              colour = pal[["hi"]], linetype = "22", linewidth = 0.6) +
@@ -141,20 +150,27 @@ timeline_base <- function() {
           axis.text.y = element_text(size = rel(1.05)))
 }
 
-# Two versions on the same canvas, so the slide can add the regulatory marks
-# with a click and nothing else on the plot shifts.
+regulation_marks <- function() {
+  list(
+    geom_point(data = regulation, aes(year, as.numeric(shared)),
+               inherit.aes = FALSE, shape = 21, size = 11, stroke = 1.6,
+               colour = pal[["hi"]], fill = NA),
+    geom_text(data = regulation,
+              aes(year, as.numeric(shared), label = label, hjust = hj),
+              inherit.aes = FALSE, vjust = 1.9, nudge_y = -0.18, size = 3.9,
+              fontface = "bold", colour = pal[["hi"]], lineheight = 0.95)
+  )
+}
+
+# Three versions on the same canvas, so the slide can add the regulatory marks
+# and then the eras with a click each, and nothing else on the plot shifts.
 p_timeline <- timeline_base()
-p_timeline_reg <- timeline_base() +
-  geom_point(data = regulation, aes(year, as.numeric(shared)),
-             inherit.aes = FALSE, shape = 21, size = 11, stroke = 1.6,
-             colour = pal[["hi"]], fill = NA) +
-  geom_text(data = regulation,
-            aes(year, as.numeric(shared), label = label, hjust = hj),
-            inherit.aes = FALSE, vjust = 1.9, nudge_y = -0.18, size = 3.9,
-            fontface = "bold", colour = pal[["hi"]], lineheight = 0.95)
+p_timeline_reg <- timeline_base() + regulation_marks()
+p_timeline_eras <- timeline_base(eras = TRUE) + regulation_marks()
 
 save_fig(p_timeline, "code-timeline.png", width = 10.5, height = 4.9)
 save_fig(p_timeline_reg, "code-timeline-regulation.png", width = 10.5, height = 4.9)
+save_fig(p_timeline_eras, "code-timeline-eras.png", width = 10.5, height = 4.9)
 
 # ===========================================================================
 # 2. The SSD: what the software actually computes
@@ -588,5 +604,89 @@ p_stop <- ggplot(octagon(), aes(x, y)) +
   theme_void()
 
 save_fig(p_stop, "stop-sign.png", width = 3, height = 3, dpi = 220)
+
+# ===========================================================================
+# 9. Separating a method from confidential data — schematic
+# ===========================================================================
+# For the last click of "Industry work and packages", where the speaker says
+# that separating a method from confidential data well enough to release it is a
+# lot of work (her request of 2026-10-13 for a graphic). Code is drawn as bars,
+# one per line, as an editor's minimap draws it; nothing here is measured, and
+# the line lengths and their order are made up for the drawing. On the left,
+# lines of method (teal) and lines written around the client's data (dark) are
+# interleaved in one project's code. On the right the method stands alone as a
+# package, and the data is a table behind a stamp. The dark lines on the left
+# are what has to be rewritten for the separation.
+
+code_lines <- function(x0, kinds, indent, len, top = 2.4, step = 0.2) {
+  tibble(
+    kind = kinds,
+    x = x0 + 0.22 + 0.28 * indent,
+    xend = x + len,
+    y = top - step * (seq_along(kinds) - 1)
+  )
+}
+
+blk_w <- 2.5
+blk <- tibble(
+  x0 = c(0.4, 5.6, 8.9),
+  title = c("Code for one project", "Method", "Data"),
+  caption = c("method written around\nthe client's data",
+              "an R package\nanyone can run", "stays confidential")
+)
+
+mixed <- code_lines(blk$x0[1],
+                    kinds = c("m", "d", "m", "m", "d", "m", "d", "d", "m"),
+                    indent = c(0, 0, 1, 1, 1, 0, 1, 1, 0),
+                    len = c(1.5, 1.9, 1.3, 1.0, 1.6, 1.4, 1.2, 1.7, 0.9))
+method_only <- code_lines(blk$x0[2],
+                          kinds = rep("m", 9),
+                          indent = c(0, 1, 1, 0, 0, 1, 1, 1, 0),
+                          len = c(1.5, 1.3, 1.0, 0.6, 1.4, 1.1, 1.6, 0.8, 0.9))
+
+# The data as a grid of cells, five columns by seven rows.
+cells <- expand_grid(col = 0:4, row = 0:6) |>
+  mutate(x = blk$x0[3] + 0.2 + col * 0.42, y = 0.85 + row * 0.235)
+
+# A stamp across the table: a rectangle and its word, both turned 12 degrees.
+stamp_c <- c(blk$x0[3] + blk_w / 2, 1.6)
+stamp_a <- 12 * pi / 180
+stamp <- tibble(dx = c(-0.98, 0.98, 0.98, -0.98), dy = c(-0.23, -0.23, 0.23, 0.23)) |>
+  mutate(x = stamp_c[1] + dx * cos(stamp_a) - dy * sin(stamp_a),
+         y = stamp_c[2] + dx * sin(stamp_a) + dy * cos(stamp_a))
+
+col_method <- pal[["era2"]]
+col_data <- "#2B2B2B"
+col_stamp <- "#C1272D"
+
+p_separate <- ggplot() +
+  geom_rect(data = blk, aes(xmin = x0, xmax = x0 + blk_w, ymin = 0.6, ymax = 2.6),
+            fill = "#F4F6F8", colour = "grey75", linewidth = 0.6) +
+  geom_segment(data = bind_rows(mixed, method_only),
+               aes(x = x, xend = xend, y = y, yend = y, colour = kind),
+               linewidth = 3.2, lineend = "round") +
+  geom_tile(data = cells, aes(x + 0.19, y), width = 0.36, height = 0.19,
+            fill = col_data, alpha = 0.85) +
+  geom_polygon(data = stamp, aes(x, y), fill = "white", alpha = 0.85,
+               colour = col_stamp, linewidth = 1.6) +
+  annotate("text", x = stamp_c[1], y = stamp_c[2], label = "CONFIDENTIAL",
+           angle = 12, colour = col_stamp, fontface = "bold", size = 5.7) +
+  annotate("segment", x = 3.15, xend = 5.35, y = 1.6, yend = 1.6,
+           linewidth = 1.4, colour = "grey30",
+           arrow = arrow(length = unit(0.16, "in"), type = "closed")) +
+  annotate("text", x = 4.25, y = 1.78, label = "separating them",
+           size = 6.6, colour = "grey20", vjust = 0) +
+  annotate("text", x = 4.25, y = 1.42, label = "a lot of work",
+           size = 6.6, colour = pal[["hi"]], fontface = "bold", vjust = 1) +
+  geom_text(data = blk, aes(x0 + blk_w / 2, 2.75, label = title),
+            size = 7.4, fontface = "bold", colour = pal[["accent"]], vjust = 0) +
+  geom_text(data = blk, aes(x0 + blk_w / 2, 0.45, label = caption),
+            size = 6.2, colour = "grey30", vjust = 1, lineheight = 0.9) +
+  scale_colour_manual(values = c(m = col_method, d = col_data)) +
+  coord_cartesian(xlim = c(0, 11.75), ylim = c(-0.3, 3.15), expand = FALSE) +
+  theme_void() +
+  theme(legend.position = "none")
+
+save_fig(p_separate, "method-data-separation.png", width = 12, height = 3.4)
 
 message("\nAll figures written to ", normalizePath(fig_dir))

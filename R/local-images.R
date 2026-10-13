@@ -3,6 +3,10 @@
 #
 #   old_talks_and_background/slides.pptx
 #
+# and, since 2026-10-13, a screenshot of the ANZG website from her ANZG talk
+# (old_talks_and_background/ANZG_WQ.pptx) and her screenshot of the
+# shinyssdtools app (Shiny.png).
+#
 #   Rscript R/local-images.R
 #
 # The source slides are the speaker's own: the blood-alcohol slide from the ANZG
@@ -34,7 +38,8 @@ dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 # and 3 pictures, nor cr-triangle and epa-guidance. They are still exported,
 # because they belong to the blood-alcohol slide and the five-slide dredging
 # build in commit 1336127, and those can then be restored from the commit
-# without changing this script.
+# without changing this script. outfall.jpg returned on 2026-10-13, with
+# plume.jpg, a satellite picture of a dredge plume from slide 8.
 manifest <- read.csv(text = "
 slide,shapes,file,w,h
 1,Group 25/Picture 8,breath-test.jpg,187,124
@@ -54,6 +59,7 @@ slide,shapes,file,w,h
 8,Picture 10,grey-literature.png,220,110
 8,Group 44/Picture 15,confidential.png,238,119
 8,Group 44/Graphic 41,black-box.png,99,99
+8,Picture 18,plume.jpg,108,133
 ", strip.white = TRUE)
 
 # On slide 7 everything is exported together except the title, the contour
@@ -76,6 +82,64 @@ write_placeholders <- function(why) {
     graphics::par(op)
     grDevices::dev.off()
   }
+}
+
+# --- pictures that are files, not slide shapes -------------------------------
+# Two screenshots added on 2026-10-13. They need no PowerPoint, so they are
+# written before the checks below, which end the script when slides.pptx or
+# PowerShell is missing. Each falls back to its own placeholder.
+#
+#   anzg.png   the ANZG website, from the speaker's ANZG talk (slides 5 and 6),
+#              read from the archive and cropped as it is on those slides
+#   shiny.png  the shinyssdtools app, a screenshot the speaker took. Its top
+#              part only: the app's header, the fitting panel and the plot,
+#              which is what fits beside the evaluation; the table of fits below
+#              them is cut.
+#
+# Shiny.png was put in the publication folder, though the request named the
+# folder of earlier talks, so both are looked in.
+placeholder <- function(file, w, h) {
+  dev <- if (grepl("\\.jpg$", file)) grDevices::jpeg else grDevices::png
+  dev(file.path(out_dir, file), width = w, height = h)
+  op <- graphics::par(mar = c(0, 0, 0, 0))
+  graphics::plot.new()
+  graphics::rect(0, 0, 1, 1, col = "grey88", border = NA)
+  graphics::text(0.5, 0.5, sub("\\.(png|jpg)$", "", file),
+                 cex = max(1, min(w, h) / 160), col = "grey45")
+  graphics::par(op)
+  grDevices::dev.off()
+}
+
+anzg_pptx <- file.path("old_talks_and_background", "ANZG_WQ.pptx")
+if (file.exists(anzg_pptx)) {
+  unpacked <- file.path(tempdir(), "anzg-talk")
+  utils::unzip(anzg_pptx, files = "ppt/media/image49.png", exdir = unpacked)
+  shot <- magick::image_read(file.path(unpacked, "ppt", "media", "image49.png"))
+  info <- magick::image_info(shot)
+  # The crop on the source slide, as fractions: 1.518% from the left, 16.482%
+  # from the top, 4.744% from the right, 2.355% from the bottom.
+  w <- round(info$width * (1 - 0.01518 - 0.04744))
+  h <- round(info$height * (1 - 0.16482 - 0.02355))
+  shot |>
+    magick::image_crop(magick::geometry_area(w, h, round(info$width * 0.01518),
+                                             round(info$height * 0.16482))) |>
+    magick::image_write(file.path(out_dir, "anzg.png"), format = "png")
+  unlink(unpacked, recursive = TRUE)
+} else {
+  placeholder("anzg.png", 494, 586)
+}
+
+shiny_src <- file.path(c("old_talks_and_background",
+                         "Relevant_publication_history_pdfs"), "Shiny.png")
+shiny_src <- shiny_src[file.exists(shiny_src)][1]
+if (!is.na(shiny_src)) {
+  shot <- magick::image_read(shiny_src)
+  magick::image_crop(shot, magick::geometry_area(magick::image_info(shot)$width, 690)) |>
+    magick::image_background("white") |>
+    magick::image_flatten() |>
+    magick::image_write(file.path(out_dir, "shiny.png"), format = "png")
+} else {
+  placeholder("shiny.png", 1045, 690)
 }
 
 ps <- Sys.which(c("powershell.exe", "powershell"))

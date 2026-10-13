@@ -56,6 +56,7 @@ colleagues' portraits, so none of it can be relicensed under this repository's C
 | `content-background.jpg` | Content master strip (`image3.png`) flattened over the layout's contour lines (`image5.jpg`) | every content slide, via `talk/aims-background.lua` |
 | `aims-intro.jpg` | Slide 2, a single full-slide picture | AIMS introduction |
 | `aims-team.jpg` | Slide 3, exported by PowerPoint | team |
+| `aims-team-guidelines.jpg` | `aims-team.jpg` with "Guidelines/thresholds" recoloured red | team, on its click, laid over the background at full size |
 | `dredge-photo.jpg` | The dredging photograph on slide 3 | title collage |
 
 Without the source deck (CI, or any other clone) the script writes labelled grey placeholders
@@ -63,6 +64,12 @@ with base R graphics, so the deck still renders. Exporting the team slide needs 
 driven through PowerShell, and works from Windows R or WSL R.
 
 The team slide was current for the SETAC talk. Check the people on it before presenting.
+
+The red version of the team slide was asked for on 2026-10-13, as the step from the team's
+areas to *Numbers in environmental regulation*. It recolours the exported picture rather than
+setting red text over it, so the words stay exactly where PowerPoint drew them: a screen blend
+with red, inside a box around that bullet's words, turns black into red and leaves white white.
+The red is that of a name on the same slide.
 
 ---
 
@@ -74,11 +81,21 @@ talks. The pictures include stock photographs, journal covers, a web graphic, th
 WA EPA guidance, and figures published in Fisher et al. (2018) *J. Appl. Ecol.*, so none can be
 relicensed. Without the source deck the script writes grey placeholders of the same shape.
 
+Two screenshots are read as files rather than exported. `anzg.png`, the ANZG website, is read
+out of the speaker's ANZG deck (`old_talks_and_background/ANZG_WQ.pptx`, slides 5 and 6) and
+cropped as it is there. `shiny.png` is the top of her screenshot of the `shinyssdtools` app,
+`Shiny.png`: the app's header, the fitting panel and the plot, without the table of fits below
+them, which would not fit beside the evaluation. Each has its own placeholder.
+
 | File | Source slide | Used on |
 |---|---|---|
 | `breath-test.jpg`, `police-hat.png` | 1, the blood-alcohol slide | *Species sensitivity distributions*, since 2026-10-09 |
-| `outfall.jpg`, `no-sign.png` | 1, the blood-alcohol slide | Not used since 2026-10-07 |
+| `outfall.jpg` | 1, the blood-alcohol slide | *Numbers in environmental regulation*, since 2026-10-13 |
+| `no-sign.png` | 1, the blood-alcohol slide | Not used since 2026-10-07 |
 | `white-literature.jpg`, `grey-literature.png`, `confidential.png`, `black-box.png` | 8, white, grey and black literature | *White, grey and black literature*; the black box also on *Evaluation of `ssdtools`* |
+| `plume.jpg` | 8, a satellite picture of a dredge plume | *Numbers in environmental regulation*, since 2026-10-13 |
+| `anzg.png` | Not from `slides.pptx`: see above | *Evaluation of `ssdtools`*, until the second click |
+| `shiny.png` | Not from `slides.pptx`: see above | *Evaluation of `ssdtools`*, second click, in place of the recommendation |
 | `cr-curve.png` | 4, concentration–response | *Dredging thresholds*, first step |
 | `roc.png` | 6, probabilistic thresholds | *Dredging thresholds*, second step |
 | `management-zones.png` | 7, link to management | *Dredging thresholds*, third step |
@@ -144,16 +161,19 @@ The top row of the same Figure 6 (days 1, 130 and 263), for the title collage.
 
 Produced by `R/figures.R`. Do not hand-edit them.
 
-### `code-timeline.png` and `code-timeline-regulation.png`
+### The timeline figures
 
-Slide: *Improving statistical methods in regulation.*
+Slide: *Improving statistical methods in regulation.* Files: `code-timeline.png`,
+`code-timeline-regulation.png` and `code-timeline-eras.png`.
 
 The speaker's code from 2010 to 2026, by how it was shared: her own computer, a zip file,
 GitHub, or CRAN. The second version, shown on a click with the slide's last line, circles the
 two pieces used in regulation: the dredging thresholds, used in WA dredging guidance, and
 `ssdtools`, the default software for guideline values in Australia, New Zealand and Canada.
 The `ssdtools` label is set on three lines so that it clears the `epower` label and the AI
-marker.
+marker. The third version adds the shaded eras and their labels (scripts, GitHub, CRAN). Until
+2026-10-13 they were on every version; the speaker asked for them on a click of their own,
+with the line that introduces the three eras.
 
 An earlier version put "named in regulation" as a fifth level above CRAN, with an axis titled
 "how far each piece of software could travel". The speaker rejected it on 2026-10-06. The axis
@@ -217,7 +237,18 @@ NSEC, EC10 and NOEC) are on the three uncounted slides after the closing slide.
 ### `stop-sign.png`
 
 Slide: *Numbers in environmental regulation.* Drawn in `R/figures.R` rather than taken from clip
-art. It was removed on 2026-10-06 with the slide and restored with it on 2026-10-07.
+art. It was removed on 2026-10-06 with the slide and restored with it on 2026-10-07. Since
+2026-10-13 it sits under the dredge plume and the outfall.
+
+### `method-data-separation.png`
+
+Slide: *Industry work and packages*, on the last click, under "The higher the stakes, the less
+shareable the tooling." The speaker asked on 2026-10-13 for a graphic of separating a method
+from confidential data. It is a schematic and measures nothing. One project's code is drawn as
+lines, the way an editor's minimap draws it, with lines of method (teal) interleaved with lines
+written around the client's data (dark). An arrow marked "separating them, a lot of work" points
+to the method alone, as "an R package anyone can run", and the data as a table under a
+CONFIDENTIAL stamp, which "stays confidential". The dark lines are what has to be rewritten.
 
 ---
 

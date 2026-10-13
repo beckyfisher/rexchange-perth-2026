@@ -22,11 +22,11 @@ with an R package: fifteen years of open-source software in environmental regula
 | `talk/figures/` | Generated figures — **do not hand-edit** |
 | `talk/external/` | Two figures from published WAMSI reports, CC BY 3.0 AU — see its `README.md` |
 | `talk/aims/` | AIMS template assets — **not committed**; extracted locally by `R/aims-assets.R` |
-| `talk/local/` | Pictures from the speaker's earlier slides — **not committed**; extracted locally by `R/local-images.R` |
+| `talk/local/` | Pictures from the speaker's earlier slides, and screenshots of the ANZG website and the `shinyssdtools` app — **not committed**; extracted locally by `R/local-images.R` |
 | `R/figures.R` | Reproducible figure code (`ggplot2`, `ssdtools`) |
 | `R/external-figures.R` | Crops the WAMSI figures from the source PDFs (author's machine only) |
 | `R/aims-assets.R` | Extracts the AIMS template assets, or writes placeholders where the source deck is absent |
-| `R/local-images.R` | Exports pictures from the speaker's earlier slides through PowerPoint, or writes placeholders |
+| `R/local-images.R` | Exports pictures from the speaker's earlier slides through PowerPoint, copies the two screenshots, or writes placeholders |
 | `R/export-deck.R` | Writes the HTML, PDF and picture-per-slide PowerPoint for the organisers to `_output/handover/` |
 | `R/git-evidence.R` | Derives the commit-history evidence in the AI section |
 | `data/` | The CSVs that script produces — committed, so figures build offline and the numbers are checkable |
@@ -62,8 +62,8 @@ Rscript R/export-deck.R
 `R/external-figures.R` is not part of the routine build. It recreates `talk/external/` from
 the git-ignored source PDFs and needs `pdftools` and `magick`; run it only if a crop changes.
 `R/aims-assets.R` and `R/local-images.R` use `magick` when their source decks are present and
-base R otherwise. Exporting the AIMS team slide, and every picture `R/local-images.R` writes,
-needs PowerPoint on the same machine.
+base R otherwise. Exporting the AIMS team slide, and every picture `R/local-images.R` takes
+from `slides.pptx`, needs PowerPoint on the same machine.
 
 The speaker notes live in `talk/index.qmd` inside `::: {.notes}` blocks and are the single
 source of truth; `notes/speaker-notes.md` is generated from them so the two can't drift. A
@@ -121,6 +121,11 @@ The PDF has one page per click because the deck sets `pdf-separate-fragments`. T
 page its own notes, `R/export-deck.R` counts the clicks on each slide in the rendered HTML and
 splits that slide's notes at its "Click" directions. It stops if the two counts differ, so a
 fragment added to a slide needs a matching `> Click` line in its notes.
+
+Slide text in a block with the class `.unread` stays on the slide but is left out of the
+handout notes, because the speaker does not read it out. She deleted such text from the
+handout notes on 2026-10-13 while asking for the slides to keep it, among them both columns of
+*Industry work and packages*.
 
 The PowerPoint is built from pictures because Quarto's own pptx writer cannot use
 `custom.scss`: its output had the AIMS styling only on the two AIMS image slides and put the
@@ -195,7 +200,8 @@ All factual claims, figures and statistical content have been checked by the aut
 - **AIMS template assets** (logos, Coat of Arms, photographs, staff portraits) are not in the
   repository and are not licensed by it.
 - **Pictures from the speaker's earlier slides** (`talk/local/`: stock photographs, journal
-  covers, published figures) are not in the repository and are not licensed by it.
+  covers, published figures, and screenshots of the ANZG website and the `shinyssdtools` app)
+  are not in the repository and are not licensed by it.
 
 ## Citation
 
