@@ -13,7 +13,7 @@ sentences that join them; the slide on species sensitivity distributions is show
 with the explanation of the SSD in the notes. Some slide text is shown but not read out, and
 is left out of the handout notes (see the README, § "Handover"). The timing markers in the
 notes add to 14:10. Counting the words she reads, the slide text she reads out and the
-narration in the notes, gives about 15.2 minutes at 140 words a minute, and 13.3 at 160. The
+narration in the notes, gives about 15.3 minutes at 140 words a minute, and 13.4 at 160. The
 count was 13.1 and 11.5 before the AI section was revised on 2026-10-13, and 14.8 and 13.0 on
 2026-10-09, when it included all the slide text, read or not. The remainder of the 15 minutes
 is the allowance for explaining the figures, clicks and pauses, and as it stands there is
@@ -146,7 +146,7 @@ direction.
 | 12 | Era three · Species sensitivity distributions | `ssd-model-average.png`; breath-test photograph and police cap | Default guideline values as the 0.05 blood alcohol driving limit, and what happens above and below it. In the notes: `ssdtools` as the work with the most impact; the SSD; `ssdtools` averages over distributions. | 0 | 1:00 |
 | 13 | Era three · Evaluation of `ssdtools` | Text, two columns, ANZG website; black box on the first click; the Shiny app on the second | AU–CA project; benchmark and simulated data; recommendation, now in the Australian and New Zealand guidance. First click: three regulators cannot audit a black box; reading the source. Second click: the Shiny app replaces the recommendation, and most people deriving guideline values don't write R. | 2 | 1:30 |
 | 14 | Divider · AI-assisted coding | None | Transition. | 0 | 0:05 |
-| 15 | The change since June | `where-work-goes.png`, with each period's commits beside its bar | Stopped writing R code by hand in June; five times is an impression, so measured; files changed a working day, 12 before and 86 since the end of July, mostly `bayesnec`; tests 3%→16% as a share; the work around the code now gets done. | 0 | 0:45 |
+| 15 | The change since June | `where-work-goes.png`, with each period's commits beside its bar | Stopped writing R code by hand in June; five times is an impression, so the AI measured it from her GitHub commits; files changed a working day, 12 before and 86 since the end of July, mostly `bayesnec`, which she calls seven times more productive; the biggest change is in the work around the code. | 0 | 0:45 |
 | 16 | `FSSgam`, 2018 to 2026 | Text, two columns | Seven years nine months without tests; four days; two silent bugs; now on CRAN. | 3 | 1:00 |
 | 17 | Routine work and judgement | Two columns | Now routine against still the speaker's; the Burrlioz standard applies to model-written code; AI use in open source software is a rapidly evolving space. | 3 | 0:50 |
 | 18 | `bayesnec`, June to October 2026 | `bayesnec-weekly.png` | 817 commits since late June after none for eleven months (shown, not read); 86 bugs and flaws found, 47 in code written before June; issues opened as fast as closed, against the 22 open in June; 103 commits parked on `predev`; writing code is no longer the limit, reading it is. | 4 | 1:15 |
@@ -179,7 +179,6 @@ Do not take time from slides 10 or 19. They hold the second point to take away.
 | The `bayesnec` counts | slide 18, `data/bayesnec-*.csv` | Measured on 2026-10-13 by `R/bayesnec-evidence.R`; the 86 bugs and flaws are from `data/bayesnec-issue-review.csv`, a reading of the 151 issues opened from her account since 20 June against the history of each fix. Correct while `bayesnec` is parked; re-run the script if work resumes before the talk. |
 | The measured percentages | slides 15–16, `data/git-evidence-*.csv` | The figure is `R/git-evidence-periods.R`, to 2026-10-13. The 1,340 commits and the tripling of tests in the published abstract are the July measurement by `R/git-evidence.R`; do not re-run that script. The figure delivers the abstract's claim with the later data: tests rose from 3% to 16% of files changed. Re-run the periods script only if work resumes before the talk, and change its cutoff. |
 | The team slide | slide 3 | Exported from the SETAC Asia-Pacific deck. Check the people on it are current. The speaker removed this reminder from the slide's notes on 2026-10-13. |
-| "on GitHub" in the closing notes | slide 19 | The talk repository is private. Make it public before the talk or drop the sentence. |
 | Timeline years | `code-timeline.png` | Reconstructed from the CV, not from CRAN metadata, apart from the 2021 CRAN date; see the comment in `R/figures.R`. |
 | "used in WA dredging guidance" | slide 5, `code-timeline-regulation.png` | The speaker's statement of 2026-10-06. Name the guidance document in `notes/source-synthesis.md` once confirmed. |
 

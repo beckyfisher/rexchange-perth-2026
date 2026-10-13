@@ -246,22 +246,24 @@ That brings me to the last few months.
 I now work with Claude Code or Codex, and my impression is that I'm about five times more
 productive.
 
-That is an impression, so I measured it.
+That is an impression, so I asked the AI to measure it, based on my GitHub commits.
 
-On a day I worked on these packages, I used to change about 12 files. Since the end of July it
-has been 86, mostly in bayesnec.
+On any one day I worked on these packages, I used to change about 12 files.
 
-Tests went from 3% of those files to 16%.
+Since the end of July it has been 86, mostly in bayesnec, so that is actually 7 times more
+productive.
 
-So the change is not in the typing. The work around the code now gets done: the tests,
-documentation and continuous integration that determine whether software still runs in five
-years.
+The biggest change is not in the source code, but in the work around the code: the tests,
+documentation and continuous integration.
+
+These are some of the things that determine whether software will still be running and useful
+in five years from now.
 
 ---
 
 ## 16 · `FSSgam`, 2018 to 2026 — 60 s
 
-One package in detail. FSSgam's first commit was in September 2018, and it went seven years
+FSSgam's first commit was in September 2018, and it went seven years
 and nine months without a test file or continuous integration. There was always a more
 pressing deadline.
 
@@ -367,15 +369,15 @@ Third, AI is now producing more than we can realistically review. We need new wa
 thinking about what reviewing that should look like. For me, it is about understanding what
 would show if it was wrong, and building simulations and tests to demonstrate that.
 
+But I think this is a moving space that we are going to see some developments for in the
+future.
+
 ---
 
 ## 20 · Contacts and acknowledgements — 15 s
 
 Thank you. The packages, the code for every figure in this talk, and the log of how I used
 AI to prepare it are on GitHub. I'm happy to take questions in the session Q&A.
-
-> The talk repository is private. Make it public before the talk, or drop the second
-> sentence.
 
 
 <!-- END GENERATED -->

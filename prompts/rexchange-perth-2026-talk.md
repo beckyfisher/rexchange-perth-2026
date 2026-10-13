@@ -1086,3 +1086,43 @@ and the words read to about 15.2 minutes at 140 a minute. The outline, visuals b
 and handout were updated.
 
 ---
+
+**User:** can you commit this, check everything and then make the repo public
+
+**Claude:** The work was committed as `c608910`. Before publication the repository was checked:
+
+- Every path ever committed on `main` and `discharge-first` was listed. The clip art removed in
+  the history rewrite of 2026-07-28 is unreachable from both. No file from the git-ignored
+  folders, and no PDF, PowerPoint or Word file, is reachable.
+- `I need to write an abstract to give.txt`, in the history of `main` and the tree of
+  `discharge-first`, is her original request for the abstract, already quoted in this log.
+- No secrets were found in any added line. Every commit is authored with her AIMS address.
+- Her personal address appears in three scripts, as one of the identities whose commits are
+  counted. It already appears in the public commit history of `bayesnec`.
+- The company names are the WAMSI funding acknowledgements, which are already public.
+- The CI steps were replayed on a clean clone: figures, placeholder assets and pictures, and
+  speaker notes not stale. Quarto rendered it.
+
+`main` was pushed, and the repository was made public with
+`gh repo edit --visibility public`. Anonymous requests to the page and the API returned 200.
+The local branch `pre-review-2026-10-06` and the pre-rewrite refs under `refs/original/` were
+not pushed.
+
+The stage direction on the closing slide saying the repository was private was removed, with
+its check in the outline. `CLAUDE.md` §4 now says the repository was made public on 2026-10-13.
+
+Her handout had been saved at 15:45 with edits, found only by comparing it against a fresh
+export. It was backed up to `superceded/review-2026-10-13-1545/` first, and the edits were
+carried into the deck:
+
+- Page 36: "so I asked the AI to measure it, based on my GitHub commits"; 86 a day "so that is
+  actually 7 times more productive"; "The biggest change is not in the source code, but in the
+  work around the code…".
+- Page 37: "One package in detail." removed, and from the later pages of that slide too.
+- Page 52: "But I think this is a moving space that we are going to see some developments for in
+  the future." added after the third point.
+
+"GitHub" was capitalised, a dash became a comma, and "will" was added to "whether software
+still be running". After carrying, the handout matches her copy apart from those fixes.
+
+---

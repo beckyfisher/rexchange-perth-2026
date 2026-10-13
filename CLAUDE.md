@@ -27,7 +27,7 @@ modeller, Australian Institute of Marine Science (AIMS).
 
 **Talk length: 15 minutes.** The programme fixes it; earlier drafts were built for 20. On
 `main` the timing markers in the notes add to about 14.2 minutes, and the words she reads (the
-slide text she reads out, and the notes) to about 15.2 minutes at 140 words a minute (13.3 at
+slide text she reads out, and the notes) to about 15.3 minutes at 140 words a minute (13.4 at
 160). The revision of the AI section on 2026-10-13 added the `bayesnec` slide and nine
 clicks, and left no time for explaining the figures; before it the counts were 12.5 and 13.1
 minutes. On 2026-10-13 she said she is comfortable with that length, because she speaks
@@ -156,8 +156,8 @@ speaker's own term). Nothing in this repo may contain raw industry data, client-
 monitoring results, or unpublished figures from commercial reports. Only use results that
 are already in the public record via the listed publications.
 
-**Treat the repo as public.** It was private on 2026-10-06 and is intended to be made public,
-so everything committed here is held to that standard:
+**The repo is public.** It was made public on 2026-10-13, so everything committed here is held to
+that standard:
 
 - `Relevant_publication_history_pdfs/` and `old_talks_and_background/` are `.gitignore`d —
   publisher copyright, third-party clip art, CV and bio. Never commit them.
