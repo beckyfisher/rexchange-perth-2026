@@ -217,22 +217,41 @@ density; the redraw shows the point estimate and interval.
 
 Slide: *The change since June.*
 
-Stacked bars, before and with an AI assistant: the share of files changed, by what each file is
-for. Measured by `R/git-evidence.R` from 1,340 commits across seven public repositories; the
-figure reads `data/git-evidence-shares.csv` and `data/git-evidence-facts.csv`. "With an AI
+Stacked bars, before and with an AI assistant: files changed on a working day, by what each
+file is for, so the length of a bar shows how much changed and its segments the shares. A working
+day is a day with at least one commit: 302 before and 4 with an AI assistant, about 12 and 47
+files a day. Measured by `R/git-evidence.R` from 1,340 commits across seven public repositories;
+the figure reads `data/git-evidence-shares.csv` and `data/git-evidence-facts.csv`, and the
+working days from `data/git-evidence-days.csv`, written by `R/git-evidence-days.R`. The speaker
+asked on 2026-10-13 for the figure to show volume as well as the breakdown; until then it showed
+shares only. "With an AI
 assistant" means a `Co-Authored-By: Claude` trailer, which understates the contrast. The unit is
 one file changed in one commit. Saved smaller than the other figures so its labels are legible
 when scaled to the slide.
+
+### `bayesnec-weekly.png`
+
+Slide: *`bayesnec`, June to October 2026.*
+
+Two bar charts on one week axis, from 1 June 2026. The upper counts the speaker's commits to
+`bayesnec` each week, on every branch except `gh-pages`, coloured by where each commit is now:
+merged into `dev`, parked on `predev`, or on a branch never merged. The lower counts the issues
+opened and closed each week, whoever opened them. Measured by `R/bayesnec-evidence.R`; the figure
+reads `data/bayesnec-weekly.csv`. Commits are not split by a `Co-Authored-By` trailer, because
+Claude Code and Codex commit as the speaker and not all of that work is marked. Drawn at 6.8 by
+6.2 inches with large text, because it is scaled to a column beside four lines of slide text.
 
 ### `title-ssd.png`
 
 The boron SSD without title or caption, for the title collage.
 
-### Backup slides
+### Former backup slides
 
 `roc-thresholds.png` (schematic ROC, after Fisher et al. 2018), `ssd-model-spread.png` (PC95
 from each single distribution, 1.07 to 1.77 mg/L) and `no-effect-estimates.png` (schematic NEC,
-NSEC, EC10 and NOEC) are on the three uncounted slides after the closing slide.
+NSEC, EC10 and NOEC) were on three uncounted slides after the closing slide, for the session
+Q&A. The speaker removed those slides on 2026-10-13. The figures are still built, so the slides
+can be restored from commit history.
 
 ### `stop-sign.png`
 
@@ -249,6 +268,20 @@ lines, the way an editor's minimap draws it, with lines of method (teal) interle
 written around the client's data (dark). An arrow marked "separating them, a lot of work" points
 to the method alone, as "an R package anyone can run", and the data as a table under a
 CONFIDENTIAL stamp, which "stays confidential". The dark lines are what has to be rewritten.
+
+### `known-answer-check.png`
+
+Slide: *Points to take away*, on the last click, beside the third point: "AI now writes more
+than humans can feasibly review", and on the next line "Understand what would show it is wrong,
+and build simulations and tests to check it." The speaker asked on 2026-10-13 for a graphic of that point. A search found no openly
+licensed graphic of reviewing code written by AI, so it is drawn. It is a schematic and measures
+nothing. Four boxes form a cycle: a known answer, set by the speaker, drawn as a target; data
+simulated from it, drawn as points; code written by AI, "too much to read", drawn as an editor's
+minimap with its lines fading out; and the estimates, one per simulated data set, drawn as dots
+on the same target. A double-headed arrow between the estimates and the known answer reads
+"compare: bias, coverage". The cycle is the method used to evaluate `ssdtools` against Burrlioz.
+The target is the bias-and-precision picture used in statistics teaching. An interval plot was
+not used, because it would read as a measured coverage result.
 
 ---
 

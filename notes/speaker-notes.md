@@ -23,7 +23,7 @@ text marked as not read out. A "Read the slide" direction marks where that text 
 among the narration.
 
 For the running order, timings, and what to drop if running long, see
-[`slide-outline.md`](slide-outline.md). The timing markers add to about 12.5 minutes, in a
+[`slide-outline.md`](slide-outline.md). The timing markers add to about 14.7 minutes, in a
 15-minute slot.
 
 ---
@@ -184,7 +184,7 @@ this I think does remain a problem in open source software.
 
 ---
 
-## 11 · Era three · 2021 onwards · Packages on CRAN — 30 s
+## 11 · Era three · 2021 onwards · CRAN · Packages on CRAN — 30 s
 
 In era three I finally started being involved with packages on CRAN. For me this started
 with bayesnec, built by Diego Barneche and I in 2021. This was followed by my building an
@@ -194,7 +194,7 @@ ssddata package, and becoming a co-collaborator on ssdtools.
 
 ---
 
-## 12 · Era three · 2021 onwards · Species sensitivity distributions — 60 s
+## 12 · Era three · 2021 onwards · CRAN · Species sensitivity distributions — 60 s
 
 ssdtools is some of my more recent work that has had the biggest impact.
 
@@ -209,7 +209,7 @@ averaging over several distributions.
 
 ---
 
-## 13 · Era three · 2021 onwards · Evaluation of `ssdtools` — 90 s
+## 13 · Era three · 2021 onwards · CRAN · Evaluation of `ssdtools` — 90 s
 
 ssdtools was originally written by Joe Thorley and Carl Schwarz. The project's job was to
 evaluate whether ssdtools could replace Burrlioz in the Australian guideline framework.
@@ -239,18 +239,25 @@ That brings me to the last few months.
 
 ---
 
-## 15 · The change since June — 60 s
+## 15 · The change since June — 75 s
 
-In June I stopped writing code by hand. I now work with Claude Code, and my impression is
-that I'm about five times more productive. That is an impression, so I measured what I
-could.
+I stopped writing R code by hand in June.
+
+I now work with Claude Code or Codex, and my impression is that I'm about five times more
+productive.
+
+That is an impression, so I measured it when I wrote the first draft of this talk, which is a
+couple of months ago now.
 
 This is every commit I've authored across seven public repositories, 1,340 of them, with
 each file classified by what it is for. "With an AI assistant" means the commit includes a
 Co-Authored-By: Claude line, which anyone can check.
 
+On a day I worked on these packages, I used to change about 12 files. With an AI assistant it
+was about 47, nearly four times as many, though that is only four days.
+
 Tests went from 3% of the files I changed to 10%. Packaging, continuous integration and CRAN
-went from 4% to 20%. Source code went down, from 41% to 25%.
+went from 4% to 20%. Source code went down as a share, from 41% to 25%.
 
 So the change is not in the typing. What has changed is that the work around the code now
 gets done: the tests, documentation and continuous integration that determine whether
@@ -258,92 +265,123 @@ software still runs in five years.
 
 ---
 
-## 16 · `FSSgam`, 2018 to 2026 — 50 s
+## 16 · `FSSgam`, 2018 to 2026 — 60 s
 
 One package in detail. FSSgam's first commit was in September 2018, and it went seven years
 and nine months without a test file or continuous integration. There was always a more
 pressing deadline.
 
-Both arrived on the 20th of June this year. Over the next four days there were thirty-two
-commits, nine test files, documentation, a pkgdown site and CRAN preparation.
+Both arrived on the 20th of June this year.
+
+> Click: four days.
+
+Over the next four days there were thirty-two commits, nine test files, documentation, a
+pkgdown site and CRAN preparation.
+
+> Click: two bugs.
 
 Writing the tests found two bugs that had been there since 2018. A deprecated argument gave
 the right warning and then did nothing. Two fields of the output came back NULL, because the
 code read the wrong element names. Anyone using those features got the wrong result,
 with no warning.
 
-> If running long, drop this slide and say the last paragraph over the previous one.
+> Click: CRAN.
+
+With a little extra work, most of it done by Claude,
+
+> Read the slide.
+
+> If running long, drop this slide and say the bugs paragraph over the previous one.
 
 ---
 
-## 17 · Routine work and judgement — 40 s
+## 17 · Routine work and judgement — 50 s
 
 The left column is work that used to be put off for the next deadline, and now gets done.
+
+> Click: still mine.
+
 The right column has not changed. If anything it matters more, because I'm producing more
 code for each hour of my own attention.
+
+> Click: the standard.
 
 When we evaluated ssdtools against Burrlioz, we asked for the source code, benchmarks, and
 simulations with a known answer. I don't get to lower that standard because a model wrote the code. The
 methods I used for checking someone else's software are the ones I now use for this.
 
+> Click: a rapidly evolving space.
+
+I think
+
+> Read the slide.
+
+It is for me.
+
 ---
 
-## 18 · Points to take away — 40 s
+## 18 · `bayesnec`, June to October 2026 — 75 s
 
-Two things I'd like to leave you with.
+Things got very busy for the last month or so. I had to prepare a software training course I
+was teaching at a conference, and decided to add some significant functionality to bayesnec
+at the same time. Things rapidly escalated to the point where I was struggling to read and
+check everything being done.
+
+> Click: bugs in the original code.
+
+Every feature or bug fix I tackled resulted in Claude finding more bugs and flaws, many of
+them written by humans into the original software.
+
+> Read the slide.
+
+> Click: issues.
+
+I ended up in an endless loop of trying to resolve issues, with Claude or Codex opening even
+more issues as fast as they were closed.
+
+> Click: predev.
+
+I couldn't find the time to review everything before merging it to dev, so for now I resorted
+to making a predev branch and parking it.
+
+> Click: the limit.
+
+I'm not exactly sure where things will go from here.
+
+> Read the slide.
+
+---
+
+## 19 · Points to take away — 55 s
+
+Three things I'd like to leave you with.
 
 First, the tests, documentation and continuous integration that determine whether
 research software outlives its project now take far less time. If you are using AI to work
 faster, spend some of the time saved on this work.
+
+> Click: data that cannot be shared.
 
 Second, we still don't have a good pattern for building open, reusable tools on data that
 can't be shared. That gap is where a large amount of high-quality industry data stops being
 useful to anyone except the client. If you've worked on this problem, I'd like to talk to
 you.
 
+> Click: your review.
+
+Third, AI is now producing more than we can realistically review. We need new ways of
+thinking about what reviewing that should look like. For me, it is about understanding what
+would show if it was wrong, and building simulations and tests to demonstrate that.
+
 ---
 
-## 19 · Contacts and acknowledgements — 15 s
+## 20 · Contacts and acknowledgements — 15 s
 
 Thank you. The packages, the code for every figure in this talk, and the log of how I used
 AI to prepare it are on GitHub. I'm happy to take questions in the session Q&A.
 
 > The talk repository is private. Make it public before the talk, or drop the second
 > sentence.
-
----
-
-## 20 · Threshold setting with ROC curves
-
-> Backup for questions on how the dredging thresholds were set.
-
-For any threshold, the proportion of impact sites above it is the true positive rate, and
-the proportion of control sites above it is the false positive rate. Varying the threshold
-across its range traces out the ROC curve. The high-power threshold detects most impacts at the expense of
-more false alarms; the low-alarm-rate threshold is exceeded only when mortality is
-probable.
-
----
-
-## 21 · PC95 by distribution
-
-> Backup for questions on model averaging.
-
-The same boron data, fitted with each of the six distributions in turn. The guideline value
-ranges from 1.07 to 1.77 mg/L, and there is no theoretical basis for choosing between them.
-The model average weights each fit by its AICc.
-
----
-
-## 22 · Estimates of "no effect"
-
-> Backup for questions on bayesnec and what goes into an SSD.
-
-The NEC is the concentration below which no effect is predicted. The NSEC, which David Fox
-and I defined, is the concentration at which the response cannot be distinguished from the
-control. The EC10 is, by definition, a 10% effect. The NOEC is the highest tested
-concentration not statistically different from the control, so it depends on which
-concentrations were tested. Whichever is used becomes an input to the SSD.
 
 
 <!-- END GENERATED -->
@@ -358,12 +396,14 @@ Since 20 June 2026, so about four months. The FSSgam work was in the first fortn
 wasn't a matter of having become good at it.
 
 **"Five times is a big claim. How did you measure it?"**
-I didn't. Five times is my impression of overall productivity, and I won't defend the number.
-What I measured is the composition of the work, on *The change since June*: across 1,340
-authored commits in seven public repositories, tests went from 3% to 10% of files changed,
-packaging and CI from 4% to 20%, and source code fell from 41% to 25%. The largest change is
-in work I previously wasn't doing at all. My output of new statistical methods did not go up
-five times.
+Not directly. Five times is my impression of overall productivity, and I won't defend the
+number. What I measured, on *The change since June*, is files changed on a day I worked on
+these packages: about 12 before and 47 with an AI assistant. The 47 is four days of work, and a
+file changed is not the same as useful work. The composition is the clearer result: across
+1,340 authored commits in seven public repositories, tests went from 3% to 10% of files changed,
+packaging and CI from 4% to 20%, and source code fell from 41% to 25%. The largest change is in
+work I previously wasn't doing at all. My output of new statistical methods did not go up five
+times.
 
 **"How did you decide a commit was AI-assisted?"**
 By the `Co-Authored-By: Claude` trailer and nothing else. Anyone who clones the repositories
@@ -405,8 +445,7 @@ No. They come from concentration–response relationships measured in the field 
 receptor, coral, at one site, with ROC curves used to set the thresholds (Fisher et al. 2018,
 *Journal of Applied Ecology*). That predates my SSD work. The SSD is for national default
 guideline values from laboratory toxicity data across many species. The slide *Dredging
-thresholds* shows how the thresholds were set, and the backup slide on ROC curves explains
-the method further.
+thresholds* shows how the thresholds were set.
 
 **"Did open source get you onto the ssdtools project?"**
 No. Years of work in the field, the publication record, and convening workshops with the

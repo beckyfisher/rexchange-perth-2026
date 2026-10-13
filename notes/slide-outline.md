@@ -7,17 +7,18 @@ The slot is **15 minutes**, 2:15–2:30pm on day two (15 October 2026), between 
 (Minderoo, 2:00pm) and François Michonneau (Posit, 2:30pm). Questions are taken in a combined
 session Q&A at 3:00pm, so all 15 minutes are talk time and the next speaker starts on time.
 
-There are 19 slides and 21 clicks within them, so the deck steps 40 times. Most of what is
+There are 20 slides and 33 clicks within them, so the deck steps 53 times. Most of what is
 said is written on the slides, some of which build up with clicks, and the notes hold only the
 sentences that join them; the slide on species sensitivity distributions is shown complete,
 with the explanation of the SSD in the notes. Some slide text is shown but not read out, and
 is left out of the handout notes (see the README, § "Handover"). The timing markers in the
-notes add to 12:35. Counting the words she reads, the slide text she reads out and the
-narration in the notes, gives about 13.1 minutes at 140 words a minute, and 11.5 at 160. The
-count on 2026-10-09 was 14.8 and 13.0, but it included all the slide text, read or not. The
-remainder of the 15 minutes is the allowance for explaining the figures, clicks and pauses,
-and the review of 2026-10-13 added five clicks and five pictures to explain. A slide added
-means time taken from another.
+notes add to 14:40. Counting the words she reads, the slide text she reads out and the
+narration in the notes, gives about 15.8 minutes at 140 words a minute, and 13.8 at 160. The
+count was 13.1 and 11.5 before the AI section was revised on 2026-10-13, and 14.8 and 13.0 on
+2026-10-09, when it included all the slide text, read or not. The remainder of the 15 minutes
+is the allowance for explaining the figures, clicks and pauses, and as it stands there is
+none: the revised AI section needs about a minute taken from elsewhere. A slide added means
+time taken from another.
 
 The deck was 25 slides on 2026-10-06, after the speaker's first review: the dredging thresholds
 were a five-slide build (exposure, coral mortality, concentration–response, thresholds from
@@ -35,6 +36,18 @@ methods, the timeline adds the three eras, ElicitN shows the coral reef estimate
 and the evaluation of `ssdtools` replaces the recommendation with the Shiny app. She also asked
 for the dredge plume and the outfall on slide 4, an era label on each era's slides, a graphic
 of separating a method from confidential data on slide 10, and the ANZG website on slide 13.
+Later that day she revised the AI section: `FSSgam` builds over three clicks and ends on its
+CRAN release, *Routine work and judgement* builds over three, ending on AI use in open source
+software as a rapidly evolving space, and a new slide, *`bayesnec`, June to October 2026*,
+gives her account of the two months since the first measurement, from the package's public
+history. A third point to take away, her advice from those two months, was added on its own
+click. After a review of what others propose for checking code written by AI, the third point
+became her own: AI now writes more than can be reviewed, and her answer is to understand what
+would show the code is wrong and build simulations and tests to check it. At her request it was
+then set on two lines, the second without an arrow because it extends the third point, and
+shown on the same click as a drawn schematic of checking code against a known answer. The phrase "Reviewing it does not." was removed from the first point, so
+that review is raised once. The
+measurement of 2026-07-28 on slide 15 was left as it was run.
 The longer version is commit `1336127`, and the version she first reviewed is on the branch
 `pre-review-2026-10-06`.
 
@@ -65,15 +78,19 @@ regulation depends on, and then walks the timeline from left to right.
    shared, are in WA guidance. The title comes from the speaker's own notes ("my journey in
    improving statistical methods in environmental regulation"), shortened to fit one line.
 4. **Three eras** (slides 6–13). Above the title, era one's slide is labelled "R scripts" and
-   era two's slides "Industry data and GitHub"; era three has no label. Era one, ElicitN. Era two: white, grey and
+   era two's slides "Industry data and GitHub", and era three's "CRAN". Era one, ElicitN. Era two: white, grey and
    black literature, the Barrow Island data, the dredging thresholds on one slide (field
    concentration–response, ROC curves, probabilistic thresholds for the management zones), and
    the packages on GitHub that never met the industry work, ending on a schematic of separating
    a method from confidential data. Era three: the packages on CRAN, the SSD on one slide, and
    the `ssdtools` evaluation with the ANZG website, then why open source mattered to it, then
    the Shiny app.
-5. **AI-assisted coding** (slides 14–19). The measured change in the commit history, one
-   package in detail, what is now routine and what is not, and the two points to take away.
+5. **AI-assisted coding** (slides 14–19). The measured change in the commit history to July,
+   one package in detail, what is now routine and what is not, then `bayesnec` since July: the
+   volume of commits, the bugs found in code written before and since June, issues opened as
+   fast as they were closed, the work parked on `predev`, and reading, not writing, as the
+   limit. The three points to take away follow, the third on what review of code written by AI
+   should look like.
 
 ### Routes to a regulatory number
 
@@ -103,7 +120,7 @@ habitat-forming receptor, one site and one campaign.
 | Slides | 8–9 | 10 |
 
 Slide 10 states the pattern: the higher the stakes, the less shareable the tooling. The speaker
-has not solved it and says so, and it returns as the second point to take away on slide 18.
+has not solved it and says so, and it returns as the second point to take away on slide 19.
 
 ---
 
@@ -128,26 +145,28 @@ direction.
 | 12 | Era three · Species sensitivity distributions | `ssd-model-average.png`; breath-test photograph and police cap | Default guideline values as the 0.05 blood alcohol driving limit, and what happens above and below it. In the notes: `ssdtools` as the work with the most impact; the SSD; `ssdtools` averages over distributions. | 0 | 1:00 |
 | 13 | Era three · Evaluation of `ssdtools` | Text, two columns, ANZG website; black box on the first click; the Shiny app on the second | AU–CA project; benchmark and simulated data; recommendation, now in the Australian and New Zealand guidance. First click: three regulators cannot audit a black box; reading the source. Second click: the Shiny app replaces the recommendation, and most people deriving guideline values don't write R. | 2 | 1:30 |
 | 14 | Divider · AI-assisted coding | None | Transition. | 0 | 0:05 |
-| 15 | The change since June | `where-work-goes.png` | Stopped writing code by hand in June; 1,340 commits; tests 3→10%, packaging 4→20%, source 41→25%. | 0 | 1:00 |
-| 16 | `FSSgam`, 2018 to 2026 | Text, two columns | Seven years nine months without tests; four days; two silent bugs. | 0 | 0:50 |
-| 17 | Routine work and judgement | Two columns | Now routine against still the speaker's; the Burrlioz standard applies to model-written code. | 0 | 0:40 |
-| 18 | Points to take away | Two points | Maintenance takes far less time; no good pattern for open tools on data that cannot be shared. | 0 | 0:40 |
-| 19 | Contacts and acknowledgements | Links | Thanks; questions at the session Q&A. | 0 | 0:15 |
+| 15 | The change since June | `where-work-goes.png` | Stopped writing R code by hand in June; 1,340 commits; about 12 files changed a working day before and 47 with an AI assistant, over four days; tests 3→10%, packaging 4→20%, source 41→25% as shares. | 0 | 1:15 |
+| 16 | `FSSgam`, 2018 to 2026 | Text, two columns | Seven years nine months without tests; four days; two silent bugs; now on CRAN. | 3 | 1:00 |
+| 17 | Routine work and judgement | Two columns | Now routine against still the speaker's; the Burrlioz standard applies to model-written code; AI use in open source software is a rapidly evolving space. | 3 | 0:50 |
+| 18 | `bayesnec`, June to October 2026 | `bayesnec-weekly.png` | 817 commits since late June after none for eleven months (shown, not read); 86 bugs and flaws found, 47 in code written before June; issues opened as fast as closed, against the 22 open in June; 103 commits parked on `predev`; writing code is no longer the limit, reading it is. | 4 | 1:15 |
+| 19 | Points to take away | Three points beside `known-answer-check.png`; the second on the first click, the third and the figure on the second | Maintenance takes far less time; no good pattern for open tools on data that cannot be shared; AI now writes more than humans can feasibly review, and on the next line, without an arrow, understand what would show it is wrong, and build simulations and tests to check it. | 2 | 0:55 |
+| 20 | Contacts and acknowledgements | Links | Thanks; questions at the session Q&A. | 0 | 0:15 |
 
-Three backup slides follow slide 19 and are not counted in the slide numbers: threshold
-setting with ROC curves, PC95 by distribution, and estimates of "no effect". They are for the
-session Q&A. A fourth, the WAMSI figure of thresholds against turbidity events, was removed at
-the speaker's request on 2026-10-09.
+There are no backup slides. Three followed the closing slide until 2026-10-13, for the session
+Q&A: threshold setting with ROC curves, PC95 by distribution, and estimates of "no effect". The
+speaker removed them then, because there will be no time for them; `R/figures.R` still builds
+their figures, so they can be restored from commit history. A fourth, the WAMSI figure of
+thresholds against turbidity events, was removed at her request on 2026-10-09.
 
 ### If running long
 
 In order of what to drop first:
 
-1. Slide 16, `FSSgam`. Say its last paragraph (the two silent bugs) over slide 15.
+1. Slide 16, `FSSgam`. Say its paragraph on the two silent bugs over slide 15.
 2. The narration after the last click on slide 10. The line and the schematic on the slide
    state the point.
 
-Do not take time from slides 10 or 18. They hold the second point to take away.
+Do not take time from slides 10 or 19. They hold the second point to take away.
 
 ---
 
@@ -156,7 +175,8 @@ Do not take time from slides 10 or 18. They hold the second point to take away.
 | What | Where | Why |
 |---|---|---|
 | "Four months" since June | anticipated questions | First AI co-authored commit: 20 June 2026. Correct for 15 October 2026. |
-| The measured percentages | slides 15–16, `data/*.csv` | They cover 20 June – 22 July 2026 (36 commits on 4 days). Re-running `R/git-evidence.R` would give a larger sample, but would change the 1,340 quoted in the published abstract. |
+| The `bayesnec` counts | slide 18, `data/bayesnec-*.csv` | Measured on 2026-10-13 by `R/bayesnec-evidence.R`; the 86 bugs and flaws are from `data/bayesnec-issue-review.csv`, a reading of the 151 issues opened from her account since 20 June against the history of each fix. Correct while `bayesnec` is parked; re-run the script if work resumes before the talk. |
+| The measured percentages | slides 15–16, `data/git-evidence-*.csv` | They cover 20 June – 22 July 2026 (36 commits on 4 days). Re-running `R/git-evidence.R` would give a larger sample, but would change the 1,340 quoted in the published abstract. The working days in `data/git-evidence-days.csv` were counted on 2026-10-13 from each repository as it stood on 28 July; that reconstruction holds nine `toxval` commits of 24 and 26 June that the July run did not, which changes the 12 files a day before by less than 0.1. |
 | The team slide | slide 3 | Exported from the SETAC Asia-Pacific deck. Check the people on it are current. The speaker removed this reminder from the slide's notes on 2026-10-13. |
 | "on GitHub" in the closing notes | slide 19 | The talk repository is private. Make it public before the talk or drop the sentence. |
 | Timeline years | `code-timeline.png` | Reconstructed from the CV, not from CRAN metadata, apart from the 2021 CRAN date; see the comment in `R/figures.R`. |
@@ -175,4 +195,4 @@ Do not take time from slides 10 or 18. They hold the second point to take away.
   impression; what was measured is the composition of the work.
 - Expect a question on verifying AI-written code. Answer from slide 17: simulate, benchmark,
   check coverage against a known truth, as was done for Burrlioz.
-- Do not get drawn into ecotoxicology detail. The backup slides are there if needed.
+- Do not get drawn into ecotoxicology detail.

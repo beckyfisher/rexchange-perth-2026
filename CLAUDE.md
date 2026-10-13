@@ -26,11 +26,12 @@ Assume they are technically strong and know nothing about ecotoxicology.
 modeller, Australian Institute of Marine Science (AIMS).
 
 **Talk length: 15 minutes.** The programme fixes it; earlier drafts were built for 20. On
-`main` the timing markers in the notes add to about 12.5 minutes, and the words she reads (the
-slide text she reads out, and the notes) to about 13.1 minutes at 140 words a minute (11.5 at
-160). The speaker talks faster than 140, and the rest of the slot goes on explaining the
-figures; the review of 2026-10-13 added five clicks and five pictures. Keep it there: a slide
-added means time taken elsewhere.
+`main` the timing markers in the notes add to about 14.7 minutes, and the words she reads (the
+slide text she reads out, and the notes) to about 15.8 minutes at 140 words a minute (13.8 at
+160). The revision of the AI section on 2026-10-13 added the `bayesnec` slide and nine
+clicks, and left no time for explaining the figures; before it the counts were 12.5 and 13.1
+minutes. On 2026-10-13 she said she is comfortable with that length, because she speaks
+quickly. A slide added means time taken elsewhere.
 
 **The abstract, title and bio are fixed.** They are published in the programme. Do not edit
 the submitted text in `talk/abstract.qmd`; the deck has to deliver what it promises.
@@ -138,7 +139,7 @@ Ask before adding to it. The two local-only scripts also use `pdftools` and `mag
 - **Visual style:** sparse text, one idea per slide, build up in layers with reveal.js
   fragments, `→` as the connector, schematic redraws rather than screenshots.
 - **Every factual claim must be traceable** to `notes/source-synthesis.md`, the CV, or
-  `data/git-evidence-*.csv`. Do not invent download counts, dates, productivity multipliers
+  the CSVs in `data/` (`git-evidence-*`, `bayesnec-*`). Do not invent download counts, dates, productivity multipliers
   or quotes.
 - **Do not put invented numbers in a figure, even labelled "illustrative".** An early draft
   did exactly that for the productivity slide; it was plausible, directionally right and

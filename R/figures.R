@@ -195,7 +195,7 @@ pred_each <- lapply(dists, function(d) {
 pts <- boron |> mutate(prop = ssd_ecd_data(boron))
 
 # PC95 from each single-distribution fit, for the build-up below and for the
-# backup slide in 2b.
+# figure in 2b.
 hc_each <- lapply(dists, function(d) {
   f <- ssd_fit_dists(boron, dists = d)
   tibble(dist = d, hc5 = ssd_hc(f, proportion = 0.05, ci = FALSE)$est)
@@ -321,7 +321,9 @@ p_ssd <- ggplot() +
 save_fig(p_ssd, "ssd-model-average.png", width = 8, height = 6.2)
 
 # --- 2b. why model averaging: the same data, several answers ----------------
-# This is the "which model do you fit?" backup slide, made concrete.
+# This was the "which model do you fit?" backup slide, made concrete. The
+# backup slides were removed from the deck on 2026-10-13, as there is no time
+# for them; the figure is still built so the slide can be restored.
 
 spread_x <- max(hc_each$hc5) / min(hc_each$hc5)
 
@@ -471,23 +473,44 @@ shares <- read.csv(file.path("data", "git-evidence-shares.csv"),
 facts <- read.csv(file.path("data", "git-evidence-facts.csv"),
                   stringsAsFactors = FALSE)
 fact <- function(k) facts$value[facts$key == k]
+# Working days come from R/git-evidence-days.R, added on 2026-10-13 so the figure
+# shows how much changed as well as the shares; see that script for why it is
+# separate from the July measurement.
+work_days <- read.csv(file.path("data", "git-evidence-days.csv"),
+                      stringsAsFactors = FALSE)
 
 cat_levels <- c("Source code", "Documentation (generated)",
                 "Documentation (written)", "Tests", "Packaging, CI, CRAN",
                 "Other")
 
+# Bar length is files changed on a working day rather than share, so the two
+# bars differ in length (how much changed) and the segments still give the
+# shares that the narration quotes. A side-by-side pair of panels, one of
+# volume and one of shares, was the alternative; one bar per period says both
+# with half the ink.
 work <- shares |>
+  left_join(select(work_days, era, working_days), by = "era") |>
   mutate(
+    per_day = touches / working_days,
     # reversed so "Before" reads on top
     era = factor(era, levels = c("With an AI assistant", "Before")),
     category = factor(category, levels = cat_levels)
   )
+work_totals <- work |>
+  group_by(era) |>
+  summarise(per_day = sum(per_day), .groups = "drop")
+n_days <- setNames(work_days$working_days, work_days$era)
 
-p_work <- ggplot(work, aes(share, era, fill = category)) +
+p_work <- ggplot(work, aes(per_day, era, fill = category)) +
   geom_col(width = 0.5, colour = "white", linewidth = 0.8) +
-  geom_text(aes(label = ifelse(share >= 7, paste0(round(share), "%"), "")),
+  # a share is labelled where its segment is wide enough to hold the label
+  geom_text(aes(label = ifelse(per_day >= 2.5, paste0(round(share), "%"), "")),
             position = position_stack(vjust = 0.5),
             size = 4.2, colour = "white", fontface = "bold") +
+  geom_text(data = work_totals,
+            aes(per_day, era, label = paste(round(per_day), "a day")),
+            inherit.aes = FALSE, hjust = 0, nudge_x = 0.8,
+            size = 6.2, fontface = "bold", colour = pal[["accent"]]) +
   scale_fill_manual(values = c(
     "Source code"               = pal[["accent"]],
     "Documentation (generated)" = pal[["era2"]],
@@ -496,18 +519,20 @@ p_work <- ggplot(work, aes(share, era, fill = category)) +
     "Packaging, CI, CRAN"       = "#A9D3CF",
     "Other"                     = "#B0B0B0"
   )) +
-  scale_x_continuous(labels = percent_format(scale = 1),
-                     expand = expansion(mult = c(0, 0.02))) +
+  scale_x_continuous(limits = c(0, 60), expand = expansion(mult = c(0, 0))) +
   labs(x = NULL, y = NULL,
-       title = "Share of files changed, by what each file is for",
-       subtitle = "Commits before 20 June 2026, and commits made with an AI assistant since.",
+       title = "Files changed on a working day, by what each file is for",
+       subtitle = paste0(
+         "Before 20 June 2026: ", n_days[["Before"]], " working days.  ",
+         "With an AI assistant since: ", n_days[["With an AI assistant"]], "."),
        caption = paste0(
          "Measured, not estimated: every commit I authored across ",
          length(strsplit(fact("repos_analysed"), ";")[[1]]),
          " public repos (", fact("commits_total"), " commits).\n",
          "\u201cWith an AI assistant\u201d = the ", fact("commits_ai_trailer"),
-         " commits carrying a Co-Authored-By: Claude trailer \u2014 a conservative floor.",
-         "  Unit: one file changed in one commit.  Code: R/git-evidence.R")) +
+         " commits carrying a Co-Authored-By: Claude trailer \u2014 a conservative floor.\n",
+         "Unit: one file changed in one commit.  A working day has at least one commit.",
+         "  Code: R/git-evidence.R, R/git-evidence-days.R")) +
   guides(fill = guide_legend(nrow = 2, byrow = TRUE)) +
   theme_talk() +
   theme(panel.grid.major.y = element_blank(),
@@ -688,5 +713,150 @@ p_separate <- ggplot() +
   theme(legend.position = "none")
 
 save_fig(p_separate, "method-data-separation.png", width = 12, height = 3.4)
+
+# ===========================================================================
+# 10. bayesnec, June to October 2026 — MEASURED, from the public history
+# ===========================================================================
+# Derived by R/bayesnec-evidence.R; see that script for the method. Commits are
+# coloured by where they sit now rather than by a Co-Authored-By trailer, because
+# Claude Code and Codex commit as the speaker and not all of it is marked. The
+# issues panel shares the week axis, so the weeks in which as many issues were
+# opened as closed line up under the weeks of most commits.
+
+bn_weekly <- read.csv(file.path("data", "bayesnec-weekly.csv")) |>
+  mutate(week = as.Date(week))
+
+bn_where <- c(dev = "merged into dev", predev = "parked on predev",
+              other = "never merged")
+bn_commits <- bn_weekly |>
+  select(week, dev = commits_dev, predev = commits_predev, other = commits_other) |>
+  pivot_longer(-week, names_to = "where", values_to = "n") |>
+  mutate(where = factor(bn_where[where], levels = rev(bn_where)))
+
+bn_issues <- bn_weekly |>
+  select(week, opened = issues_opened, closed = issues_closed) |>
+  pivot_longer(-week, names_to = "what", values_to = "n") |>
+  mutate(what = factor(what, levels = c("opened", "closed")))
+
+bn_x <- scale_x_date(date_breaks = "1 month", date_labels = "%b",
+                     limits = range(bn_weekly$week) + c(0, 7),
+                     expand = expansion(mult = 0.01))
+bn_legend <- theme(legend.position = "top", legend.justification = "left",
+                   legend.title = element_blank(),
+                   legend.text = element_text(size = rel(0.72)),
+                   legend.key.size = unit(0.8, "lines"),
+                   legend.margin = margin(0, 0, 0, 0),
+                   panel.grid.major.x = element_blank())
+
+p_bn_commits <- ggplot(bn_commits, aes(week + 3, n, fill = where)) +
+  geom_col(width = 5.6) +
+  scale_fill_manual(values = setNames(c(pal[["accent"]], pal[["hi"]], "#B0B0B0"),
+                                      bn_where),
+                    breaks = unname(bn_where)) +
+  bn_x +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.04))) +
+  labs(x = NULL, y = NULL, title = "Commits a week") +
+  theme_talk(base_size = 22) + bn_legend
+
+p_bn_issues <- ggplot(bn_issues, aes(week + 3, n, fill = what)) +
+  geom_col(width = 5.6, position = position_dodge(width = 5.8)) +
+  scale_fill_manual(values = c(opened = "grey35", closed = pal[["era2"]])) +
+  bn_x +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.06))) +
+  labs(x = NULL, y = NULL, title = "Issues a week") +
+  theme_talk(base_size = 22) + bn_legend
+
+save_fig(p_bn_commits / p_bn_issues + plot_layout(heights = c(1.35, 1)),
+         "bayesnec-weekly.png", width = 6.8, height = 6.2)
+
+# ===========================================================================
+# 11. Checking code against a known answer — schematic
+# ===========================================================================
+# For the last click of "Points to take away", where the speaker says AI now
+# writes more than people can review, and that for her review means
+# understanding what would show the code is wrong and building simulations and
+# tests to check it (her request of 2026-10-13 for a graphic). No openly
+# licensed graphic of this was found, so it is drawn. The cycle is the method of
+# the ssdtools evaluation: set a true value, simulate data from it, run the code,
+# and compare the estimates with the true value for bias and coverage. The known
+# answer and the estimates are drawn as the bias-and-precision target used in
+# statistics teaching, rather than as an interval plot, because an interval plot
+# would read as a measured coverage result and none was measured. The code is
+# drawn as an editor's minimap, as in section 9. Nothing here is measured: the
+# positions of the data points, line lengths and estimates are made up for the
+# drawing.
+
+set.seed(2026)
+
+chk_box <- tibble(
+  x0 = c(0.25, 5.9, 5.9, 0.25),
+  y0 = c(5.7, 5.7, 0.3, 0.3),
+  title = c("Known answer", "Simulated data", "Code written by AI", "Estimates"),
+  caption = c("set by you", "from that answer", "too much to read", "one per data set")
+) |>
+  mutate(x1 = x0 + 3.85, y1 = y0 + 4, cx = x0 + 3.85 / 2, cy = y0 + 1.45)
+
+target_rings <- function(cx, cy, r = c(1.25, 0.85, 0.45)) {
+  expand_grid(ring = seq_along(r), t = seq(0, 2 * pi, length.out = 121)) |>
+    mutate(x = cx + r[ring] * cos(t), y = cy + r[ring] * sin(t),
+           group = paste(cx, cy, ring))
+}
+rings <- bind_rows(target_rings(chk_box$cx[1], chk_box$cy[1]),
+                   target_rings(chk_box$cx[4], chk_box$cy[4]))
+
+chk_data <- tibble(x = runif(26, chk_box$x0[2] + 0.5, chk_box$x1[2] - 0.5),
+                   y = runif(26, chk_box$y0[2] + 0.35, chk_box$y0[2] + 2.6))
+
+chk_code <- code_lines(chk_box$x0[3] + 0.15,
+                       kinds = rep("ai", 11),
+                       indent = c(0, 1, 1, 2, 1, 0, 1, 1, 2, 2, 1),
+                       len = c(2.4, 2.0, 1.4, 1.1, 2.3, 1.7, 2.5, 1.2, 1.5, 0.9, 2.1),
+                       top = chk_box$y0[3] + 2.4, step = 0.2) |>
+  mutate(alpha = c(rep(1, 7), 0.75, 0.5, 0.3, 0.15))
+
+chk_est <- tibble(dx = c(0.14, -0.2, 0.06, 0.27, -0.09, 0.17, -0.27, 0.0),
+                  dy = c(0.05, 0.12, -0.22, -0.08, -0.13, 0.24, -0.02, 0.3)) |>
+  mutate(x = chk_box$cx[4] + 1.4 * dx, y = chk_box$cy[4] + 1.4 * dy)
+
+chk_arrow <- arrow(length = unit(0.11, "in"), type = "closed")
+
+p_check <- ggplot() +
+  geom_rect(data = chk_box, aes(xmin = x0, xmax = x1, ymin = y0, ymax = y1),
+            fill = "#F4F6F8", colour = "grey75", linewidth = 0.6) +
+  geom_text(data = chk_box, aes(cx, y1 - 0.3, label = title),
+            size = 5.6, fontface = "bold", colour = pal[["accent"]], vjust = 1) +
+  geom_text(data = chk_box, aes(cx, y1 - 0.9, label = caption),
+            size = 5.4, colour = "grey35", vjust = 1) +
+  geom_path(data = rings, aes(x, y, group = group),
+            colour = pal[["accent"]], linewidth = 1.1) +
+  annotate("point", x = chk_box$cx[c(1, 4)], y = chk_box$cy[c(1, 4)],
+           colour = pal[["accent"]], size = 4.5) +
+  geom_point(data = chk_data, aes(x, y), colour = "grey35", size = 2.4) +
+  geom_segment(data = chk_code,
+               aes(x = x, xend = xend, y = y, yend = y, alpha = alpha),
+               colour = pal[["hi"]], linewidth = 2.6, lineend = "round") +
+  geom_point(data = chk_est, aes(x, y), colour = pal[["hi"]], size = 3) +
+  # simulate, run, give estimates: the cycle runs clockwise
+  annotate("segment", x = 4.25, xend = 5.75, y = 7.15, yend = 7.15,
+           linewidth = 1, colour = "grey30", arrow = chk_arrow) +
+  annotate("text", x = 5, y = 7.4, label = "simulate", size = 5.4,
+           colour = "grey20", vjust = 0) +
+  annotate("segment", x = 7.825, xend = 7.825, y = 5.55, yend = 4.45,
+           linewidth = 1, colour = "grey30", arrow = chk_arrow) +
+  annotate("text", x = 8.05, y = 5, label = "run", size = 5.4,
+           colour = "grey20", hjust = 0) +
+  annotate("segment", x = 5.75, xend = 4.25, y = 1.75, yend = 1.75,
+           linewidth = 1, colour = "grey30", arrow = chk_arrow) +
+  annotate("segment", x = 2.175, xend = 2.175, y = 4.45, yend = 5.55,
+           linewidth = 1.2, colour = pal[["accent"]],
+           arrow = arrow(length = unit(0.11, "in"), type = "closed", ends = "both")) +
+  annotate("text", x = 2.4, y = 5, label = "compare: bias, coverage",
+           size = 5.4, colour = pal[["accent"]], fontface = "bold", hjust = 0) +
+  scale_alpha_identity() +
+  coord_fixed(xlim = c(0, 10), ylim = c(0, 10), expand = FALSE) +
+  theme_void() +
+  theme(legend.position = "none")
+
+save_fig(p_check, "known-answer-check.png", width = 5.6, height = 5.6)
 
 message("\nAll figures written to ", normalizePath(fig_dir))

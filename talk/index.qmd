@@ -376,9 +376,9 @@ turbidity record above it. You can see sediment settling, bleaching, and recover
 
 ::: {.columns}
 
-::: {.column width="50%"}
+::: {.column width="55%"}
 
-::: {.say .unread style="font-size:0.72em;"}
+::: {.say .unread}
 Coral mortality at each site against water quality → a concentration–response curve from
 field data
 :::
@@ -405,14 +405,9 @@ management zones.
 Still in regulatory use. The code was written for one project and never packaged.
 :::
 
-::: {.credit}
-Fisher, Walshe, Bessell-Browne & Jones (2018) *J. Appl. Ecol.* 55:415. WA EPA (2016) Technical
-Guidance: Environmental Impact Assessment of Marine Dredging Proposals.
 :::
 
-:::
-
-::: {.column width="50%"}
+::: {.column width="45%"}
 
 ::: {.r-stack}
 ![](local/cr-curve.png){.panel .stack-panel fig-alt="Probability of coral mortality against light stress, a 14-day running mean, with a fitted S-shaped curve. Sites with low stress have near-zero mortality; sites with high stress have high mortality."}
@@ -420,6 +415,11 @@ Guidance: Environmental Impact Assessment of Marine Dredging Proposals.
 ![](local/roc.png){.panel .stack-panel .fragment data-fragment-index="1" fig-alt="An ROC curve of true positive rate, or statistical power, against false positive rate, or false alarm rate, with a high-power threshold and a low-alarm-rate threshold marked."}
 
 ![](local/management-zones.png){.panel .stack-panel .fragment data-fragment-index="2" fig-alt="The concentration–response curve with the probable and possible mortality thresholds marked as vertical lines, projected down onto a plot of impact against distance from the dredge, where they mark the edges of the zones of high impact, moderate impact and influence."}
+:::
+
+::: {.credit}
+Fisher, Walshe, Bessell-Browne & Jones (2018) *J. Appl. Ecol.* 55:415. WA EPA (2016) Technical
+Guidance: Environmental Impact Assessment of Marine Dredging Proposals.
 :::
 
 :::
@@ -517,7 +517,7 @@ this I think does remain a problem in open source software.
 ---
 
 
-## [Era three · 2021 onwards]{.kicker} Packages on CRAN
+## [Era three · 2021 onwards · CRAN]{.kicker} Packages on CRAN
 
 ::: {.cran}
 **`bayesnec`** concentration–response modelling, to estimate "no effect"\
@@ -548,7 +548,7 @@ ssddata package, and becoming a co-collaborator on ssdtools.
 ---
 
 
-## [Era three · 2021 onwards]{.kicker} Species sensitivity distributions
+## [Era three · 2021 onwards · CRAN]{.kicker} Species sensitivity distributions
 
 ::: {.columns}
 
@@ -594,7 +594,7 @@ averaging over several distributions.
 ---
 
 
-## [Era three · 2021 onwards]{.kicker} Evaluation of `ssdtools`
+## [Era three · 2021 onwards · CRAN]{.kicker} Evaluation of `ssdtools`
 
 ::: {.columns}
 
@@ -726,25 +726,32 @@ That brings me to the last few months.
 I stopped writing code by hand in [June]{.e3}.
 :::
 
-![](figures/where-work-goes.png){.fig-full style="max-height:560px;" fig-alt="Stacked bar chart of the share of files changed by category, before versus with an AI assistant, measured from 1,340 authored commits across seven public repositories. Tests rise from 3 to 10 per cent; packaging and CI from 4 to 20 per cent; source code falls from 41 to 25 per cent."}
+![](figures/where-work-goes.png){.fig-full style="max-height:560px;" fig-alt="Stacked bar chart of files changed on a working day, by category, before versus with an AI assistant, measured from 1,340 authored commits across seven public repositories. Before 20 June 2026, about 12 files a day over 302 working days; with an AI assistant, about 47 a day over 4 working days. As shares, tests rise from 3 to 10 per cent, packaging and CI from 4 to 20 per cent, and source code falls from 41 to 25 per cent."}
 
 ::: {.notes}
-In June I stopped writing code by hand. I now work with Claude Code, and my impression is
-that I'm about five times more productive. That is an impression, so I measured what I
-could.
+I stopped writing R code by hand in June.
+
+I now work with Claude Code or Codex, and my impression is that I'm about five times more
+productive.
+
+That is an impression, so I measured it when I wrote the first draft of this talk, which is a
+couple of months ago now.
 
 This is every commit I've authored across seven public repositories, 1,340 of them, with
 each file classified by what it is for. "With an AI assistant" means the commit includes a
 Co-Authored-By: Claude line, which anyone can check.
 
+On a day I worked on these packages, I used to change about 12 files. With an AI assistant it
+was about 47, nearly four times as many, though that is only four days.
+
 Tests went from 3% of the files I changed to 10%. Packaging, continuous integration and CRAN
-went from 4% to 20%. Source code went down, from 41% to 25%.
+went from 4% to 20%. Source code went down as a share, from 41% to 25%.
 
 So the change is not in the typing. What has changed is that the work around the code now
 gets done: the tests, documentation and continuous integration that determine whether
 software still runs in five years.
 
-[~60 s]
+[~75 s]
 :::
 
 ---
@@ -763,7 +770,7 @@ First commit **14 September 2018**.
 - **7 years and 9 months** with neither
 :::
 
-::: {.minor style="margin-top:0.7em;"}
+::: {.fragment style="margin-top:0.6em; line-height:1.35;"}
 Then, over **four days**: 32 commits, 9 test files, roxygen documentation, a pkgdown site,
 `NEWS.md`, a snake_case interface with deprecation wrappers, and CRAN preparation.
 :::
@@ -772,10 +779,14 @@ Then, over **four days**: 32 commits, 9 test files, roxygen documentation, a pkg
 
 ::: {.column width="46%"}
 
-::: {.punch style="font-size:1.1em;"}
+::: {.punch .fragment style="font-size:1.1em;"}
 Writing the tests found\
 [two silent bugs]{.e3}\
 present since 2018.
+:::
+
+::: {.lede .fragment style="text-align:center; margin-top:1.4em;"}
+This package is now on CRAN.
 :::
 
 :::
@@ -787,17 +798,29 @@ One package in detail. FSSgam's first commit was in September 2018, and it went 
 and nine months without a test file or continuous integration. There was always a more
 pressing deadline.
 
-Both arrived on the 20th of June this year. Over the next four days there were thirty-two
-commits, nine test files, documentation, a pkgdown site and CRAN preparation.
+Both arrived on the 20th of June this year.
+
+> Click: four days.
+
+Over the next four days there were thirty-two commits, nine test files, documentation, a
+pkgdown site and CRAN preparation.
+
+> Click: two bugs.
 
 Writing the tests found two bugs that had been there since 2018. A deprecated argument gave
 the right warning and then did nothing. Two fields of the output came back NULL, because the
 code read the wrong element names. Anyone using those features got the wrong result,
 with no warning.
 
-> If running long, drop this slide and say the last paragraph over the previous one.
+> Click: CRAN.
 
-[~50 s]
+With a little extra work, most of it done by Claude,
+
+> Read the slide.
+
+> If running long, drop this slide and say the bugs paragraph over the previous one.
+
+[~60 s]
 :::
 
 ---
@@ -820,7 +843,7 @@ with no warning.
 
 :::
 
-::: {.column width="50%"}
+::: {.column width="50%" .fragment}
 ### Still mine
 
 ::: {.arrows}
@@ -834,21 +857,125 @@ with no warning.
 
 :::
 
-::: {.minor style="margin-top:0.6em;"}
+::: {.lede .fragment style="margin-top:0.6em;"}
 The standard used to evaluate `ssdtools` and Burrlioz applies to code written by a model:
 read the source, simulate with a known answer, check bias and coverage.
 :::
 
+::: {.punch .fragment style="font-size:1.0em; margin-top:0.8em;"}
+AI use in open source software is a rapidly evolving space.
+:::
+
 ::: {.notes}
 The left column is work that used to be put off for the next deadline, and now gets done.
+
+> Click: still mine.
+
 The right column has not changed. If anything it matters more, because I'm producing more
 code for each hour of my own attention.
+
+> Click: the standard.
 
 When we evaluated ssdtools against Burrlioz, we asked for the source code, benchmarks, and
 simulations with a known answer. I don't get to lower that standard because a model wrote the code. The
 methods I used for checking someone else's software are the ones I now use for this.
 
-[~40 s]
+> Click: a rapidly evolving space.
+
+I think
+
+> Read the slide.
+
+It is for me.
+
+[~50 s]
+:::
+
+---
+
+
+## `bayesnec`, June to October 2026
+
+::: {.columns}
+
+::: {.column width="42%"}
+
+::: {.say .unread}
+No commits from July 2025 until late June. Since then, 817.
+:::
+
+::: {.fragment}
+
+::: {.say style="margin-bottom:0.1em;"}
+Claude and Codex found 86 bugs and flaws: 47 in code people wrote before June, 27 in code
+written since.
+:::
+
+::: {.minor style="margin-bottom:0.6em;"}
+45 of the 47 are in the release on CRAN.
+:::
+
+:::
+
+::: {.fragment}
+
+::: {.say style="margin-bottom:0.1em;"}
+Issues were opened about as fast as they were closed.
+:::
+
+::: {.minor style="margin-bottom:0.6em;"}
+In June, 22 were open, some since 2020; all are now closed. Since then, 151 more were opened
+from my account, by Claude, Codex or myself, and 135 of them closed.
+:::
+
+:::
+
+::: {.say .fragment}
+103 commits parked on a `predev` branch.
+:::
+
+::: {.lede .fragment style="font-weight:700; margin-top:0.5em;"}
+Writing code is no longer the limit. Reading it is.
+:::
+
+:::
+
+::: {.column width="58%"}
+![](figures/bayesnec-weekly.png){.bayesnec-fig fig-alt="Two bar charts on the same weeks, June to October 2026. Commits a week in bayesnec: none in June, a few in July, rising through August to 173 and 211 a week in mid-September, then falling to 112, 24, one and none; most are merged into dev, and from the third week of September most are parked on predev. Issues a week: in each week from mid-August, about as many issues were opened as were closed, up to 29 opened and 37 closed in one week."}
+:::
+
+:::
+
+::: {.notes}
+Things got very busy for the last month or so. I had to prepare a software training course I
+was teaching at a conference, and decided to add some significant functionality to bayesnec
+at the same time. Things rapidly escalated to the point where I was struggling to read and
+check everything being done.
+
+> Click: bugs in the original code.
+
+Every feature or bug fix I tackled resulted in Claude finding more bugs and flaws, many of
+them written by humans into the original software.
+
+> Read the slide.
+
+> Click: issues.
+
+I ended up in an endless loop of trying to resolve issues, with Claude or Codex opening even
+more issues as fast as they were closed.
+
+> Click: predev.
+
+I couldn't find the time to review everything before merging it to dev, so for now I resorted
+to making a predev branch and parking it.
+
+> Click: the limit.
+
+I'm not exactly sure where things will go from here.
+
+> Read the slide.
+
+[~75 s]
 :::
 
 ---
@@ -856,26 +983,55 @@ methods I used for checking someone else's software are the ones I now use for t
 
 ## Points to take away
 
-::: {.arrows style="font-size:1.15em; margin-top:0.8em;"}
+::: {.columns}
+
+::: {.column width="57%"}
+
+::: {.arrows style="font-size:1.0em; margin-top:0.5em;"}
 - The maintenance that determines whether research software outlives its project now
   takes far less time.
+
+::: {.fragment fragment-index="1"}
 - We still have no good pattern for open, reusable tools built on
   [data that cannot be shared]{.e3}.
 :::
 
+::: {.fragment fragment-index="2"}
+- AI now writes more than humans can feasibly review.\
+  Understand what would show it is wrong, and build simulations and tests to check it.
+:::
+
+:::
+
+:::
+
+::: {.column width="43%"}
+![](figures/known-answer-check.png){.check-fig .fragment data-fragment-index="2" fig-alt="Schematic of a cycle of four boxes. Known answer, set by you, drawn as a target. An arrow labelled simulate leads to simulated data, drawn as scattered points. An arrow labelled run leads to code written by AI, too much to read, drawn as many lines of code fading out. An arrow leads to estimates, one per data set, drawn as dots near the centre of the same target. A double-headed arrow between the estimates and the known answer is labelled compare: bias, coverage."}
+:::
+
+:::
+
 ::: {.notes}
-Two things I'd like to leave you with.
+Three things I'd like to leave you with.
 
 First, the tests, documentation and continuous integration that determine whether
 research software outlives its project now take far less time. If you are using AI to work
 faster, spend some of the time saved on this work.
+
+> Click: data that cannot be shared.
 
 Second, we still don't have a good pattern for building open, reusable tools on data that
 can't be shared. That gap is where a large amount of high-quality industry data stops being
 useful to anyone except the client. If you've worked on this problem, I'd like to talk to
 you.
 
-[~40 s]
+> Click: your review.
+
+Third, AI is now producing more than we can realistically review. We need new ways of
+thinking about what reviewing that should look like. For me, it is about understanding what
+would show if it was wrong, and building simulations and tests to demonstrate that.
+
+[~55 s]
 :::
 
 ---
@@ -922,53 +1078,4 @@ AI to prepare it are on GitHub. I'm happy to take questions in the session Q&A.
 > sentence.
 
 [~15 s]
-:::
-
----
-
-
-## Threshold setting with ROC curves {visibility="uncounted"}
-
-![](figures/roc-thresholds.png){.fig-full fig-alt="Two panels. Left: overlapping control and impact distributions of an exposure metric with two thresholds marked, high power and low alarm rate. Right: the corresponding ROC curve with those two operating points marked."}
-
-::: {.notes}
-> Backup for questions on how the dredging thresholds were set.
-
-For any threshold, the proportion of impact sites above it is the true positive rate, and
-the proportion of control sites above it is the false positive rate. Varying the threshold
-across its range traces out the ROC curve. The high-power threshold detects most impacts at the expense of
-more false alarms; the low-alarm-rate threshold is exceeded only when mortality is
-probable.
-:::
-
----
-
-
-## PC95 by distribution {visibility="uncounted"}
-
-![](figures/ssd-model-spread.png){.fig-full fig-alt="Lollipop chart of the PC95 guideline value from six single-distribution fits to the same boron dataset, spanning 1.07 to 1.77 mg/L, with the model average highlighted at 1.26."}
-
-::: {.notes}
-> Backup for questions on model averaging.
-
-The same boron data, fitted with each of the six distributions in turn. The guideline value
-ranges from 1.07 to 1.77 mg/L, and there is no theoretical basis for choosing between them.
-The model average weights each fit by its AICc.
-:::
-
----
-
-
-## Estimates of "no effect" {visibility="uncounted"}
-
-![](figures/no-effect-estimates.png){.fig-full fig-alt="Schematic concentration-response curve with four estimates marked and labelled: NEC, NSEC, EC10 and NOEC, with the region below the NEC shaded and labelled no effect."}
-
-::: {.notes}
-> Backup for questions on bayesnec and what goes into an SSD.
-
-The NEC is the concentration below which no effect is predicted. The NSEC, which David Fox
-and I defined, is the concentration at which the response cannot be distinguished from the
-control. The EC10 is, by definition, a 10% effect. The NOEC is the highest tested
-concentration not statistically different from the control, so it depends on which
-concentrations were tested. Whichever is used becomes an input to the SSD.
 :::

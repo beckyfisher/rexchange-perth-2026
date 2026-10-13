@@ -654,3 +654,358 @@ differences are the new clicks, the corrected typing and the slide wording above
 visuals brief, README, speaker-notes preamble and `CLAUDE.md` were updated.
 
 ---
+
+**User:** Slide 24 - "Coral mortality at a site///" - the text is now smaller than the other dot
+points, can you fix it? Slide 29 - 34, can you add ". CRAN" (to be consistent with the other ERAs).
+
+**Claude:** The first line of *Dredging thresholds* had been set at 0.72em so the slide fitted
+its page once every click was shown. At the 0.9em of the other lines the slide overflowed and
+the PDF printed 47 pages for 43 clicks. Two changes made the room: the text column was widened
+from 50% to 55%, and the source line now sits under the figure it credits rather than under
+the text. The three era-three kickers now read "Era three · 2021 onwards ·
+CRAN". The deck prints 43 pages again, and page 25, the slide with every click shown, was
+checked by eye.
+
+---
+
+## Session: ai-section-revision-2026-10-13
+Date: 2026-10-13
+Model: Claude Opus 5.5 (claude-opus-5-5)
+
+### Prompts and Responses
+
+**User:** I now need to update the AI section. There are some notes on this section in
+Xfisher-rexchange-perth-2026.pptx which I places in the old_talks_and_background. Things have
+changed a lot since we put together the first draft. Can we create some extra animation of the
+main points for this section, in line with the early part of the talk. I'm not exactly what I
+want the story to be, let's work on that together. Slide 31, I think the phase between June and
+the first analysis should potentially be kept, because the more recent work pushes this even
+further, so maybe an extra lines of bars? But tell me the numbers and what you think might work.
+Slide 32 does need updating - Animate "Then, over four days: 32 commits, 9 test files, roxygen
+documentation, a pkgdown site, NEWS.md, a snake_case interface with deprecation wrappers, and
+CRAN preparation." (make the text of this point bigger, it is too small) and then animate
+"Writing the tests found two bugs that had been there since 2018". And finally add "This package
+is now on CRAN". Slide 33 - I hope this is still valid given the more recent data. Can we
+emphasis the last dot point a bit, it is small and grey, but I think it is a main point so should
+be main text size and blue. Also, in line with the previous version Then Segway into a new point
+(AI use in open source software is a rapidly evolving space). I've made some comments in the
+speaker notes regarding my current status, can you help me explore how to present that? Can you
+collect some data on this for me to understand what this looks like exactly on my GitHub? Only
+consider the public repos
+
+**Claude:** The annotated file is her copy of the 38-page handout of the morning; its notes
+differ from the backup in `superceded/review-2026-10-13/` only on pages 31 to 33, the AI
+section. Those edits were copied into the notes. *FSSgam, 2018 to 2026* now builds over three
+clicks: the four days at the size of the other points, the two silent bugs, and "This package
+is now on CRAN" (FSSgam 1.2.0, published on CRAN on 2026-09-28, checked against crandb).
+*Routine work and judgement* builds over three: the "Still mine" column, the Burrlioz standard
+as blue main text, and "AI use in open source software is a rapidly evolving space". Her account
+of the last month follows that click in the notes, marked as a draft, because how to present it
+was left to be agreed. No earlier version of that slide had clicks, so "in line with the previous
+version" was read as matching the builds earlier in the talk.
+
+The GitHub data were collected in the session scratchpad and are not yet in the repository.
+The GraphQL contributions collection for 2026-06-01 to 2026-10-13 lists 17 public repositories
+with her commits. Those and the seven of `R/git-evidence.R` (22 clones, forks deduplicated by
+SHA) were read on every branch except `gh-pages`, whose commits are pkgdown deploys, with
+merges excluded. The method differs from that of 2026-07-28, which read only the default
+branch: the `bayesnec` work since July is on `dev` and `predev`, and its default branch has not
+changed since 2025-08-11. Her commits, by period:
+
+| Period | Commits | With a Claude line | Repositories | Commits a day |
+|---|---|---|---|---|
+| 2017-06-12 to 2026-06-19 | 1,523 | 0 | 12 | |
+| 2026-06-20 to 2026-07-28 | 203 | 94 | 7 | 5.2 |
+| 2026-07-29 to 2026-10-13 | 1,260 | 1,063 | 16 | 16.4 |
+
+In the seven repositories of the first analysis, the share of file changes going to tests was
+3.4%, 16.7% and 15.8% in the three periods; packaging, CI and CRAN was 4.2%, 15.5% and 5.1%;
+source code 40.8%, 22.6% and 28.6%. The packaging share was therefore a one-off of setting up CI
+and pkgdown, and the test share held; in counts, test-file changes were 126, 54 and 691. Weekly
+commits peaked at 228, 250 and 301 in the weeks from 31 August, then fell to 117, 35, 3 and 0.
+Lines changed were not used: one rendered vignette accounts for 311,449 lines in one week.
+
+In `bayesnec` since 2026-06-20, 151 issues were opened from her account, 135 of them closed,
+and 19 issues dating from 2020 to 2022 were closed. Open issues numbered 21 on 1 June, between
+18 and 38 through August and September, and 16 now. Pull requests were merged into `dev` until
+the week of 14 September (38 that week), and into `predev` from 19 September (31). `predev`
+holds 103 commits not in `dev`, and `dev` 660 not in `master`, the version on CRAN. Codex left
+no comments under its own account, so issues opened by Claude or Codex cannot be told apart from
+hers.
+
+---
+
+**User:** I like your plan, please implement it. I think leave the existing analysis as is, and
+make this new phase, focused on bayesnec as the final story. INclude the weekly chart as a new
+slide. Some other notes "codex v claude" note that not every commit by claude or codex is
+marked as by them, because I am using CLI and they have access to github essentially as me.
+"Bugs written by humans into the original software" yes, go and check it.
+
+**Claude:** `R/git-evidence.R`, its CSVs and `where-work-goes.png` were left as run on
+2026-07-28. A new script, `R/bayesnec-evidence.R`, clones `bayesnec`, reads every branch except
+`gh-pages` with merges excluded, and reads the issues and pull requests through `gh api`. It
+writes `data/bayesnec-weekly.csv` and `data/bayesnec-facts.csv`. It does not split commits by
+trailer, because Claude Code and Codex commit as the speaker. Commits are classed instead by
+where they sit now: merged into `dev`, only on `predev`, or on a branch never merged. Since 20
+June there were 817 commits: 655 in `dev`, 103 only on `predev` and 59 never merged. The last
+commit before June was on 2025-07-17. The busiest week, from 14 September, had 211. Of 151
+issues opened from her account, 135 were closed.
+
+`R/figures.R` section 10 draws `bayesnec-weekly.png`: commits a week by location above issues
+opened and closed a week, on one axis. It was drawn at 6.8 by 6.2 inches with base size 22,
+because at 7.6 by 6.6 and base size 17 the text was too small beside four lines of slide text.
+
+The bug check was delegated to a subagent and its result checked. Each of the 151 issues was
+read and typed as defect, flaw, feature or documentation and process. The fixing pull request
+was found from branch names, titles, closing keywords and comments. The lines each fix deleted
+or changed in `R/`, `src/` and `inst/` were blamed at the fix's parent (`-w -M -C`, comments
+and roxygen lines excluded). An issue was called human if at least 80% of those lines predated
+20 June, and AI-era if at least 80% postdated it. Otherwise, or where the fix only added lines,
+the code at the last `dev` commit before 20 June (`d508cf65`) and on `master` was read. Blame
+names the last editor of a line, and the AI-era work rewrote much older code, so six human
+verdicts overrode mostly-new blame where the fault was in `master` unchanged. The result was 57
+defects, 29 flaws, 26 features and 39 documentation and process issues. Of the 86 defects and
+flaws, 47 were in code written before 20 June (45 of them in the CRAN release 2.1.3.1), 27
+were in code written since, and 12 were mixed. Of the 27, 24 were opened in September. Five
+verdicts were checked by hand: #196 (`ecx.R:155` on `master`), #216 (unseeded `sample()` in
+`w_post_pred_calc()`), #247 (`dispersion()` applying the family's `linkinv`), #256
+(`validate_family()` forcing the identity link only for a character family), and #325 (the
+issue comment measuring `master` and naming the introducing pull request). All five agreed.
+The table is committed as `data/bayesnec-issue-review.csv`.
+
+The new slide, *`bayesnec`, June to October 2026*, follows *Routine work and judgement*. It
+shows the chart beside "No commits from July 2025 until late June. Since then, 817." Four
+clicks follow:
+
+- the 86 bugs and flaws, with 47 in code written by people before June;
+- issues opened about as fast as they were closed;
+- 103 commits parked on `predev`;
+- "Writing code is no longer the limit. Reading it is."
+
+Her account of the last month went from the notes of *Routine work and judgement* to this
+slide, split across the clicks, with her remark that Claude and Codex work through GitHub as
+her. Her "as many bugs and flaws written by humans" became "many of them written by humans",
+followed by the counts on the slide. The first point to take away gained
+"Reviewing it does not." The deck is 20 slides and 31 clicks. The words she reads come to 15.4
+minutes at 140 words a minute and 13.5 at 160, and the timing markers to 14:10. About a minute
+must come from elsewhere; cuts were proposed to her, not made.
+
+---
+
+**User:** what do you mean by " and another 12 were in old and new code." - just removed this, it
+is too confusing. Slide 47. I think we need the number of issues before June as context. Ie I
+started with 19 issues (is that correct) before June, but since then 151 have been opened and
+another 135 closed. Also, can you summarize a final point of advice for the last dot point of
+the last slide, based on my recent experience. [Later in the same turn:] there were also a few
+edits to speaker notes that i didn't populate forward for the animation slides
+
+**Claude:** The 12 were the issues whose faulty code was partly written before 20 June and
+partly since. The line was removed. There were 22 open issues on 20 June (21 on 1 June), not 19:
+19 is the number of them opened before 2026, the oldest on 2020-05-28, and all 22 are now
+closed. Since 20 June, 151 were opened, all from her account, and 157 were closed, the 135 of
+the new ones and the 22. `R/bayesnec-evidence.R` now writes those counts to
+`data/bayesnec-facts.csv`. The small line on the issues click reads "In June, 22 were open, some
+since 2020; all are now closed. Since then, 151 more were opened from my account, by Claude,
+Codex or myself, and 135 of them closed."
+
+The handout, saved by her at 12:56, was copied to `superceded/review-2026-10-13-ai/` and its
+notes compared page by page with a fresh export of the unchanged deck. Her edits were all on the
+`bayesnec` slide, and were applied to every page of it:
+
+- the opening line deleted from the notes, so marked `.unread`;
+- "by Claude, Codex or myself";
+- the issues narration shortened to "…with Claude or Codex opening even more issues as fast as
+  they were closed";
+- the `predev` narration shortened to "…so for now I resorted to making a predev branch and
+  parking it".
+
+Her copy had no backup pages. They were kept in the deck, and she was told.
+
+*Points to take away* now builds over two clicks to a third point: "Don't let an AI write more
+than you can review. Merge only what you have read." Its narration reads "Third, from my own
+experience over the last two months: an AI will write code, and find problems in it, faster
+than you can check them." The deck is 20 slides and 33 clicks, 56 pages with the backups. The
+words read come to 15.4 minutes at 140 words a minute and 13.5 at 160, and the markers to 14:20.
+
+---
+
+**User:** remove the backup slides. we wont have time for them anyway.
+
+**Claude:** The three uncounted slides after the closing slide were removed: threshold setting
+with ROC curves, PC95 by distribution, and estimates of "no effect". Their figures
+(`roc-thresholds.png`, `ssd-model-spread.png`, `no-effect-estimates.png`) are still built by
+`R/figures.R`, so the slides can be restored from commit history. The outline, the visuals
+brief, one anticipated-question answer that pointed to the ROC backup, and two comments in
+`R/figures.R` were updated. The handout is 53 pages, one for each of 20 slides and 33 clicks.
+
+---
+
+## Session: ai-review-closing-point-2026-10-13
+Date: 2026-10-13
+Model: Claude Opus 5.5 (claude-opus-5-5)
+
+### Prompts and Responses
+
+**User:** I'm wondering if you can review the current narratives around the use of AI in
+software and potentially help strengthen the final argument of this talk. My own narrative is in
+the speaker notes slide 49 (and also in my own github commit history and prompt log). I am
+wondering what reviewing ai generated code should even look like? humans are not going to keep
+up. What are people saying we should do?
+
+**Claude:** Page 49 of the handout is the last click of *`bayesnec`, June to October 2026*,
+"Writing code is no longer the limit. Reading it is." A research subagent searched for what was
+being said in 2025–2026 about review of code written by AI, reading primary pages where it could
+and marking what it could not confirm. Five positions were found:
+
+1. a person understands every change before it is merged, with the volume limited at intake
+   (the LLVM, Linux kernel, Ghostty and rOpenSci policies; LLVM's rule that a contribution
+   should be worth more to the project than the time it takes to review it);
+2. the author proves the change works rather than the reviewer reading it (Willison, December
+   2025; Carlini's compiler checked against GCC; Wickham's unit tests as the "double-entry
+   accounting" of programming);
+3. the objection to 2, that agents change tests to pass them and nothing tests behaviour no one
+   specified (Beck; *Ten Simple Rules for AI-Assisted Coding in Science*; Osmani on
+   comprehension debt), so the person must own the tests or the reference;
+4. review tiered by risk, with AI review as a first pass (Osmani), on mostly vendor evidence;
+5. no line-by-line reading (Willison, May 2026, with stated unease).
+
+METR's trial (July 2025) found experienced open-source developers 19% slower with AI while
+believing they were 20% faster. O'Brien, Milewicz and Eisty (September 2026) found researchers
+mostly check code by running it. No source was found proposing simulation with a known answer
+for statistical code written by AI.
+
+Against her own record: parking 103 commits on `predev` is what the LLVM and kernel policies
+require; 86 of the 151 issues were classed as defects or flaws, where about 15% of 809
+AI-assisted findings in curl were confirmed; and the 47 bugs in code people wrote, and the two
+FSSgam bugs found by writing tests, show reading had not caught them. The third point, "Don't let
+an AI write more than you can review. Merge only what you have read.", was judged to contradict
+the slide before it. A replacement built on the Burrlioz standard and the *Still mine* question
+"what would show it is wrong?" was proposed, with "Reviewing it does not." removed from the
+first point so that review is raised once. No files were changed at that stage.
+
+---
+
+**User:** I'm comfortable with the length, I talk fast. I like your recommendation re removing
+"Reviewing it does not" from point 1. I think for point 3, change it to "AI is now producing
+more than we can realistically review. We need new ways of thinking about what reviewing that
+should look like, for me it is about understanding what would show if it was wrong and building
+simulations and tests to demonstrate that." (that is the speaker notes, you can make a shorter
+point for the slide)
+
+**Claude:** *Points to take away* was changed in `talk/index.qmd`. The first point lost
+"Reviewing it does not." on the slide and "Reviewing that work does not." in the notes. The
+third point on the slide now reads "AI now writes more than we can review. Decide what would
+show it is wrong, and build simulations and tests to check it." Its narration is her text,
+prefixed "Third," to match the first two points, with the comma splice made two sentences:
+
+> Third, AI is now producing more than we can realistically review. We need new ways of
+> thinking about what reviewing that should look like. For me, it is about understanding what
+> would show if it was wrong, and building simulations and tests to demonstrate that.
+
+The "Read the slide" direction was removed, as the first two points have none, so the handout
+places the slide text before the narration after the click. The slide's timing marker went
+from 50 to 55 seconds. The words read rose by 15, giving about 15.5 minutes at 140 words a minute
+and 13.6 at 160; the markers add to 14:25. `notes/slide-outline.md`, `CLAUDE.md` and the
+preamble of `notes/speaker-notes.md`, which still gave 12.5 minutes, were updated, and her
+comfort with the length was recorded in `CLAUDE.md`. The speaker notes were rebuilt and the deck
+rendered; a screenshot of the slide with all three points showed it fits. The handout was not
+re-exported, because it was open in PowerPoint.
+
+---
+
+**User:** I closed the hanover ppt. FOr the final point, can we change "Decide" to
+"Understand"?
+
+**Claude:** The handout had not been saved since its export at 13:19, so it held no edits to
+carry; it was copied to `superceded/review-2026-10-13-closing/` before being overwritten. The
+third point on the slide now reads "AI now writes more than we can review. Understand what would
+show it is wrong, and build simulations and tests to check it.", matching "understanding" in
+her narration. `notes/slide-outline.md` was changed to match. The speaker notes were rebuilt,
+the deck rendered, and `R/export-deck.R` wrote the HTML, PDF and PowerPoint, 53 pages.
+
+---
+
+**User:** can you change the last point to two dot points? "AI now writes more than humans can
+feasibly review" and "Undertsand what would ....". ALso, can you come up with a graphic for that?
+Or is there one on the internet we can attribute?
+
+**Claude:** Two web searches found no openly licensed graphic of reviewing code written by AI.
+The pages found gave no licence for their images, and no xkcd comic on the subject was found. A
+schematic was therefore drawn in a new section 11 of `R/figures.R`, written to
+`talk/figures/known-answer-check.png`. It is a cycle of four boxes:
+
+- a known answer, set by you, drawn as a target;
+- data simulated from it, drawn as points;
+- code written by AI, "too much to read", drawn as an editor's minimap whose lines fade out, as
+  in the method/data schematic of section 9;
+- the estimates, one per data set, drawn as dots on the same target.
+
+A double-headed arrow between the estimates and the known answer is labelled "compare: bias,
+coverage", the method of the `ssdtools` evaluation. A coverage plot of intervals around a true
+value was considered and rejected. Drawn by hand it would put invented numbers in a figure. A
+real simulation of `ssdtools` coverage would be a new, unpublished result about a regulatory
+tool. The point positions are made up for the drawing, under `set.seed(2026)` at the start of
+the section, which comes after every other figure so the earlier ones are unchanged. Running the
+whole script left every other PNG byte-identical.
+
+*Points to take away* now has two columns. The points are on the left at 1.0em, and the last
+two are "AI now writes more than humans can feasibly review." and "Understand what would show
+it is wrong, and build simulations and tests to check it." The figure is on the right and
+appears on the same click as those two points, using an explicit fragment index. The click
+count and the notes are unchanged. A `.check-fig` rule was added to `talk/custom.scss`. The
+layout was checked in screenshots of the first and last clicks, and after a full rebuild on
+page 52 of the exported PDF. Labels were enlarged, and the boxes narrowed to 3.85 units, after
+the first screenshot showed "simulate" touching the boxes. `notes/visuals-brief.md` and
+`notes/slide-outline.md` describe the figure and the new layout.
+
+---
+
+**User:** can we take the lst arrow away (this is consistent with the "three things" - the last
+point is an extension of the third
+
+**Claude:** The two lines are now one list item joined by a hard line break, so "Understand what
+would show it is wrong, and build simulations and tests to check it." sits under "AI now writes
+more than humans can feasibly review." without an arrow, and the slide shows three points, as
+the narration's "three things" says. The deck was rendered and the handout re-exported (53
+pages). Page 52 of the PDF was checked, and the handout notes give the third point as one line.
+The outline and visuals brief were changed to match.
+
+---
+
+**User:** slide 36 doesn;t really show the 5x productive? is shows the breakdown (also useful)
+can we plot this a different way to show both?
+
+**Claude:** Page 36 is *The change since June*. Her handout had been saved at 14:31, after the
+export at 14:16. It was copied to `superceded/review-2026-10-13-1431/` and its notes compared
+page by page with a fresh export of the unchanged deck. The only edit was on page 36, and it
+was carried into the notes, with "codex" capitalised as elsewhere in the notes: "I stopped
+writing R code by hand in June. / I now work with Claude Code or Codex, and my impression is
+that I'm about five times more productive. / That is an impression, so I measured it…"
+
+Showing volume as well as shares needs the number of days worked in each period. The July run
+did not record it. A full re-run of `R/git-evidence.R` was rejected, because it would change the
+1,340 commits and the tripling of tests quoted in the published abstract. Each repository was
+first reconstructed as its default branch stood at the end of 28 July (the last first-parent
+commit before 29 July). That gave 36 AI-assisted commits and 189 file changes, as in July, and
+1,312 commits before, against July's 1,304. The nine extra commits are all in `toxval` on 24 and
+26 June (51 file changes, 23 of them tests); why the July run lacked them is not known. A
+separate script, `R/git-evidence-days.R`, counts only the working days, a working day being a
+day with at least one of her commits: 302 before and 4 with an AI assistant, in both Windows and
+WSL R. It writes `data/git-evidence-days.csv` and leaves the July CSVs untouched. Dropping the
+two `toxval` days would give 300, which changes the files a day before by less than 0.1.
+
+`where-work-goes.png` now draws each bar at files changed per working day, about 12 before and
+47 with an AI assistant, nearly four times. The shares stay as labels on the segments. A pair
+of panels, one of volume and one of shares, was the alternative; one bar for each period shows
+both with less ink. Shares are labelled where a segment is at least 2.5 files a day wide. The
+caption was wrapped to three lines, because its first line had been cut off at the right edge
+since July. The narration gained "On a day I worked on these packages, I used to change about
+12 files. With an AI assistant it was about 47, nearly four times as many, though that is only
+four days." Source code "went down as a share", because the bars now show it rising per day,
+from 4.9 to 11.8 files. Against the 2026 working days before 20 June alone, the multiple would be
+smaller; that baseline rests on three days. The timing marker went from 60 to 75 seconds. The
+anticipated answer on "five times" was revised, and the README, outline, visuals brief and
+`CLAUDE.md` updated. Of the committed figures only `where-work-goes.png` changed. The handout was
+exported and page 36 of the PDF checked.
+
+---

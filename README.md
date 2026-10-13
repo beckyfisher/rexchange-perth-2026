@@ -28,8 +28,10 @@ with an R package: fifteen years of open-source software in environmental regula
 | `R/aims-assets.R` | Extracts the AIMS template assets, or writes placeholders where the source deck is absent |
 | `R/local-images.R` | Exports pictures from the speaker's earlier slides through PowerPoint, copies the two screenshots, or writes placeholders |
 | `R/export-deck.R` | Writes the HTML, PDF and picture-per-slide PowerPoint for the organisers to `_output/handover/` |
-| `R/git-evidence.R` | Derives the commit-history evidence in the AI section |
-| `data/` | The CSVs that script produces — committed, so figures build offline and the numbers are checkable |
+| `R/git-evidence.R` | Derives the commit-history evidence in the AI section, as measured on 2026-07-28 |
+| `R/git-evidence-days.R` | Counts the working days in the same two periods, so the figure can show files changed a day |
+| `R/bayesnec-evidence.R` | Derives the `bayesnec` evidence for June to October 2026: commits by week and branch, issues and pull requests |
+| `data/` | The CSVs those scripts produce — committed, so figures build offline and the numbers are checkable |
 | `notes/slide-outline.md` | Slide-by-slide outline, timings, and what to drop if running long |
 | `notes/speaker-notes.md` | Full narration script + anticipated questions — **generated** from the deck by `R/build-speaker-notes.R` |
 | `notes/visuals-brief.md` | Visual system, sourcing, alt text, suggested additions |
@@ -125,7 +127,7 @@ fragment added to a slide needs a matching `> Click` line in its notes.
 Slide text in a block with the class `.unread` stays on the slide but is left out of the
 handout notes, because the speaker does not read it out. She deleted such text from the
 handout notes on 2026-10-13 while asking for the slides to keep it, among them both columns of
-*Industry work and packages*.
+*Industry work and packages* and the opening line of the `bayesnec` slide.
 
 The PowerPoint is built from pictures because Quarto's own pptx writer cannot use
 `custom.scss`: its output had the AIMS styling only on the two AIMS image slides and put the
@@ -176,13 +178,34 @@ that carry a `Co-Authored-By: Claude` trailer against all the rest:
 | Packaging, CI, CRAN | 4% | 20% |
 | Source code | 41% | 25% |
 
+On a day with at least one of those commits, about 12 files changed before (302 days) and about
+47 with an AI assistant (4 days). `R/git-evidence-days.R` counts the days, reading each
+repository as it stood on 2026-07-28.
+
 And one package end to end: `FSSgam` was created in September 2018 and got its first test
 file and its first CI workflow on the **same day, 20 June 2026** — 7 years and 9 months
 later. Writing those tests surfaced two silent bugs that had been shipping since 2018.
 
 Caveats are stated on the slide and in `notes/visuals-brief.md`: public repos only, the
 trailer definition is a conservative floor, and the unit is a file touch rather than lines
-or commits.
+or commits. That measurement was made on 2026-07-28 and is left as it was run.
+
+The slide after it follows `bayesnec` from June to October 2026:
+
+```bash
+Rscript R/bayesnec-evidence.R    # clones bayesnec, reads its issues with gh, writes data/bayesnec-*.csv
+```
+
+It reads every branch except `gh-pages`, because the work since June is on `dev` and `predev`
+and the default branch is the CRAN release line. It does not split commits by trailer: Claude
+Code and Codex commit, open issues and open pull requests as the speaker, and not all of that
+is marked. Of the 151 issues opened from her account between 20 June and 13 October, 86
+reported a bug or a flaw: 47 in code written before 20 June (45 of them in the CRAN release),
+27 in code written since, and 12 in both. That count is in `data/bayesnec-issue-review.csv`.
+Each issue's type was decided by reading it. Where the issue had been fixed, the age of the
+code was taken from `git blame` of the lines its fix changed. Otherwise it was found by
+reading the code as it stood before 20 June and on `master`. Five of the verdicts were
+checked again by hand against `master` and the issue comments.
 
 ## AI disclosure
 

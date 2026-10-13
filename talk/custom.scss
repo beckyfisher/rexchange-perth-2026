@@ -375,3 +375,21 @@ html.reveal-print .reveal .footer {
 // ("Industry work and packages").
 .reveal .arrows.compact { font-size: 0.85em; }
 .reveal .arrows.compact ul li { margin-bottom: 0.15em; }
+
+// The bayesnec weekly chart beside its four clicks: as wide as its column, and
+// no taller than the space under the title.
+.reveal img.bayesnec-fig {
+  width: 100%;
+  max-height: 690px;
+  object-fit: contain;
+  margin: 0;
+}
+
+// The schematic of checking code against a known answer, beside the last click
+// of "Points to take away": as wide as its column, below the title.
+.reveal img.check-fig {
+  width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+  margin: 0.3em 0 0 0;
+}
