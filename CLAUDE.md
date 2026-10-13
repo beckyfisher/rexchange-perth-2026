@@ -26,8 +26,8 @@ Assume they are technically strong and know nothing about ecotoxicology.
 modeller, Australian Institute of Marine Science (AIMS).
 
 **Talk length: 15 minutes.** The programme fixes it; earlier drafts were built for 20. On
-`main` the timing markers in the notes add to about 14.7 minutes, and the words she reads (the
-slide text she reads out, and the notes) to about 15.8 minutes at 140 words a minute (13.8 at
+`main` the timing markers in the notes add to about 14.2 minutes, and the words she reads (the
+slide text she reads out, and the notes) to about 15.2 minutes at 140 words a minute (13.3 at
 160). The revision of the AI section on 2026-10-13 added the `bayesnec` slide and nine
 clicks, and left no time for explaining the figures; before it the counts were 12.5 and 13.1
 minutes. On 2026-10-13 she said she is comfortable with that length, because she speaks

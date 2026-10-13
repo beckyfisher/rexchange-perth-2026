@@ -463,54 +463,62 @@ save_fig(p_dens + p_roc + plot_layout(widths = c(1.25, 1)),
 # ===========================================================================
 # 5. Where the work actually goes \u2014 MEASURED, from the commit history
 # ===========================================================================
-# Derived by R/git-evidence.R from the public repos; see that script for the
-# method and its limits. Earlier drafts of this talk used an invented chart
+# Derived by R/git-evidence-periods.R from the public repos; see that script for
+# the method and its limits. Earlier drafts of this talk used an invented chart
 # here. It was directionally right and numerically wrong, which is exactly the
 # failure mode the talk warns about, so it has been replaced with the data.
+#
+# Until 2026-10-13 this was the first measurement, by R/git-evidence.R on
+# 2026-07-28: shares only, then files a working day, before and with a
+# Co-Authored-By trailer. The speaker asked for it brought up to date. The bars
+# are now three periods split by date, so the length of a bar is how much
+# changed on a working day and its segments are the shares. A pair of panels,
+# one of volume and one of shares, was the alternative; one bar for each period
+# shows both with less ink. The July measurement stays in the narration, because
+# the published abstract quotes it.
 
-shares <- read.csv(file.path("data", "git-evidence-shares.csv"),
-                   stringsAsFactors = FALSE)
-facts <- read.csv(file.path("data", "git-evidence-facts.csv"),
-                  stringsAsFactors = FALSE)
-fact <- function(k) facts$value[facts$key == k]
-# Working days come from R/git-evidence-days.R, added on 2026-10-13 so the figure
-# shows how much changed as well as the shares; see that script for why it is
-# separate from the July measurement.
-work_days <- read.csv(file.path("data", "git-evidence-days.csv"),
-                      stringsAsFactors = FALSE)
+periods_cat <- read.csv(file.path("data", "git-evidence-periods.csv"),
+                        stringsAsFactors = FALSE)
+periods_facts <- read.csv(file.path("data", "git-evidence-periods-facts.csv"),
+                          stringsAsFactors = FALSE)
+pfact <- function(k) periods_facts$value[periods_facts$key == k]
 
 cat_levels <- c("Source code", "Documentation (generated)",
                 "Documentation (written)", "Tests", "Packaging, CI, CRAN",
                 "Other")
+period_levels <- c("Before 20 June", "20 June to 28 July",
+                   "29 July to 13 October")
 
-# Bar length is files changed on a working day rather than share, so the two
-# bars differ in length (how much changed) and the segments still give the
-# shares that the narration quotes. A side-by-side pair of panels, one of
-# volume and one of shares, was the alternative; one bar per period says both
-# with half the ink.
-work <- shares |>
-  left_join(select(work_days, era, working_days), by = "era") |>
+work <- periods_cat |>
   mutate(
-    per_day = touches / working_days,
-    # reversed so "Before" reads on top
-    era = factor(era, levels = c("With an AI assistant", "Before")),
+    # reversed so the earliest period reads on top
+    period = factor(period, levels = rev(period_levels)),
     category = factor(category, levels = cat_levels)
   )
 work_totals <- work |>
-  group_by(era) |>
-  summarise(per_day = sum(per_day), .groups = "drop")
-n_days <- setNames(work_days$working_days, work_days$era)
+  group_by(period) |>
+  summarise(per_day = sum(per_day), .groups = "drop") |>
+  mutate(commits = as.numeric(vapply(as.character(period),
+                                     function(x) pfact(paste0("commits: ", x)), "")))
+n_days <- vapply(period_levels, function(x) pfact(paste0("working_days: ", x)), "")
 
-p_work <- ggplot(work, aes(per_day, era, fill = category)) +
-  geom_col(width = 0.5, colour = "white", linewidth = 0.8) +
+p_work <- ggplot(work, aes(per_day, period, fill = category)) +
+  geom_col(width = 0.55, colour = "white", linewidth = 0.8) +
   # a share is labelled where its segment is wide enough to hold the label
-  geom_text(aes(label = ifelse(per_day >= 2.5, paste0(round(share), "%"), "")),
+  geom_text(aes(label = ifelse(per_day >= 4.5, paste0(round(share), "%"), "")),
             position = position_stack(vjust = 0.5),
-            size = 4.2, colour = "white", fontface = "bold") +
+            size = 3.9, colour = "white", fontface = "bold") +
+  # The commits in each period sit under its files a day, at the speaker's request
+  # (2026-10-13), so the narration need not count them.
   geom_text(data = work_totals,
-            aes(per_day, era, label = paste(round(per_day), "a day")),
-            inherit.aes = FALSE, hjust = 0, nudge_x = 0.8,
+            aes(per_day, period, label = paste(round(per_day), "a day")),
+            inherit.aes = FALSE, hjust = 0, vjust = -0.2, nudge_x = 1.5,
             size = 6.2, fontface = "bold", colour = pal[["accent"]]) +
+  geom_text(data = work_totals,
+            aes(per_day, period,
+                label = paste(prettyNum(commits, big.mark = ","), "commits")),
+            inherit.aes = FALSE, hjust = 0, vjust = 1.3, nudge_x = 1.5,
+            size = 5.2, colour = "grey30") +
   scale_fill_manual(values = c(
     "Source code"               = pal[["accent"]],
     "Documentation (generated)" = pal[["era2"]],
@@ -519,27 +527,27 @@ p_work <- ggplot(work, aes(per_day, era, fill = category)) +
     "Packaging, CI, CRAN"       = "#A9D3CF",
     "Other"                     = "#B0B0B0"
   )) +
-  scale_x_continuous(limits = c(0, 60), expand = expansion(mult = c(0, 0))) +
+  scale_x_continuous(limits = c(0, 108), expand = expansion(mult = c(0, 0))) +
   labs(x = NULL, y = NULL,
        title = "Files changed on a working day, by what each file is for",
-       subtitle = paste0(
-         "Before 20 June 2026: ", n_days[["Before"]], " working days.  ",
-         "With an AI assistant since: ", n_days[["With an AI assistant"]], "."),
+       subtitle = paste0("June 2017 to ", format(as.Date(pfact("cutoff")), "%e %B %Y"),
+                         ". Working days: ", n_days[1], ", ", n_days[2], " and ",
+                         n_days[3], ", from the top."),
        caption = paste0(
-         "Measured, not estimated: every commit I authored across ",
-         length(strsplit(fact("repos_analysed"), ";")[[1]]),
-         " public repos (", fact("commits_total"), " commits).\n",
-         "\u201cWith an AI assistant\u201d = the ", fact("commits_ai_trailer"),
-         " commits carrying a Co-Authored-By: Claude trailer \u2014 a conservative floor.\n",
-         "Unit: one file changed in one commit.  A working day has at least one commit.",
-         "  Code: R/git-evidence.R, R/git-evidence-days.R")) +
+         "Measured, not estimated: every commit I authored in seven public repos, on every",
+         " branch but gh-pages (", format(as.numeric(pfact("commits_total")), big.mark = ","),
+         " commits).\n",
+         "Split by date, not by a Co-Authored-By trailer: Claude Code and Codex commit as me,",
+         " and not all of it is marked.\n",
+         "Unit: one file changed in one commit. A working day has at least one commit.",
+         "  Code: R/git-evidence-periods.R")) +
   guides(fill = guide_legend(nrow = 2, byrow = TRUE)) +
   theme_talk() +
   theme(panel.grid.major.y = element_blank(),
         axis.text.x = element_blank(),
         panel.grid.major.x = element_blank(),
         axis.text.y = element_text(face = "bold", colour = pal[["accent"]],
-                                   size = rel(1.05)),
+                                   size = rel(1.0)),
         legend.position = "bottom",
         legend.title = element_blank(),
         legend.text = element_text(size = rel(0.85)),
@@ -548,7 +556,7 @@ p_work <- ggplot(work, aes(per_day, era, fill = category)) +
 
 # Sized smaller than the other full-slide figures so that, scaled up to the
 # slide, the bar labels and legend are legible from the back of a room.
-save_fig(p_work, "where-work-goes.png", width = 9.6, height = 4.9)
+save_fig(p_work, "where-work-goes.png", width = 9.6, height = 5.4)
 
 # ===========================================================================
 # 6. Title-slide panel

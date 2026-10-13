@@ -1009,3 +1009,80 @@ anticipated answer on "five times" was revised, and the README, outline, visuals
 exported and page 36 of the PDF checked.
 
 ---
+
+**User:** what would it look like if we updated it to now?
+
+**Claude:** The seven repositories were measured to 2026-10-13 in a scratch analysis, with a
+preview drawn to the git-ignored `_output/preview/`. Two parts of the July method no longer
+held. The July run read only default branches, and the `bayesnec` work since July is on `dev`
+and `predev`, so every branch except `gh-pages` was read, merges excluded, and commits
+deduplicated by SHA. The Claude trailer no longer marks the AI-assisted work, because Codex
+commits as the speaker without it, so commits were split by date at 20 June and 28 July.
+
+A first pass passed `--exclude=refs/remotes/origin/gh-pages`. With `--remotes`, git matches
+nothing with that full name, so 175 pkgdown deploy commits were read. The short form
+`--exclude=origin/gh-pages`, as in `R/bayesnec-evidence.R`, fixed it. The counts then matched
+that script (817 `bayesnec` commits since 20 June) and the shares measured that morning.
+
+On a working day, files changed were 12 before 20 June (302 days), 29 from 20 June to 28 July
+(11 days) and 86 from 29 July to 13 October (51 days). Source code files a day went from 5.0 to
+24.6, and tests from 0.4 to 13.5. As shares, tests went from 3% to 17% and 16%, packaging and CI
+from 4% to 15% and 5%, and source code from 41% to 23% and 29%. `bayesnec` is 80% of the commits
+since 28 July. The middle bar's 29 a day differs from the 47 of the trailer split, because it
+counts all 11 working days rather than the 4 with a trailer.
+
+---
+
+**User:** yes do that, but commit the original work first
+
+**Claude:** The work so far was committed to `main` as `d306276`. `R/git-evidence-periods.R`
+was then written from the scratch analysis, with the cutoff applied to both commit and author
+dates so that a re-run gives the same answer. It writes `data/git-evidence-periods.csv`, of files
+a working day and shares by period and category, and `data/git-evidence-periods-facts.csv`.
+Run under Windows R on fresh clones, it reproduced the scratch numbers: 2,374 commits, of which
+1,070 are since 20 June and 887 of those carry the trailer.
+
+Section 5 of `R/figures.R` draws three bars, earliest on top. The subtitle gives the date range
+and working days, and the caption states the date split and its reason. `R/git-evidence-days.R`
+and its CSV, committed in `d306276`, were removed as superseded. `R/git-evidence.R` and its CSVs
+stay as the record of the July measurement.
+
+The narration keeps her opening and quotes the July measurement, so that the abstract's 1,340
+commits and tripling of tests are still delivered. It then gives the files a day for the three
+periods, notes that most of the recent volume is `bayesnec`, and states the shares of tests
+(3% to about 16%) and of source code (41% to 29%). It adds that she now changes about five times
+as many source files a day. Three anticipated answers were revised: "five times", how a commit
+was judged AI-assisted (by date, with the trailer count), and "Isn't 36 commits a small sample?",
+now "Isn't that mostly one package?". The timing marker went to 80 seconds; the markers add to
+14:45 and the words to about 16.0 minutes at 140 a minute. The README, outline, visuals brief,
+CI comment and `CLAUDE.md` were updated, the deck rendered and the handout exported (53 pages),
+and page 36 checked. These changes were not committed.
+
+---
+
+**User:** there is way to much text in the speaker notes. Can you simplify it, with the minimum
+number of words to provide the imprtant narrative. If you think I should quote the total
+commits, add them as large text next to the bars. [Then:] just the new slide I mean, not the
+whole talk. Slide 36
+
+**Claude:** Only *The change since June* was changed. Each period's commits (1,304, 78 and 992)
+were added to the figure under its files a day, in large grey text, so the narration no longer
+gives them. The narration was cut from about 218 words to the following, after the slide text:
+
+> I now work with Claude Code or Codex, and my impression is that I'm about five times more
+> productive. That is an impression, so I measured it. On a day I worked on these packages, I
+> used to change about 12 files. Since the end of July it has been 86, mostly in bayesnec. Tests
+> went from 3% of those files to 16%. So the change is not in the typing. The work around the
+> code now gets done: the tests, documentation and continuous integration that determine
+> whether software still runs in five years.
+
+The July measurement (1,340 commits, tests tripled), the 29 a day of the first five weeks, the
+source-code share and the description of the method were dropped from the narration. The
+caption and the anticipated questions still carry them. The abstract's claim is delivered by the
+figure, where tests rise from 3% to 16% of files changed. Her opening narration line repeated
+the slide text, so her wording "R code" was put on the slide, and the line became a "Read the
+slide" direction. The timing marker went from 80 to 45 seconds. The markers now add to 14:10,
+and the words read to about 15.2 minutes at 140 a minute. The outline, visuals brief, timings
+and handout were updated.
+
+---

@@ -217,14 +217,18 @@ density; the redraw shows the point estimate and interval.
 
 Slide: *The change since June.*
 
-Stacked bars, before and with an AI assistant: files changed on a working day, by what each
-file is for, so the length of a bar shows how much changed and its segments the shares. A working
-day is a day with at least one commit: 302 before and 4 with an AI assistant, about 12 and 47
-files a day. Measured by `R/git-evidence.R` from 1,340 commits across seven public repositories;
-the figure reads `data/git-evidence-shares.csv` and `data/git-evidence-facts.csv`, and the
-working days from `data/git-evidence-days.csv`, written by `R/git-evidence-days.R`. The speaker
-asked on 2026-10-13 for the figure to show volume as well as the breakdown; until then it showed
-shares only. "With an AI
+Stacked bars for three periods: files changed on a working day, by what each file is for, so
+the length of a bar shows how much changed and its segments the shares. A working day is a day
+with at least one commit. Before 20 June 2026, 302 working days and about 12 files a day; 20 June
+to 28 July, 11 days and 29 a day; 29 July to 13 October, 51 days and 86 a day. Each period's
+commits (1,304, 78 and 992) are printed under its files a day, at the speaker's request, so the
+narration need not give them. Measured by
+`R/git-evidence-periods.R` from 2,374 commits across seven public repositories, on every branch
+except `gh-pages`, split by date rather than by a `Co-Authored-By` trailer; the figure reads
+`data/git-evidence-periods.csv` and `data/git-evidence-periods-facts.csv`. On 2026-10-13 the
+speaker asked first for the figure to show volume as well as shares, and then for it to be
+brought up to date. Until then it showed the measurement of 2026-07-28 by `R/git-evidence.R`
+(1,340 commits, trailer split), which the published abstract quotes. "With an AI
 assistant" means a `Co-Authored-By: Claude` trailer, which understates the contrast. The unit is
 one file changed in one commit. Saved smaller than the other figures so its labels are legible
 when scaled to the slide.

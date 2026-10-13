@@ -723,35 +723,29 @@ That brings me to the last few months.
 ## The change since June
 
 ::: {.lede style="margin-bottom:0.3em;"}
-I stopped writing code by hand in [June]{.e3}.
+I stopped writing R code by hand in [June]{.e3}.
 :::
 
-![](figures/where-work-goes.png){.fig-full style="max-height:560px;" fig-alt="Stacked bar chart of files changed on a working day, by category, before versus with an AI assistant, measured from 1,340 authored commits across seven public repositories. Before 20 June 2026, about 12 files a day over 302 working days; with an AI assistant, about 47 a day over 4 working days. As shares, tests rise from 3 to 10 per cent, packaging and CI from 4 to 20 per cent, and source code falls from 41 to 25 per cent."}
+![](figures/where-work-goes.png){.fig-full style="max-height:560px;" fig-alt="Stacked bar chart of files changed on a working day, by category, in three periods, measured from 2,374 authored commits across seven public repositories, on every branch except gh-pages. Before 20 June 2026, about 12 files a day over 302 working days; from 20 June to 28 July, about 29 a day over 11; from 29 July to 13 October, about 86 a day over 51. Beside each bar are its commits: 1,304, 78 and 992. As shares, tests rise from 3 to 17 and then 16 per cent, packaging and CI from 4 to 15 and back to 5 per cent, and source code falls from 41 to 23 and then 29 per cent."}
 
 ::: {.notes}
-I stopped writing R code by hand in June.
+> Read the slide.
 
 I now work with Claude Code or Codex, and my impression is that I'm about five times more
 productive.
 
-That is an impression, so I measured it when I wrote the first draft of this talk, which is a
-couple of months ago now.
+That is an impression, so I measured it.
 
-This is every commit I've authored across seven public repositories, 1,340 of them, with
-each file classified by what it is for. "With an AI assistant" means the commit includes a
-Co-Authored-By: Claude line, which anyone can check.
+On a day I worked on these packages, I used to change about 12 files. Since the end of July it
+has been 86, mostly in bayesnec.
 
-On a day I worked on these packages, I used to change about 12 files. With an AI assistant it
-was about 47, nearly four times as many, though that is only four days.
+Tests went from 3% of those files to 16%.
 
-Tests went from 3% of the files I changed to 10%. Packaging, continuous integration and CRAN
-went from 4% to 20%. Source code went down as a share, from 41% to 25%.
+So the change is not in the typing. The work around the code now gets done: the tests,
+documentation and continuous integration that determine whether software still runs in five
+years.
 
-So the change is not in the typing. What has changed is that the work around the code now
-gets done: the tests, documentation and continuous integration that determine whether
-software still runs in five years.
-
-[~75 s]
+[~45 s]
 :::
 
 ---

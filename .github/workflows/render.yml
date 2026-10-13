@@ -51,12 +51,13 @@ jobs:
             any::ssdtools
             any::ssddata
 
-      # NOTE: R/git-evidence.R and R/bayesnec-evidence.R are deliberately NOT
-      # run here. They clone repositories (the second also reads the GitHub API
-      # through an authenticated gh), and their output changes as those repos
-      # gain commits, which would make the staleness check below fail for
-      # reasons unrelated to this repo. Regenerate data/*.csv by hand when you
-      # want fresher numbers.
+      # NOTE: R/git-evidence.R, R/git-evidence-periods.R and
+      # R/bayesnec-evidence.R are deliberately NOT run here. They clone
+      # repositories (the last also reads the GitHub API through an
+      # authenticated gh), and their output changes as those repos gain
+      # commits, which would make the staleness check below fail for reasons
+      # unrelated to this repo. Regenerate data/*.csv by hand when you want
+      # fresher numbers.
 
       # Proves the figure script runs. Its PNGs are not compared with the
       # committed ones: the same code renders different bytes on Ubuntu and on

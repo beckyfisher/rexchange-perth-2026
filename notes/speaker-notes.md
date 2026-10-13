@@ -23,7 +23,7 @@ text marked as not read out. A "Read the slide" direction marks where that text 
 among the narration.
 
 For the running order, timings, and what to drop if running long, see
-[`slide-outline.md`](slide-outline.md). The timing markers add to about 14.7 minutes, in a
+[`slide-outline.md`](slide-outline.md). The timing markers add to about 14.2 minutes, in a
 15-minute slot.
 
 ---
@@ -239,29 +239,23 @@ That brings me to the last few months.
 
 ---
 
-## 15 · The change since June — 75 s
+## 15 · The change since June — 45 s
 
-I stopped writing R code by hand in June.
+> Read the slide.
 
 I now work with Claude Code or Codex, and my impression is that I'm about five times more
 productive.
 
-That is an impression, so I measured it when I wrote the first draft of this talk, which is a
-couple of months ago now.
+That is an impression, so I measured it.
 
-This is every commit I've authored across seven public repositories, 1,340 of them, with
-each file classified by what it is for. "With an AI assistant" means the commit includes a
-Co-Authored-By: Claude line, which anyone can check.
+On a day I worked on these packages, I used to change about 12 files. Since the end of July it
+has been 86, mostly in bayesnec.
 
-On a day I worked on these packages, I used to change about 12 files. With an AI assistant it
-was about 47, nearly four times as many, though that is only four days.
+Tests went from 3% of those files to 16%.
 
-Tests went from 3% of the files I changed to 10%. Packaging, continuous integration and CRAN
-went from 4% to 20%. Source code went down as a share, from 41% to 25%.
-
-So the change is not in the typing. What has changed is that the work around the code now
-gets done: the tests, documentation and continuous integration that determine whether
-software still runs in five years.
+So the change is not in the typing. The work around the code now gets done: the tests,
+documentation and continuous integration that determine whether software still runs in five
+years.
 
 ---
 
@@ -398,23 +392,25 @@ wasn't a matter of having become good at it.
 **"Five times is a big claim. How did you measure it?"**
 Not directly. Five times is my impression of overall productivity, and I won't defend the
 number. What I measured, on *The change since June*, is files changed on a day I worked on
-these packages: about 12 before and 47 with an AI assistant. The 47 is four days of work, and a
-file changed is not the same as useful work. The composition is the clearer result: across
-1,340 authored commits in seven public repositories, tests went from 3% to 10% of files changed,
-packaging and CI from 4% to 20%, and source code fell from 41% to 25%. The largest change is in
-work I previously wasn't doing at all. My output of new statistical methods did not go up five
-times.
+these packages: about 12 before June, 29 in the first five weeks, and 86 since the end of July.
+Source code files a day went up about five times. But a file changed is not the same as useful
+work, most of the recent volume is bayesnec, and some of that is parked unreviewed on predev.
+The composition is the clearer result: tests went from 3% of the files changed to about 16%.
+The largest change is in work I previously wasn't doing at all. My output of new statistical
+methods did not go up five times.
 
 **"How did you decide a commit was AI-assisted?"**
-By the `Co-Authored-By: Claude` trailer and nothing else. Anyone who clones the repositories
-can check it, and it undercounts: AI-assisted work before I adopted the trailer is counted as
-"before". The script is `R/git-evidence.R` in the talk repository, and its output is
-committed.
+By date. Everything since 20 June, when I stopped writing code by hand, counts as done with an
+AI assistant. The first measurement, in July, used the `Co-Authored-By: Claude` trailer, but
+Claude Code and Codex commit as me and not all of it is marked: 887 of the 1,070 commits since
+20 June carry the trailer. The scripts are `R/git-evidence.R` for July and
+`R/git-evidence-periods.R` for now, in the talk repository, and their output is committed.
 
-**"Isn't 36 commits a small sample?"**
-For the percentages, yes: the AI-assisted bars rest on 36 commits over four days, and 189 file
-changes. That is why there is a slide on one package followed end to end, where the change
-does not depend on how I drew the categories.
+**"Isn't that mostly one package?"**
+Since the end of July, yes: bayesnec is 80% of the commits and 84% of the files changed. The
+first five weeks are spread over four repositories, 78 commits on 11 working days, and show the
+same shift towards tests. That is also why there is a slide on one package followed end to
+end, FSSgam, where the change does not depend on how I drew the categories.
 
 **"How do you check code you didn't write?"**
 The same way we checked Burrlioz: simulate data with a known answer, measure bias and

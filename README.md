@@ -29,7 +29,7 @@ with an R package: fifteen years of open-source software in environmental regula
 | `R/local-images.R` | Exports pictures from the speaker's earlier slides through PowerPoint, copies the two screenshots, or writes placeholders |
 | `R/export-deck.R` | Writes the HTML, PDF and picture-per-slide PowerPoint for the organisers to `_output/handover/` |
 | `R/git-evidence.R` | Derives the commit-history evidence in the AI section, as measured on 2026-07-28 |
-| `R/git-evidence-days.R` | Counts the working days in the same two periods, so the figure can show files changed a day |
+| `R/git-evidence-periods.R` | Measures files changed on a working day in the same repositories to 2026-10-13, for *The change since June* |
 | `R/bayesnec-evidence.R` | Derives the `bayesnec` evidence for June to October 2026: commits by week and branch, issues and pull requests |
 | `data/` | The CSVs those scripts produce — committed, so figures build offline and the numbers are checkable |
 | `notes/slide-outline.md` | Slide-by-slide outline, timings, and what to drop if running long |
@@ -178,17 +178,32 @@ that carry a `Co-Authored-By: Claude` trailer against all the rest:
 | Packaging, CI, CRAN | 4% | 20% |
 | Source code | 41% | 25% |
 
-On a day with at least one of those commits, about 12 files changed before (302 days) and about
-47 with an AI assistant (4 days). `R/git-evidence-days.R` counts the days, reading each
-repository as it stood on 2026-07-28.
+That measurement was made on 2026-07-28 and is left as it was run, because the published
+abstract quotes it. The slide now shows the same repositories measured to 2026-10-13:
+
+```bash
+Rscript R/git-evidence-periods.R    # writes data/git-evidence-periods*.csv
+```
+
+It reads every branch except `gh-pages` and splits commits by date rather than by trailer,
+because Claude Code and Codex commit as the speaker and not all of it is marked. On a working
+day, a day with at least one of her commits, the files changed were:
+
+| Period | Working days | Files a day | Tests | Source code |
+|---|---|---|---|---|
+| Before 20 June 2026 | 302 | 12 | 3% | 41% |
+| 20 June to 28 July | 11 | 29 | 17% | 23% |
+| 29 July to 13 October | 51 | 86 | 16% | 29% |
+
+`bayesnec` is 80% of the commits since 28 July.
 
 And one package end to end: `FSSgam` was created in September 2018 and got its first test
 file and its first CI workflow on the **same day, 20 June 2026** — 7 years and 9 months
 later. Writing those tests surfaced two silent bugs that had been shipping since 2018.
 
-Caveats are stated on the slide and in `notes/visuals-brief.md`: public repos only, the
-trailer definition is a conservative floor, and the unit is a file touch rather than lines
-or commits. That measurement was made on 2026-07-28 and is left as it was run.
+Caveats are stated on the slide and in `notes/visuals-brief.md`: public repos only, a file
+touch is not a measure of useful work, and the unit is a file touch rather than lines or
+commits.
 
 The slide after it follows `bayesnec` from June to October 2026:
 
